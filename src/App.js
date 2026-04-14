@@ -551,6 +551,7 @@ function CreditImpotPage() {
             </p>
           </div>
         </section>
+                
 
         <section style={styles.sectionAlt}>
           <div style={styles.containerNarrow}>
