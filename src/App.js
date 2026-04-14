@@ -1,9 +1,72 @@
 import React, { useState, useEffect } from "react";
+const SITE_URL = "https://lokofr.com";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
+const DEFAULT_SITE_NAME = "Loko";
+
+const defaultSeo = {
+  title: "Assistance numérique à domicile aux Sables d’Olonne | Loko",
+  description:
+    "Loko propose une assistance numérique à domicile aux Sables d’Olonne : Wi-Fi, Internet, smartphone, ordinateur, TV, transfert de données et découverte de l’IA.",
+  robots: "index, follow",
+  canonical: `${SITE_URL}/`,
+  ogType: "website",
+  ogImage: DEFAULT_OG_IMAGE,
+  twitterCard: "summary_large_image",
+};
+
+const staticPagesSeo = {
+  "/": {
+    title: "Assistance numérique à domicile aux Sables d’Olonne | Loko",
+    description:
+      "Loko intervient à domicile aux Sables d’Olonne pour vous aider avec Internet, le Wi-Fi, les smartphones, les ordinateurs, la télévision, les transferts de données et l’intelligence artificielle.",
+  },
+
+  "/rendez-vous": {
+    title: "Prendre rendez-vous | Loko",
+    description:
+      "Prenez rendez-vous avec Loko pour une assistance numérique à domicile aux Sables d’Olonne : appel, demande en ligne ou choix d’un créneau simple et rapide.",
+  },
+
+  "/plan-du-site": {
+    title: "Plan du site | Loko",
+    description:
+      "Accédez rapidement à toutes les pages du site Loko : services d’assistance numérique, prise de rendez-vous, informations légales et crédit d’impôt.",
+  },
+
+  "/credit-impot": {
+    title: "Crédit d’impôt de 50 % | Assistance numérique Loko",
+    description:
+      "Découvrez comment fonctionne le crédit d’impôt de 50 % pour les prestations d’assistance numérique à domicile proposées par Loko aux Sables d’Olonne.",
+  },
+
+  "/cgv": {
+    title: "Conditions Générales de Vente | Loko",
+    description:
+      "Consultez les Conditions Générales de Vente de Loko pour les prestations d’assistance numérique à domicile aux Sables d’Olonne.",
+    robots: "noindex, follow",
+  },
+
+  "/politique-confidentialite": {
+    title: "Politique de confidentialité | Loko",
+    description:
+      "Découvrez comment Loko collecte, utilise et protège vos données personnelles dans le respect du RGPD.",
+    robots: "noindex, follow",
+  },
+
+  "/mentions-legales": {
+    title: "Mentions légales | Loko",
+    description:
+      "Consultez les mentions légales du site Loko : éditeur, hébergeur, propriété intellectuelle et responsabilité.",
+    robots: "noindex, follow",
+  },
+};
 
 const problemPages = {
   "/probleme-wifi-internet-les-sables-dolonne": {
     title: "Problème Wi-Fi / Internet",
     seoTitle: "Problème Wi-Fi et Internet aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko vous aide à domicile aux Sables d’Olonne pour les problèmes de Wi-Fi, de box Internet, de coupures réseau et de connexion des appareils.",
     hero: "Un problème de Wi-Fi ou d’Internet à domicile ?",
     intro:
       "Loko intervient à domicile aux Sables d’Olonne pour les coupures Internet, les problèmes de Wi-Fi, les box qui ne fonctionnent plus ou les appareils qui refusent de se connecter.",
@@ -33,6 +96,8 @@ const problemPages = {
   "/aide-smartphone-les-sables-dolonne": {
     title: "Aide smartphone",
     seoTitle: "Aide smartphone à domicile aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko propose une aide smartphone à domicile aux Sables d’Olonne pour les réglages, le stockage, les transferts de données et les difficultés d’utilisation du quotidien.",
     hero: "Besoin d’aide avec votre smartphone ?",
     intro:
       "Loko vous aide à domicile aux Sables d’Olonne pour la prise en main de votre smartphone, les réglages, le stockage, les transferts de données et les difficultés d’utilisation du quotidien.",
@@ -62,6 +127,8 @@ const problemPages = {
   "/depannage-ordinateur-les-sables-dolonne": {
     title: "Dépannage ordinateur",
     seoTitle: "Dépannage ordinateur à domicile aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko intervient à domicile aux Sables d’Olonne pour l’aide sur ordinateur : mails, fichiers, imprimantes, réglages simples et accompagnement numérique du quotidien.",
     hero: "Votre ordinateur vous bloque au quotidien ?",
     intro:
       "Loko intervient à domicile aux Sables d’Olonne pour les usages du quotidien : mails, fichiers, imprimantes, petites installations, compréhension des bases et remise en route simple.",
@@ -91,6 +158,8 @@ const problemPages = {
   "/probleme-tv-box-les-sables-dolonne": {
     title: "TV & box",
     seoTitle: "Problème TV et box aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko vous aide à domicile aux Sables d’Olonne pour les problèmes de TV, box, décodeur, applications, connexion Internet et installation des équipements.",
     hero: "Votre télévision ou votre box pose problème ?",
     intro:
       "Loko intervient à domicile aux Sables d’Olonne pour les problèmes de télévision, de décodeur, de box, d’applications ou de connexion des équipements connectés.",
@@ -120,6 +189,8 @@ const problemPages = {
   "/transfert-de-donnees-les-sables-dolonne": {
     title: "Transfert de données",
     seoTitle: "Transfert de données à domicile aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko vous accompagne à domicile aux Sables d’Olonne pour le transfert de données entre appareils : photos, contacts, fichiers, comptes et premiers réglages.",
     hero: "Besoin d’un transfert de données ?",
     intro:
       "Loko vous aide à domicile aux Sables d’Olonne pour transférer vos données d’un appareil à un autre : photos, contacts, fichiers, comptes et premiers réglages.",
@@ -149,6 +220,8 @@ const problemPages = {
   "/apprendre-ia-les-sables-dolonne": {
     title: "Découverte de l’IA",
     seoTitle: "Apprendre à utiliser l’IA aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko accompagne les particuliers aux Sables d’Olonne pour découvrir l’intelligence artificielle, comprendre ses usages et apprendre à l’utiliser simplement.",
     hero: "Envie de comprendre et utiliser l’intelligence artificielle ?",
     intro:
       "Loko accompagne les particuliers aux Sables d’Olonne pour découvrir l’intelligence artificielle, comprendre à quoi elle sert et apprendre à l’utiliser simplement au quotidien.",
@@ -209,6 +282,139 @@ const problemCards = [
     desc: "Comprendre l’intelligence artificielle et apprendre à l’utiliser simplement.",
   },
 ];
+function upsertMetaTag(attr, key, content) {
+  if (typeof document === "undefined" || !content) return;
+
+  let selector = "";
+  if (attr === "name") selector = `meta[name="${key}"]`;
+  if (attr === "property") selector = `meta[property="${key}"]`;
+
+  let tag = document.head.querySelector(selector);
+
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attr, key);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("content", content);
+}
+
+function upsertLinkTag(rel, href) {
+  if (typeof document === "undefined" || !href) return;
+
+  let tag = document.head.querySelector(`link[rel="${rel}"]`);
+
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", rel);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("href", href);
+}
+
+function applySeoMeta(seo) {
+  if (typeof document === "undefined") return;
+
+  const finalSeo = {
+    ...defaultSeo,
+    ...seo,
+  };
+
+  document.title = finalSeo.title;
+
+  upsertMetaTag("name", "description", finalSeo.description);
+  upsertMetaTag("name", "robots", finalSeo.robots);
+
+  upsertLinkTag("canonical", finalSeo.canonical);
+
+  upsertMetaTag("property", "og:type", finalSeo.ogType || "website");
+  upsertMetaTag("property", "og:site_name", DEFAULT_SITE_NAME);
+  upsertMetaTag("property", "og:title", finalSeo.ogTitle || finalSeo.title);
+  upsertMetaTag(
+    "property",
+    "og:description",
+    finalSeo.ogDescription || finalSeo.description
+  );
+  upsertMetaTag("property", "og:image", finalSeo.ogImage || DEFAULT_OG_IMAGE);
+  upsertMetaTag("property", "og:url", finalSeo.ogUrl || finalSeo.canonical);
+
+  upsertMetaTag(
+    "name",
+    "twitter:card",
+    finalSeo.twitterCard || "summary_large_image"
+  );
+  upsertMetaTag(
+    "name",
+    "twitter:title",
+    finalSeo.twitterTitle || finalSeo.title
+  );
+  upsertMetaTag(
+    "name",
+    "twitter:description",
+    finalSeo.twitterDescription || finalSeo.description
+  );
+  upsertMetaTag(
+    "name",
+    "twitter:image",
+    finalSeo.twitterImage || finalSeo.ogImage || DEFAULT_OG_IMAGE
+  );
+}
+
+function getSeoData(path, currentPage) {
+  const cleanPath = path || "/";
+  const canonical = `${SITE_URL}${cleanPath}`;
+
+  if (currentPage) {
+    return {
+      title: currentPage.seoTitle,
+      description: currentPage.seoDescription || currentPage.intro,
+      canonical,
+      robots: "index, follow",
+      ogTitle: currentPage.seoTitle,
+      ogDescription: currentPage.seoDescription || currentPage.intro,
+      ogImage: DEFAULT_OG_IMAGE,
+      ogUrl: canonical,
+      twitterTitle: currentPage.seoTitle,
+      twitterDescription: currentPage.seoDescription || currentPage.intro,
+      twitterImage: DEFAULT_OG_IMAGE,
+    };
+  }
+
+  const staticSeo = staticPagesSeo[cleanPath];
+
+  if (staticSeo) {
+    return {
+      ...staticSeo,
+      canonical,
+      ogTitle: staticSeo.title,
+      ogDescription: staticSeo.description,
+      ogImage: DEFAULT_OG_IMAGE,
+      ogUrl: canonical,
+      twitterTitle: staticSeo.title,
+      twitterDescription: staticSeo.description,
+      twitterImage: DEFAULT_OG_IMAGE,
+    };
+  }
+
+  return {
+    title: "Page non trouvée | Loko",
+    description:
+      "Cette page du site Loko n’existe pas ou n’est plus disponible.",
+    canonical,
+    robots: "noindex, follow",
+    ogTitle: "Page non trouvée | Loko",
+    ogDescription:
+      "Cette page du site Loko n’existe pas ou n’est plus disponible.",
+    ogImage: DEFAULT_OG_IMAGE,
+    ogUrl: canonical,
+    twitterTitle: "Page non trouvée | Loko",
+    twitterDescription:
+      "Cette page du site Loko n’existe pas ou n’est plus disponible.",
+    twitterImage: DEFAULT_OG_IMAGE,
+  };
+}
 function useIsMobile() {
   const getIsMobile = () =>
     typeof window !== "undefined" ? window.innerWidth <= 768 : false;
@@ -234,24 +440,51 @@ function useGlobalAnimations() {
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
-      @keyframes lokoStarsGlow {
-        0% {
-          transform: translateY(0) scale(1);
-          filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-          opacity: 0.92;
-        }
-        50% {
-          transform: translateY(-1px) scale(1.06);
-          filter: drop-shadow(0 0 8px rgba(255,255,255,0.35));
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(0) scale(1);
-          filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-          opacity: 0.92;
-        }
+    @keyframes lokoStarsGlow {
+      0% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+        opacity: 0.92;
       }
-    `;
+      50% {
+        transform: translateY(-1px) scale(1.06);
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.35));
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+        opacity: 0.92;
+      }
+    }
+  
+    @keyframes lokoBlueGlow {
+      0% {
+        box-shadow:
+          inset 0 0 0 1px rgba(59,130,246,0.20),
+          inset 0 0 18px rgba(59,130,246,0.10),
+          0 0 8px rgba(59,130,246,0.18),
+          0 0 18px rgba(59,130,246,0.10),
+          0 20px 60px rgba(0,0,0,0.28);
+      }
+      50% {
+        box-shadow:
+          inset 0 0 0 1px rgba(59,130,246,0.45),
+          inset 0 0 28px rgba(59,130,246,0.18),
+          0 0 12px rgba(59,130,246,0.28),
+          0 0 28px rgba(59,130,246,0.16),
+          0 20px 60px rgba(0,0,0,0.28);
+      }
+      100% {
+        box-shadow:
+          inset 0 0 0 1px rgba(59,130,246,0.20),
+          inset 0 0 18px rgba(59,130,246,0.10),
+          0 0 8px rgba(59,130,246,0.18),
+          0 0 18px rgba(59,130,246,0.10),
+          0 20px 60px rgba(0,0,0,0.28);
+      }
+    }
+  `;
     document.head.appendChild(style);
   }, []);
 }
@@ -266,7 +499,16 @@ export default function LokoSite() {
 
   const isRdvPage = path === "/rendez-vous";
   const isPlanPage = path === "/plan-du-site";
+  const isCgvPage = path === "/cgv";
+  const isPrivacyPage = path === "/politique-confidentialite";
+  const isMentionsPage = path === "/mentions-legales";
+  const isCreditImpotPage = path === "/credit-impot";
   const currentPage = problemPages[path] || null;
+
+  useEffect(() => {
+    const seoData = getSeoData(path, currentPage);
+    applySeoMeta(seoData);
+  }, [path, currentPage]);
 
   if (isRdvPage) {
     return <RendezVousPage />;
@@ -275,18 +517,750 @@ export default function LokoSite() {
   if (isPlanPage) {
     return <PlanDuSitePage />;
   }
-
-  if (typeof document !== "undefined") {
-    document.title = currentPage
-      ? currentPage.seoTitle
-      : "Assistance numérique à domicile aux Sables d’Olonne | Loko";
+  if (isCgvPage) {
+    return <CGVPage />;
   }
-
+  if (isPrivacyPage) {
+    return <PrivacyPage />;
+  }
+  if (isMentionsPage) {
+    return <MentionsPage />;
+  }
+  if (isCreditImpotPage) {
+    return <CreditImpotPage />;
+  }
   if (currentPage) {
     return <ProblemPage page={currentPage} />;
   }
 
   return <HomePage />;
+}
+function CreditImpotPage() {
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Service à la personne • Loko</div>
+            <h1 style={styles.heroTitle}>Crédit d’impôt de 50 %</h1>
+            <p style={styles.heroText}>
+              Avec Loko, certaines prestations d’assistance numérique à domicile
+              peuvent vous permettre de bénéficier d’un crédit d’impôt de 50 %.
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.taxHeroCard}>
+              <div style={styles.taxHeroTop}>
+                <img
+                  src="/logo-credit-impot.png"
+                  alt="Crédit d’impôt service à la personne"
+                  style={styles.taxLogo}
+                />
+                <div>
+                  <div style={styles.taxHeroLabel}>Exemple simple</div>
+                  <div style={styles.taxHeroPriceLine}>
+                    79 € → 39,50 € après crédit d’impôt
+                  </div>
+                </div>
+              </div>
+
+              <p style={styles.taxHeroText}>
+                Vous payez votre prestation, puis vous pouvez récupérer 50 % du
+                montant sous forme de crédit d’impôt, selon votre situation et
+                l’éligibilité de la prestation.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.section}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Comment ça fonctionne ?</h2>
+
+            <div style={styles.cardGridSingle}>
+              <div style={styles.infoCard}>
+                <h3 style={styles.cardTitle}>1. Vous prenez rendez-vous</h3>
+                <p style={styles.cardText}>
+                  Loko intervient à domicile pour vous aider sur vos besoins
+                  numériques du quotidien.
+                </p>
+              </div>
+
+              <div style={styles.infoCard}>
+                <h3 style={styles.cardTitle}>2. Vous réglez la prestation</h3>
+                <p style={styles.cardText}>
+                  Le montant de l’intervention est payé normalement, comme une
+                  prestation classique.
+                </p>
+              </div>
+
+              <div style={styles.infoCard}>
+                <h3 style={styles.cardTitle}>
+                  3. Vous bénéficiez de l’avantage fiscal
+                </h3>
+                <p style={styles.cardText}>
+                  Selon votre situation, 50 % du montant peut être récupéré sous
+                  forme de crédit d’impôt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Pourquoi c’est intéressant ?</h2>
+
+            <div style={styles.bulletPanel}>
+              <div style={styles.bulletItem}>
+                • Le coût réel peut être réduit de moitié
+              </div>
+              <div style={styles.bulletItem}>
+                • Vous profitez d’une aide à domicile claire, locale et humaine
+              </div>
+              <div style={styles.bulletItem}>
+                • Vous avancez plus sereinement sur vos besoins numériques
+              </div>
+              <div style={styles.bulletItem}>
+                • Vous gagnez à la fois en aide immédiate et en autonomie
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.section}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.taxNoteCard}>
+              <h2 style={styles.sectionTitle}>Important</h2>
+              <p style={styles.sectionText}>
+                Le crédit d’impôt s’applique selon la réglementation en vigueur
+                et selon l’éligibilité des prestations concernées.
+              </p>
+              <p style={styles.sectionText}>
+                Si vous avez un doute, Loko peut vous expliquer simplement le
+                principe au moment de la prise de rendez-vous.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.contactCard}>
+              <h2 style={styles.sectionTitle}>
+                Besoin d’aide ou d’une précision ?
+              </h2>
+              <p style={styles.sectionText}>
+                Contactez Loko pour savoir comment cela peut s’appliquer à votre
+                situation.
+              </p>
+              <div style={styles.heroButtons}>
+                <HoverButton href="tel:+33763131515" variant="primary">
+                  Appeler Loko
+                </HoverButton>
+                <HoverButton href="/rendez-vous" variant="secondary">
+                  Prendre rendez-vous
+                </HoverButton>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+function MentionsPage() {
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Informations légales • Loko</div>
+            <h1 style={styles.heroTitle}>Mentions légales</h1>
+            <p style={styles.heroText}>
+              Informations légales relatives au site Loko.
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.legalCard}>
+              <h2 style={styles.legalArticleTitle}>1. Éditeur du site</h2>
+              <p style={styles.legalText}>
+                Loko – Assistance numérique à domicile
+                <br />
+                Micro-entreprise représentée par Ludéric Gelot
+                <br />
+                Les Sables d’Olonne, France
+                <br />
+                07 63 13 15 15
+                <br />
+                rdvloko@gmail.com
+                <br />
+                SIRET : 811 759 737 00034
+                <br />
+                Code APE : 62.02A
+                <br />
+                TVA non applicable, article 293 B du CGI.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>2. Hébergeur</h2>
+              <p style={styles.legalText}>
+                Cloudflare, Inc.
+                <br />
+                101 Townsend Street, San Francisco, CA 94107, États-Unis
+                <br />
+                https://www.cloudflare.com/
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                3. Propriété intellectuelle
+              </h2>
+              <p style={styles.legalText}>
+                L’ensemble du contenu du site (textes, visuels, graphismes,
+                logo, structure) est la propriété exclusive de Loko.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>4. Données personnelles</h2>
+              <p style={styles.legalText}>
+                Les données sont traitées conformément au RGPD. Consultez la
+                politique de confidentialité pour plus de détails.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>5. Responsabilité</h2>
+              <ul style={styles.legalList}>
+                <li>Erreurs ou omissions involontaires</li>
+                <li>Interruptions ou dysfonctionnements</li>
+                <li>Dommages liés à l’utilisation du site</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>6. Liens externes</h2>
+              <p style={styles.legalText}>
+                Loko décline toute responsabilité concernant les sites externes.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>7. Contact</h2>
+              <p style={styles.legalText}>
+                rdvloko@gmail.com
+                <br />
+                07 63 13 15 15
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+function PrivacyPage() {
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Informations légales • Loko</div>
+            <h1 style={styles.heroTitle}>Politique de confidentialité</h1>
+            <p style={styles.heroText}>
+              Découvrez comment Loko protège et utilise vos données
+              personnelles.
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.legalCard}>
+              <h2 style={styles.legalArticleTitle}>1. Introduction</h2>
+              <p style={styles.legalText}>
+                Chez Loko, la confidentialité de vos données est une priorité.
+                Nous ne vendons, ne louons et ne troquons aucune information
+                personnelle.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>2. Qui sommes-nous ?</h2>
+              <p style={styles.legalText}>
+                Loko est une entreprise d’assistance numérique basée aux Sables
+                d’Olonne. Responsable : Ludéric Gelot.
+              </p>
+              <p style={styles.legalText}>
+                Contact : rdvloko@gmail.com — 07 63 13 15 15
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>3. Données collectées</h2>
+              <ul style={styles.legalList}>
+                <li>Nom, prénom, email, téléphone</li>
+                <li>Adresse pour intervention</li>
+                <li>Informations de paiement (via prestataires sécurisés)</li>
+                <li>Historique et préférences</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>
+                4. Utilisation des données
+              </h2>
+              <ul style={styles.legalList}>
+                <li>Gestion des rendez-vous</li>
+                <li>Traitement des paiements</li>
+                <li>Envoi de confirmations et factures</li>
+                <li>Communication (si consentement)</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>5. Stockage et partage</h2>
+              <p style={styles.legalText}>
+                Données stockées en Europe, uniquement partagées avec des outils
+                techniques nécessaires.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>6. Durée de conservation</h2>
+              <ul style={styles.legalList}>
+                <li>Données clients : durée de relation + 2 ans</li>
+                <li>Facturation : 10 ans</li>
+                <li>Cookies : 13 mois</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>7. Vos droits</h2>
+              <ul style={styles.legalList}>
+                <li>Accès</li>
+                <li>Rectification</li>
+                <li>Suppression</li>
+                <li>Portabilité</li>
+              </ul>
+              <p style={styles.legalText}>Contact : rdvloko@gmail.com</p>
+
+              <h2 style={styles.legalArticleTitle}>8. Cookies</h2>
+              <p style={styles.legalText}>
+                Utilisés pour le fonctionnement du site et les statistiques.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>9. Sécurité</h2>
+              <p style={styles.legalText}>
+                Données protégées via chiffrement SSL et accès restreint.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>10. Modifications</h2>
+              <p style={styles.legalText}>
+                Cette politique peut évoluer à tout moment.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+function CGVPage() {
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Informations légales • Loko</div>
+            <h1 style={styles.heroTitle}>Conditions Générales de Vente</h1>
+            <p style={styles.heroText}>
+              Retrouvez ici les conditions applicables aux prestations
+              d’assistance numérique à domicile proposées par Loko.
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.legalCard}>
+              <h2 style={styles.legalArticleTitle}>Article 1 — Objet</h2>
+              <p style={styles.legalText}>
+                Les présentes Conditions Générales de Vente ont pour objet de
+                définir les conditions dans lesquelles Loko propose à ses
+                clients des prestations d’assistance numérique à domicile,
+                d’accompagnement technique du quotidien, d’installation, de
+                paramétrage et, selon les cas, certaines interventions
+                techniques limitées.
+              </p>
+              <p style={styles.legalText}>
+                Les prestations de Loko ont pour finalité d’accompagner le
+                client dans la résolution de situations numériques du quotidien,
+                dans la limite du périmètre annoncé, du temps prévu, des accès
+                disponibles et des contraintes techniques constatées.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 2 — Prestations proposées
+              </h2>
+              <p style={styles.legalText}>Loko propose notamment :</p>
+              <ul style={styles.legalList}>
+                <li>l’assistance numérique à domicile ;</li>
+                <li>l’aide à l’utilisation d’équipements numériques ;</li>
+                <li>l’installation et la mise en service d’équipements ;</li>
+                <li>le paramétrage simple ;</li>
+                <li>l’accompagnement dans certaines démarches numériques ;</li>
+                <li>
+                  l’accompagnement avec certains services tiers ou opérateurs,
+                  avec accord du client.
+                </li>
+              </ul>
+              <p style={styles.legalText}>
+                Certaines demandes techniques plus spécifiques peuvent être
+                acceptées au cas par cas, sans engagement automatique préalable.
+              </p>
+              <p style={styles.legalText}>
+                Loko se réserve le droit de refuser toute demande hors
+                périmètre, trop risquée, trop technique, ou incompatible avec
+                son fonctionnement.
+              </p>
+              <p style={styles.legalText}>
+                Loko n’a pas vocation à assurer des prestations de vente de
+                matériel, de réparation lourde, de micro-soudure, de
+                contournement de sécurité, ni toute intervention spécialisée
+                excédant son périmètre habituel.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 3 — Prise de rendez-vous
+              </h2>
+              <p style={styles.legalText}>
+                La prise de rendez-vous s’effectue principalement par téléphone.
+                Un rendez-vous peut ensuite être confirmé par écrit, notamment
+                par courrier électronique.
+              </p>
+              <p style={styles.legalText}>
+                Le rendez-vous est fixé sur la base des informations
+                communiquées par le client. Toute description du besoin
+                effectuée à distance est considérée comme indicative. Le besoin
+                réel peut être précisé, ajusté ou requalifié lors de
+                l’intervention sur place.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 4 — Tarifs et facturation
+              </h2>
+              <p style={styles.legalText}>
+                Les tarifs en vigueur sont ceux communiqués au client au moment
+                de la prise de rendez-vous ou affichés sur les supports de
+                communication de Loko lorsqu’ils existent.
+              </p>
+              <p style={styles.legalText}>
+                Le tarif annoncé correspond à la prestation prévue dans le cadre
+                initialement décrit par le client.
+              </p>
+              <p style={styles.legalText}>
+                Si le besoin réel constaté sur place diffère de la demande
+                initiale, nécessite un temps supplémentaire, une prise en charge
+                particulière, un déplacement complémentaire ou une intervention
+                distincte, Loko en informe le client avant toute poursuite hors
+                cadre initial.
+              </p>
+              <p style={styles.legalText}>
+                Tout dépassement de temps accepté par le client est facturé par
+                palier de <strong>15 minutes au tarif de 15 € TTC</strong>.
+              </p>
+              <p style={styles.legalText}>
+                Toute prestation complémentaire ou hors périmètre initial peut
+                faire l’objet d’une facturation complémentaire ou d’une nouvelle
+                intervention.
+              </p>
+              <p style={styles.legalText}>
+                La facture est émise après intervention.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 5 — Conditions d’intervention
+              </h2>
+              <p style={styles.legalText}>
+                Le client s’engage à fournir des informations sincères et
+                suffisamment précises sur le besoin rencontré.
+              </p>
+              <p style={styles.legalText}>
+                Le client s’engage également à rendre accessibles les
+                équipements, comptes, identifiants, mots de passe, codes,
+                autorisations ou éléments nécessaires à la bonne réalisation de
+                la prestation.
+              </p>
+              <p style={styles.legalText}>
+                Lorsque certaines conditions ne sont pas réunies au moment de
+                l’intervention, notamment en cas d’absence d’accès, de matériel,
+                d’identifiants ou de conditions techniques minimales, Loko
+                pourra :
+              </p>
+              <ul style={styles.legalList}>
+                <li>limiter son intervention ;</li>
+                <li>proposer un report ;</li>
+                <li>proposer une prise en charge différente ;</li>
+                <li>
+                  ou facturer le déplacement et/ou le temps mobilisé selon la
+                  situation.
+                </li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 6 — Annulation, report, absence
+              </h2>
+              <p style={styles.legalText}>
+                Toute demande de report ou d’annulation doit être communiquée
+                dès que possible.
+              </p>
+              <p style={styles.legalText}>
+                Sauf accord particulier, tout report ou annulation intervenant
+                moins de <strong>24 heures</strong> avant le rendez-vous donne
+                lieu à une facturation forfaitaire de <strong>10 € TTC</strong>.
+              </p>
+              <p style={styles.legalText}>
+                En cas d’absence du client au rendez-vous, d’impossibilité
+                d’accéder au lieu d’intervention, ou de déplacement rendu
+                inutile du fait du client, Loko se réserve le droit de facturer
+                un forfait de déplacement ou d’immobilisation de{" "}
+                <strong>10 € TTC</strong>.
+              </p>
+              <p style={styles.legalText}>
+                En cas de reports répétés ou abusifs, Loko se réserve le droit
+                d’annuler définitivement la demande.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 7 — Déroulement et périmètre de la prestation
+              </h2>
+              <p style={styles.legalText}>
+                La prestation réalisée correspond au besoin annoncé, tel qu’il a
+                été compris au moment du rendez-vous puis confirmé au démarrage
+                de l’intervention.
+              </p>
+              <p style={styles.legalText}>
+                Si, sur place, le client sollicite un besoin différent, plus
+                large ou distinct de celui annoncé initialement, Loko pourra :
+              </p>
+              <ul style={styles.legalList}>
+                <li>
+                  l’intégrer si cela reste compatible avec le cadre prévu ;
+                </li>
+                <li>proposer une adaptation tarifaire ;</li>
+                <li>proposer une nouvelle intervention ;</li>
+                <li>ou refuser la demande si elle sort du périmètre.</li>
+              </ul>
+              <p style={styles.legalText}>
+                La prestation de Loko constitue une{" "}
+                <strong>obligation de moyens</strong> et non une obligation
+                générale de résultat, sauf cas particulier expressément défini.
+                Loko s’engage à mettre en œuvre son savoir-faire avec sérieux,
+                professionnalisme et pédagogie, dans le cadre de la mission
+                acceptée.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 8 — Données, accès et sauvegardes
+              </h2>
+              <p style={styles.legalText}>
+                Le client demeure responsable de ses données personnelles,
+                professionnelles ou familiales, ainsi que de leur sauvegarde.
+              </p>
+              <p style={styles.legalText}>
+                Avant toute intervention susceptible d’affecter un appareil, un
+                compte, un support ou des données, il appartient au client de
+                s’assurer, lorsque cela est possible, qu’une sauvegarde récente
+                existe.
+              </p>
+              <p style={styles.legalText}>
+                Dans le cadre de certaines prestations, notamment les transferts
+                de données, sauvegardes ou récupérations, Loko peut être amené,
+                à la demande du client, à copier temporairement tout ou partie
+                des données sur un support externe, notamment un disque dur ou
+                tout autre support de stockage adapté, afin de sécuriser
+                l’intervention et de limiter les risques de perte de données.
+              </p>
+              <p style={styles.legalText}>
+                Lorsque cette copie temporaire est réalisée, les données peuvent
+                être conservées sur ce support externe pendant le temps
+                strictement nécessaire à la finalisation de l’intervention,
+                notamment afin de vérifier le bon déroulement du transfert ou de
+                prévenir tout incident technique.
+              </p>
+              <p style={styles.legalText}>
+                Une fois l’intervention finalisée, et sauf demande contraire du
+                client ou contrainte particulière liée à la prestation, cette
+                copie temporaire n’a pas vocation à être conservée durablement
+                par Loko.
+              </p>
+              <p style={styles.legalText}>
+                Loko s’engage à manipuler les données du client uniquement dans
+                le cadre de la prestation demandée, avec discrétion et sans
+                consultation non nécessaire de leur contenu.
+              </p>
+              <p style={styles.legalText}>
+                Loko ne pourra être tenu responsable de la perte de données
+                préexistante, ni d’une perte résultant :
+              </p>
+              <ul style={styles.legalList}>
+                <li>de l’état antérieur de l’appareil ;</li>
+                <li>d’un support défectueux ;</li>
+                <li>d’un accès indisponible ;</li>
+                <li>d’un blocage logiciel ou matériel ;</li>
+                <li>d’une contrainte technique indépendante de sa volonté ;</li>
+                <li>
+                  ou d’une interruption, d’une corruption ou d’une anomalie
+                  constatée sur les données avant intervention.
+                </li>
+              </ul>
+              <p style={styles.legalText}>
+                Le client reste responsable de la communication de ses
+                identifiants, autorisations et accès nécessaires à
+                l’intervention.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 9 — Intervention avec un tiers
+              </h2>
+              <p style={styles.legalText}>
+                Loko peut accompagner le client dans ses démarches auprès d’un
+                tiers, notamment un opérateur, un service client, une plateforme
+                ou un organisme.
+              </p>
+              <p style={styles.legalText}>
+                Cet accompagnement ne vaut pas garantie de résultat sur la
+                décision, le délai, l’action ou le traitement effectué par le
+                tiers concerné.
+              </p>
+              <p style={styles.legalText}>
+                Loko ne saurait être tenu responsable :
+              </p>
+              <ul style={styles.legalList}>
+                <li>des décisions, délais ou blocages d’un tiers ;</li>
+                <li>d’un refus d’opérateur ou de service ;</li>
+                <li>d’un compte bloqué ;</li>
+                <li>d’une panne externe ;</li>
+                <li>ni de toute situation échappant à son contrôle direct.</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 10 — Prise en charge atelier
+              </h2>
+              <p style={styles.legalText}>
+                Certaines situations peuvent nécessiter une prise en charge
+                atelier.
+              </p>
+              <p style={styles.legalText}>
+                Dans ce cas, une fiche de prise en charge est établie et signée
+                par le client. Cette fiche mentionne notamment :
+              </p>
+              <ul style={styles.legalList}>
+                <li>l’identité du client ;</li>
+                <li>le matériel confié ;</li>
+                <li>l’état apparent du matériel au moment de sa remise ;</li>
+                <li>la panne ou le besoin déclaré ;</li>
+                <li>la date de prise en charge.</li>
+              </ul>
+              <p style={styles.legalText}>
+                Le lieu de prise en charge atelier est situé au :
+              </p>
+              <p style={styles.legalText}>
+                <strong>
+                  16 bis chemin de la Gillerie, 85340 Les Sables d’Olonne
+                </strong>
+                .
+              </p>
+              <p style={styles.legalText}>
+                La prise en charge atelier ne vaut pas engagement automatique de
+                réparation ni garantie de résultat, sauf accord exprès écrit.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 11 — Responsabilité
+              </h2>
+              <p style={styles.legalText}>
+                Loko intervient dans le cadre d’une prestation d’assistance
+                numérique, d’accompagnement ou de mise en service. Sa
+                responsabilité est limitée au périmètre exact de la prestation
+                réalisée.
+              </p>
+              <p style={styles.legalText}>
+                Loko ne saurait être tenu responsable :
+              </p>
+              <ul style={styles.legalList}>
+                <li>d’un équipement défectueux ou déjà altéré ;</li>
+                <li>d’un problème antérieur ou non signalé ;</li>
+                <li>
+                  d’une incompatibilité technique indépendante de sa volonté ;
+                </li>
+                <li>d’un défaut provenant d’un tiers ;</li>
+                <li>d’un usage non conforme postérieur à l’intervention ;</li>
+                <li>ni de toute situation échappant à son contrôle direct.</li>
+              </ul>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 12 — Réclamations
+              </h2>
+              <p style={styles.legalText}>
+                Toute réclamation doit être adressée à Loko dans un délai
+                raisonnable après l’intervention, de préférence par écrit.
+              </p>
+              <p style={styles.legalText}>
+                Après analyse de la situation, Loko pourra, selon les cas :
+              </p>
+              <ul style={styles.legalList}>
+                <li>apporter une précision ;</li>
+                <li>proposer un retour ;</li>
+                <li>proposer une nouvelle intervention ;</li>
+                <li>appliquer un geste commercial ;</li>
+                <li>
+                  ou refuser la demande si elle ne relève pas de la prestation
+                  initiale.
+                </li>
+              </ul>
+              <p style={styles.legalText}>
+                Une nouvelle demande, distincte de la prestation initiale,
+                pourra faire l’objet d’une nouvelle facturation.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>Article 13 — Paiement</h2>
+              <p style={styles.legalText}>
+                Le paiement intervient à l’issue de la prestation, sauf cas
+                particulier.
+              </p>
+              <p style={styles.legalText}>
+                Loko accepte les moyens de paiement proposés au client au moment
+                de l’encaissement.
+              </p>
+              <p style={styles.legalText}>
+                Une facture est transmise au client après intervention.
+              </p>
+
+              <h2 style={styles.legalArticleTitle}>
+                Article 14 — Droit applicable
+              </h2>
+              <p style={styles.legalText}>
+                Les présentes CGV sont soumises au droit français.
+              </p>
+              <p style={styles.legalText}>
+                En cas de litige, les parties rechercheront d’abord une solution
+                amiable. À défaut, le client pourra recourir au médiateur de la
+                consommation compétent puis, si nécessaire, aux juridictions
+                compétentes.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
 }
 function RendezVousPage() {
   return (
@@ -391,6 +1365,7 @@ function RendezVousPage() {
       </main>
 
       <SiteFooter />
+      <CookieBanner />
     </div>
   );
 }
@@ -447,11 +1422,12 @@ function PlanDuSitePage() {
       title: "Mentions légales",
       text: "Informations légales du site.",
     },
+    {
+      href: "/credit-impot",
+      title: "Crédit d’impôt de 50 %",
+      text: "Comprendre le fonctionnement du crédit d’impôt applicable aux prestations éligibles.",
+    },
   ];
-
-  if (typeof document !== "undefined") {
-    document.title = "Plan du site | Loko";
-  }
 
   return (
     <div style={styles.page}>
@@ -482,6 +1458,7 @@ function PlanDuSitePage() {
       </main>
 
       <SiteFooter />
+      <CookieBanner />
     </div>
   );
 }
@@ -875,12 +1852,16 @@ function HomePage() {
     {
       title: "Intervention à domicile",
       price: "79€",
-      text: "79€ soit 39,50€ après crédit d’impôt (service à la personne).",
+      beforeText: "79€ soit ",
+      reducedPrice: "39,50€",
+      afterText: " après crédit d’impôt (service à la personne).",
     },
     {
       title: "Intervention à domicile urgente",
       price: "99€",
-      text: "99€ soit 49,50€ après crédit d’impôt (service à la personne).",
+      beforeText: "99€ soit ",
+      reducedPrice: "49,50€",
+      afterText: " après crédit d’impôt (service à la personne).",
     },
   ];
 
@@ -1016,15 +1997,50 @@ function HomePage() {
           <div style={styles.container}>
             <h2 style={styles.sectionTitle}>Tarifs</h2>
             <p style={styles.sectionText}>
-              Service à la personne éligible au crédit d’impôt de 50% aux Sables
-              d’Olonne.
+              Service à la personne éligible au crédit d’impôt de 50 %.
             </p>
+
+            <div style={styles.taxHighlightCard}>
+              <div style={styles.taxHighlightLeft}>
+                <img
+                  src="/logo-credit-impot.png"
+                  alt="Crédit d’impôt de 50 %"
+                  style={styles.taxHighlightLogo}
+                />
+                <div>
+                  <div style={styles.taxHighlightLabel}>Crédit d’impôt</div>
+                  <div style={styles.taxHighlightMain}>
+                    Divisez votre coût réel par deux
+                  </div>
+                  <p style={styles.taxHighlightText}>
+                    Exemple : 79 € l’intervention, soit{" "}
+                    <span style={styles.taxHighlightBluePrice}>
+                      39,50 € après crédit d’impôt
+                    </span>
+                    .
+                  </p>
+                </div>
+              </div>
+
+              <div style={styles.taxHighlightRight}>
+                <HoverButton href="/credit-impot" variant="primary">
+                  Comprendre le fonctionnement
+                </HoverButton>
+              </div>
+            </div>
+
             <div style={styles.pricingGrid}>
               {plans.map((plan) => (
                 <div key={plan.title} style={styles.priceCard}>
                   <div style={styles.cardTitle}>{plan.title}</div>
                   <div style={styles.price}>{plan.price}</div>
-                  <p style={styles.cardText}>{plan.text}</p>
+                  <p style={styles.cardText}>
+                    {plan.beforeText}
+                    <span style={styles.taxPriceInlineBlue}>
+                      {plan.reducedPrice}
+                    </span>
+                    {plan.afterText}
+                  </p>
                 </div>
               ))}
             </div>
@@ -1062,6 +2078,7 @@ function HomePage() {
       </main>
 
       <SiteFooter />
+      <CookieBanner />
     </div>
   );
 }
@@ -1182,6 +2199,7 @@ function ProblemPage({ page }) {
       </main>
 
       <SiteFooter />
+      <CookieBanner />
     </div>
   );
 }
@@ -1270,6 +2288,97 @@ function SiteHeader() {
     </header>
   );
 }
+function CookieBanner() {
+  const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const cookieChoice = localStorage.getItem("loko-cookie-consent");
+
+    if (!cookieChoice) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  const handleChoice = (choice) => {
+    localStorage.setItem("loko-cookie-consent", choice);
+    setIsVisible(false);
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div
+      style={{
+        ...styles.cookieBanner,
+        ...(isMobile ? styles.cookieBannerMobile : {}),
+      }}
+    >
+      <div
+        style={{
+          ...styles.cookieBannerContent,
+          ...(isMobile ? styles.cookieBannerContentMobile : {}),
+        }}
+      >
+        <div style={styles.cookieBannerTextBlock}>
+          <div style={styles.cookieBannerTitle}>🍪 Cookies</div>
+
+          <p
+            style={{
+              ...styles.cookieBannerText,
+              ...(isMobile ? styles.cookieBannerTextMobile : {}),
+            }}
+          >
+            Loko utilise des cookies pour assurer le bon fonctionnement du site
+            et mesurer sa fréquentation. Vous pouvez accepter ou refuser leur
+            utilisation.
+          </p>
+
+          <a
+            href="/politique-confidentialite"
+            style={{
+              ...styles.cookieBannerLink,
+              ...(isMobile ? styles.cookieBannerLinkMobile : {}),
+            }}
+          >
+            Voir la politique de confidentialité
+          </a>
+        </div>
+
+        <div
+          style={{
+            ...styles.cookieBannerActions,
+            ...(isMobile ? styles.cookieBannerActionsMobile : {}),
+          }}
+        >
+          <button
+            type="button"
+            style={{
+              ...styles.cookieSecondaryButton,
+              ...(isMobile ? styles.cookieButtonMobile : {}),
+            }}
+            onClick={() => handleChoice("refused")}
+          >
+            Refuser
+          </button>
+
+          <button
+            type="button"
+            style={{
+              ...styles.cookiePrimaryButton,
+              ...(isMobile ? styles.cookieButtonMobile : {}),
+            }}
+            onClick={() => handleChoice("accepted")}
+          >
+            Accepter
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const styles = {
   page: {
@@ -1299,8 +2408,8 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: 18,
-    padding: "20px 0 18px",
+    gap: 10,
+    padding: "10px 0 10px",
   },
 
   headerLogoZoneMobile: {
@@ -1334,6 +2443,121 @@ const styles = {
     minHeight: 100,
     resize: "vertical",
   },
+  taxHighlightCard: {
+    marginTop: 24,
+    marginBottom: 28,
+    padding: 24,
+    borderRadius: 28,
+    background: "linear-gradient(180deg, #ffffff, #f8fbff)",
+    color: "#050505",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    gap: 20,
+    alignItems: "center",
+    border: "1px solid rgba(59,130,246,0.72)",
+    boxShadow:
+      "inset 0 0 0 1px rgba(59,130,246,0.18), 0 20px 60px rgba(0,0,0,0.28)",
+    animation: "lokoBlueGlow 3.8s ease-in-out infinite",
+  },
+
+  taxHighlightLeft: {
+    display: "flex",
+    alignItems: "center",
+    gap: 18,
+  },
+
+  taxHighlightRight: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
+  taxHighlightLogo: {
+    width: 82,
+    height: 82,
+    objectFit: "contain",
+    flexShrink: 0,
+  },
+
+  taxHighlightLabel: {
+    fontSize: 13,
+    textTransform: "uppercase",
+    letterSpacing: "0.14em",
+    color: "#3b82f6",
+    marginBottom: 8,
+    fontWeight: 700,
+  },
+
+  taxHighlightMain: {
+    fontSize: "clamp(24px, 4vw, 38px)",
+    lineHeight: 1.05,
+    letterSpacing: "-0.04em",
+    fontWeight: 800,
+    color: "#050505",
+  },
+
+  taxHighlightText: {
+    margin: "12px 0 0",
+    fontSize: 16,
+    lineHeight: 1.7,
+    color: "rgba(0,0,0,0.72)",
+  },
+
+  taxHeroCard: {
+    background: "#ffffff",
+    color: "#050505",
+    borderRadius: 28,
+    padding: 26,
+    border: "1px solid rgba(0,0,0,0.08)",
+    boxShadow: "0 20px 60px rgba(0,0,0,0.28)",
+  },
+
+  taxHeroTop: {
+    display: "flex",
+    alignItems: "center",
+    gap: 18,
+    flexWrap: "wrap",
+  },
+
+  taxLogo: {
+    width: 92,
+    height: 92,
+    objectFit: "contain",
+    display: "block",
+  },
+
+  taxHeroLabel: {
+    fontSize: 13,
+    textTransform: "uppercase",
+    letterSpacing: "0.14em",
+    color: "rgba(0,0,0,0.55)",
+    marginBottom: 8,
+    fontWeight: 700,
+  },
+
+  taxHeroPriceLine: {
+    fontSize: "clamp(28px, 4vw, 42px)",
+    lineHeight: 1.05,
+    letterSpacing: "-0.05em",
+    fontWeight: 800,
+    color: "#050505",
+  },
+
+  taxHeroText: {
+    marginTop: 18,
+    marginBottom: 0,
+    fontSize: 17,
+    lineHeight: 1.8,
+    color: "rgba(0,0,0,0.74)",
+  },
+
+  taxNoteCard: {
+    background:
+      "linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 28,
+    padding: 24,
+  },
 
   submitButton: {
     marginTop: 10,
@@ -1350,15 +2574,15 @@ const styles = {
     width: "100%",
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: 12,
+    gap: 8,
     justifyItems: "center",
   },
 
   navLinkMobile: {
     width: "100%",
     textAlign: "center",
-    padding: "10px 12px",
-    fontSize: 15,
+    padding: "8px 10px",
+    fontSize: 13,
   },
   headerInner: {
     display: "flex",
@@ -1406,17 +2630,17 @@ const styles = {
   headerCTAMobile: {
     width: "fit-content",
     alignSelf: "center",
-    padding: "12px 20px",
-    fontSize: 15,
-    marginTop: 10,
+    padding: "9px 14px",
+    fontSize: 13,
+    marginTop: 2,
     borderRadius: 999,
   },
   sublogo: {
     color: "rgba(255,255,255,0.62)",
-    marginTop: 4,
-    fontSize: 14,
+    marginTop: 2,
+    fontSize: 11,
     textAlign: "center",
-    lineHeight: 1.4,
+    lineHeight: 1.2,
   },
   logoWrap: {
     display: "flex",
@@ -1426,10 +2650,18 @@ const styles = {
     gap: 8,
     textAlign: "center",
   },
+  taxHighlightBluePrice: {
+    color: "#3b82f6",
+    fontWeight: 800,
+  },
   nav: {
     display: "flex",
     gap: 18,
     alignItems: "center",
+  },
+  taxPriceInlineBlue: {
+    color: "#3b82f6",
+    fontWeight: 800,
   },
   navLink: {
     color: "rgba(255,255,255,0.82)",
@@ -1504,6 +2736,129 @@ const styles = {
     border: "1px solid rgba(255,255,255,0.12)",
     transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
     cursor: "pointer",
+  },
+  cookieBanner: {
+    position: "fixed",
+    bottom: 20,
+    left: 20,
+    right: 20,
+    zIndex: 999,
+    display: "flex",
+    justifyContent: "center",
+    pointerEvents: "none",
+  },
+
+  cookieBannerMobile: {
+    bottom: 12,
+    left: 12,
+    right: 12,
+  },
+
+  cookieBannerContent: {
+    width: "min(980px, 100%)",
+    background: "#ffffff",
+    border: "1px solid rgba(0,0,0,0.08)",
+    borderRadius: 22,
+    boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+    backdropFilter: "blur(14px)",
+    padding: "20px 22px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 20,
+    pointerEvents: "auto",
+  },
+
+  cookieBannerContentMobile: {
+    flexDirection: "column",
+    alignItems: "stretch",
+    padding: "18px 16px",
+    gap: 16,
+    borderRadius: 18,
+  },
+
+  cookieBannerTextBlock: {
+    flex: 1,
+  },
+
+  cookieBannerTitle: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#050505",
+    marginBottom: 8,
+  },
+
+  cookieBannerText: {
+    margin: 0,
+    color: "rgba(0,0,0,0.75)",
+    fontSize: 14,
+    lineHeight: 1.7,
+  },
+
+  cookieBannerTextMobile: {
+    fontSize: 13,
+    lineHeight: 1.6,
+  },
+
+  cookieBannerLink: {
+    display: "inline-block",
+    marginTop: 10,
+    color: "#050505",
+    fontWeight: 600,
+    fontSize: 14,
+    textDecoration: "underline",
+    textUnderlineOffset: "3px",
+  },
+
+  cookieBannerLinkMobile: {
+    fontSize: 13,
+    marginTop: 8,
+  },
+
+  cookieBannerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    flexShrink: 0,
+  },
+
+  cookieBannerActionsMobile: {
+    width: "100%",
+    flexDirection: "column-reverse",
+    gap: 10,
+  },
+
+  cookiePrimaryButton: {
+    background: "#050505",
+    color: "#ffffff",
+    color: "#ffffff",
+    padding: "12px 18px",
+    borderRadius: 14,
+    fontWeight: 700,
+    fontSize: 14,
+    cursor: "pointer",
+    minWidth: 120,
+    transition: "all 0.2s ease",
+  },
+
+  cookieSecondaryButton: {
+    border: "1px solid rgba(0,0,0,0.12)",
+    color: "#050505",
+    background: "rgba(0,0,0,0.04)",
+    padding: "12px 18px",
+    borderRadius: 14,
+    fontWeight: 600,
+    fontSize: 14,
+    cursor: "pointer",
+    minWidth: 120,
+    transition: "all 0.2s ease",
+  },
+
+  cookieButtonMobile: {
+    width: "100%",
+    minWidth: "100%",
+    padding: "12px 14px",
+    fontSize: 14,
   },
   primaryButtonHover: {
     transform: "translateY(-2px) scale(1.03)",
@@ -1637,7 +2992,7 @@ const styles = {
     boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
   },
   logoImage: {
-    width: "clamp(80px, 10vw, 120px)",
+    width: "clamp(64px, 10vw, 120px)",
     height: "auto",
     objectFit: "contain",
     display: "block",
@@ -1684,6 +3039,34 @@ const styles = {
     fontSize: 14,
     color: "rgba(255,255,255,0.75)",
     letterSpacing: "0.02em",
+  },
+  legalCard: {
+    background: "#0b0b0b",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: 28,
+    padding: "28px 24px",
+  },
+  legalArticleTitle: {
+    fontSize: 28,
+    lineHeight: 1.2,
+    marginTop: 0,
+    marginBottom: 18,
+    fontWeight: 700,
+  },
+  legalText: {
+    color: "rgba(255,255,255,0.78)",
+    fontSize: 16,
+    lineHeight: 1.85,
+    marginTop: 0,
+    marginBottom: 18,
+  },
+  legalList: {
+    color: "rgba(255,255,255,0.78)",
+    fontSize: 16,
+    lineHeight: 1.85,
+    paddingLeft: 22,
+    marginTop: 0,
+    marginBottom: 18,
   },
   socialProofBox: {
     display: "inline-flex",
