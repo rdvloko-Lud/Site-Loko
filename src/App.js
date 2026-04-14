@@ -2005,7 +2005,6 @@ function HomePage() {
             <div style={styles.taxHighlightCard}>
               <div style={styles.taxHighlightLeft}>
                 <img
-               <img
   src={logoCreditImpot}
   alt="Crédit d’impôt de 50 %"
   style={styles.taxHighlightLogo}
