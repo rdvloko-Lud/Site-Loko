@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import logoCreditImpot from "./assets/logo-credit-impot.png";
 const SITE_URL = "https://lokofr.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
 const DEFAULT_SITE_NAME = "Loko";
@@ -558,10 +559,11 @@ function CreditImpotPage() {
             <div style={styles.taxHeroCard}>
               <div style={styles.taxHeroTop}>
                 <img
-                  src="/logo-credit-impot.png"
-                  alt="Crédit d’impôt service à la personne"
-                  style={styles.taxLogo}
-                />
+                <img
+  src={logoCreditImpot}
+  alt="Crédit d’impôt de 50 %"
+  style={styles.taxHighlightLogo}
+/>
                 <div>
                   <div style={styles.taxHeroLabel}>Exemple simple</div>
                   <div style={styles.taxHeroPriceLine}>
@@ -2004,10 +2006,11 @@ function HomePage() {
             <div style={styles.taxHighlightCard}>
               <div style={styles.taxHighlightLeft}>
                 <img
-                  src="/logo-credit-impot.png"
-                  alt="Crédit d’impôt de 50 %"
-                  style={styles.taxHighlightLogo}
-                />
+               <img
+  src={logoCreditImpot}
+  alt="Crédit d’impôt de 50 %"
+  style={styles.taxHighlightLogo}
+/>
                 <div>
                   <div style={styles.taxHighlightLabel}>Crédit d’impôt</div>
                   <div style={styles.taxHighlightMain}>
