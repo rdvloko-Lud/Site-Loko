@@ -63,9 +63,9 @@ const staticPagesSeo = {
   },
 
   "/rendez-vous": {
-    title: "Prendre rendez-vous | Loko",
+    title: "Contact et rendez-vous | Assistance numérique aux Sables d’Olonne — Loko",
     description:
-      "Prenez rendez-vous avec Loko pour une assistance numérique à domicile aux Sables d’Olonne : appel, demande en ligne ou choix d’un créneau simple et rapide.",
+      "Prenez rendez-vous avec Loko pour une intervention d’assistance numérique à domicile aux Sables d’Olonne : Wi-Fi, smartphone, ordinateur, TV, imprimante et transfert de données.",
   },
 
   "/plan-du-site": {
@@ -78,6 +78,18 @@ const staticPagesSeo = {
     title: "Crédit d’impôt de 50 % | Assistance numérique Loko",
     description:
       "Découvrez comment fonctionne le crédit d’impôt de 50 % pour les prestations d’assistance numérique à domicile proposées par Loko aux Sables d’Olonne.",
+  },
+
+  "/tarifs": {
+    title: "Tarifs assistance numérique aux Sables d’Olonne | Loko",
+    description:
+      "Découvrez les tarifs Loko pour une assistance numérique à domicile aux Sables d’Olonne : Wi-Fi, smartphone, ordinateur, imprimante, TV et transfert de données.",
+  },
+
+  "/zone-intervention": {
+    title: "Zone d’intervention assistance numérique | Les Sables d’Olonne — Loko",
+    description:
+      "Loko intervient à domicile aux Sables d’Olonne, Olonne-sur-Mer, Château-d’Olonne, L’Île-d’Olonne et alentours pour l’aide numérique du quotidien.",
   },
 
   "/cgv": {
@@ -101,6 +113,23 @@ const staticPagesSeo = {
     robots: "noindex, follow",
   },
 };
+
+const LOKO_PLANS = [
+  {
+    title: "Intervention à domicile",
+    price: "79€",
+    beforeText: "79€ soit ",
+    reducedPrice: "39,50€",
+    afterText: " après crédit d’impôt (service à la personne).",
+  },
+  {
+    title: "Intervention à domicile urgente",
+    price: "99€",
+    beforeText: "99€ soit ",
+    reducedPrice: "49,50€",
+    afterText: " après crédit d’impôt (service à la personne).",
+  },
+];
 
 const searchData = [
   {
@@ -662,7 +691,7 @@ const problemPages = {
       "Loko vous aide à domicile aux Sables d’Olonne si votre ordinateur est lent : PC qui rame, démarrage long, blocages, lenteurs du quotidien et réglages simples.",
     hero: "Votre ordinateur est lent aux Sables d’Olonne ?",
     intro:
-      "Loko vous accompagne à domicile aux Sables d’Olonne si votre ordinateur est devenu lent au quotidien. Démarrage trop long, fichiers qui s’ouvrent mal, ordinateur qui rame ou blocages fréquents : l’objectif est de retrouver un usage plus fluide, plus simple et moins frustrant.",
+      "Loko vous accompagne à domicile aux Sables d’Olonne pour le petit dépannage informatique du quotidien : ordinateur lent, démarrage trop long, fichiers qui s’ouvrent mal ou blocages fréquents. L’objectif est de retrouver un usage plus fluide, plus simple et moins frustrant, sans jargon.",
     symptoms: [
       "Ordinateur très lent au démarrage",
       "PC ou Mac qui rame au quotidien",
@@ -680,8 +709,8 @@ const problemPages = {
     relatedPages: [
       {
         href: "/depannage-ordinateur-les-sables-dolonne",
-        title: "Ordinateur",
-        text: "Vue d’ensemble pour l’aide sur ordinateur à domicile aux Sables d’Olonne.",
+        title: "Dépannage informatique",
+        text: "Vue d’ensemble pour l’aide informatique à domicile aux Sables d’Olonne.",
       },
       {
         href: "/imprimante-ne-fonctionne-plus-les-sables-dolonne",
@@ -718,7 +747,7 @@ const problemPages = {
     seoTitle: "Wi-Fi ne fonctionne plus aux Sables d’Olonne | Loko",
     seoDescription:
       "Loko intervient à domicile aux Sables d’Olonne si votre Wi-Fi ne fonctionne plus : connexion impossible, appareils déconnectés ou réseau introuvable.",
-    hero: "Votre Wi-Fi ne fonctionne plus ?",
+    hero: "Votre Wi-Fi ne fonctionne plus aux Sables d’Olonne ?",
     intro:
       "Loko vous aide à domicile aux Sables d’Olonne lorsque votre Wi-Fi ne fonctionne plus. Appareils déconnectés, réseau introuvable ou impossibilité de se connecter : l’objectif est de remettre votre connexion en route simplement.",
     symptoms: [
@@ -761,7 +790,7 @@ const problemPages = {
     seoTitle: "Installation box Internet aux Sables d’Olonne | Loko",
     seoDescription:
       "Loko installe votre box Internet à domicile aux Sables d’Olonne : mise en service, connexion des appareils et accompagnement simple.",
-    hero: "Installer votre box Internet simplement",
+    hero: "Installation de box Internet aux Sables d’Olonne",
     intro:
       "Loko vous accompagne à domicile aux Sables d’Olonne pour installer votre box Internet. Branchement, activation, connexion des appareils : tout est mis en place pour un fonctionnement immédiat.",
     symptoms: [
@@ -804,7 +833,7 @@ const problemPages = {
     seoTitle: "Transfert de données téléphone aux Sables d’Olonne | Loko",
     seoDescription:
       "Loko vous aide à transférer vos données de téléphone aux Sables d’Olonne : photos, contacts, applications et comptes.",
-    hero: "Transférer vos données sans stress",
+    hero: "Transfert de données téléphone aux Sables d’Olonne, sans stress",
     intro:
       "Loko vous accompagne à domicile aux Sables d’Olonne pour transférer vos données d’un téléphone à un autre. Photos, contacts, applications : tout est récupéré simplement.",
     symptoms: [
@@ -847,7 +876,7 @@ const problemPages = {
     seoTitle: "Changement de téléphone aux Sables d’Olonne | Loko",
     seoDescription:
       "Loko vous accompagne lors du changement de téléphone aux Sables d’Olonne : transfert, configuration et prise en main.",
-    hero: "Changer de téléphone sans repartir de zéro",
+    hero: "Changement de téléphone aux Sables d’Olonne, sans repartir de zéro",
     intro:
       "Loko vous accompagne à domicile aux Sables d’Olonne lors de votre changement de téléphone. L’objectif : récupérer vos données et repartir sur un téléphone prêt à l’emploi.",
     symptoms: [
@@ -943,9 +972,9 @@ const problemPages = {
       "Aide smartphone aux Sables d’Olonne | Utilisation, réglages et accompagnement",
     seoDescription:
       "Loko vous aide à domicile aux Sables d’Olonne pour votre smartphone : réglages, stockage, transfert de données et prise en main simple.",
-    hero: "Votre smartphone, simplement maîtrisé",
+    hero: "Aide smartphone aux Sables d’Olonne, simplement",
     intro:
-      "Loko vous accompagne à domicile aux Sables d’Olonne pour mieux comprendre et utiliser votre smartphone. Réglages, organisation, transfert de données ou prise en main globale : l’objectif est de rendre votre téléphone plus simple et plus agréable à utiliser.",
+      "Loko vous accompagne à domicile aux Sables d’Olonne pour mieux comprendre et utiliser votre smartphone. Réglages, organisation, transfert de données ou prise en main globale : l’objectif est de rendre votre téléphone plus simple et plus agréable à utiliser. Loko accompagne aussi les seniors qui veulent reprendre confiance avec leur téléphone, à leur rythme.",
     symptoms: [
       "Téléphone difficile à comprendre ou à utiliser",
       "Stockage plein ou mal organisé",
@@ -959,6 +988,11 @@ const problemPages = {
       "Accompagnement simple pour gagner en autonomie",
     ],
     relatedPages: [
+      {
+        href: "/assistance-numerique-senior-les-sables-dolonne",
+        title: "Assistance numérique senior",
+        text: "Pour les seniors ou personnes peu à l’aise qui veulent reprendre confiance avec le numérique.",
+      },
       {
         href: "/transfert-donnees-telephone-les-sables-dolonne",
         title: "Transfert de données téléphone",
@@ -982,27 +1016,27 @@ const problemPages = {
     ],
   },
   "/depannage-ordinateur-les-sables-dolonne": {
-    title: "Ordinateur",
+    title: "Dépannage informatique",
     seoTitle:
-      "Aide ordinateur aux Sables d’Olonne | Utilisation, réglages, mails et imprimante",
+      "Dépannage informatique aux Sables d’Olonne | Ordinateur à domicile — Loko",
     seoDescription:
-      "Loko vous aide à domicile aux Sables d’Olonne pour votre ordinateur : utilisation, mails, fichiers, imprimante, réglages simples et accompagnement du quotidien.",
-    hero: "Aide ordinateur aux Sables d’Olonne : utilisation, réglages et accompagnement à domicile",
+      "Loko vous aide à domicile aux Sables d’Olonne pour les petits besoins de dépannage informatique : ordinateur lent, connexion Internet, imprimante, réglages et usage quotidien.",
+    hero: "Dépannage informatique aux Sables d’Olonne, simplement à domicile",
     intro:
-      "Loko vous accompagne à domicile aux Sables d’Olonne pour tout ce qui concerne l’utilisation de votre ordinateur au quotidien. Mails, fichiers, imprimante, réglages simples, compréhension du fonctionnement ou besoin d’être rassuré : l’objectif est de rendre votre ordinateur plus simple, plus clair et plus agréable à utiliser.",
+      "Loko vous accompagne à domicile aux Sables d’Olonne pour les petits problèmes informatiques du quotidien : ordinateur lent, connexion Internet ou Wi-Fi, imprimante, réglages simples ou aide à l’usage. L’objectif est de vous aider sans jargon, sans atelier et sans promesse de réparation lourde — quand une intervention simple à domicile suffit.",
     symptoms: [
       "Ordinateur difficile à utiliser ou devenu décourageant au quotidien",
-      "Difficultés avec les mails, les fichiers ou l’organisation",
-      "Imprimante ou périphérique qui ne fonctionne pas correctement",
       "Ordinateur lent, bloqué ou peu agréable à utiliser",
-      "Besoin d’aide simple pour reprendre les bases tranquillement",
+      "Difficultés avec les mails, les fichiers ou l’organisation",
+      "Connexion Internet, Wi-Fi ou imprimante qui pose problème",
+      "Besoin d’aide simple pour comprendre un message ou un réglage",
     ],
     help: [
-      "Aide à l’utilisation quotidienne de l’ordinateur",
-      "Réglages simples pour retrouver un usage plus fluide",
-      "Organisation des fichiers, dossiers et mails",
-      "Connexion d’imprimantes et de périphériques",
-      "Accompagnement pédagogique à domicile, sans jargon",
+      "Rendre un ordinateur plus agréable et plus simple à utiliser",
+      "Aider à comprendre les messages, alertes ou réglages du quotidien",
+      "Reconnecter Internet, le Wi-Fi ou une imprimante",
+      "Installer ou vérifier des usages simples, sans prise de tête",
+      "Expliquer les bonnes habitudes pour éviter les blocages récurrents",
     ],
     relatedPages: [
       {
@@ -1016,9 +1050,14 @@ const problemPages = {
         text: "Quand l’imprimante n’est plus reconnue, n’imprime plus ou perd sa connexion.",
       },
       {
+        href: "/probleme-wifi-internet-les-sables-dolonne",
+        title: "Internet & Wi-Fi",
+        text: "Si le blocage concerne surtout la connexion, la box ou le réseau à domicile.",
+      },
+      {
         href: "/transfert-de-donnees-les-sables-dolonne",
         title: "Transfert de données",
-        text: "Pour déplacer, récupérer ou organiser des fichiers utiles entre plusieurs appareils.",
+        text: "Pour déplacer ou organiser des fichiers utiles entre plusieurs appareils.",
       },
     ],
     faq: [
@@ -1063,8 +1102,8 @@ const problemPages = {
     relatedPages: [
       {
         href: "/depannage-ordinateur-les-sables-dolonne",
-        title: "Ordinateur",
-        text: "Aide globale sur l’ordinateur, les fichiers, les mails et les périphériques du quotidien.",
+        title: "Dépannage informatique",
+        text: "Aide à domicile pour l’ordinateur, les fichiers, les mails et les périphériques du quotidien.",
       },
       {
         href: "/ordinateur-lent-les-sables-dolonne",
@@ -1161,7 +1200,7 @@ const problemPages = {
     seoTitle: "Transfert de données à domicile aux Sables d’Olonne | Loko",
     seoDescription:
       "Loko vous accompagne à domicile aux Sables d’Olonne pour le transfert de données entre appareils : photos, contacts, fichiers, comptes et premiers réglages.",
-    hero: "Besoin d’un transfert de données ?",
+    hero: "Transfert de données aux Sables d’Olonne",
     intro:
       "Loko vous aide à domicile aux Sables d’Olonne pour transférer vos données d’un appareil à un autre : photos, contacts, fichiers, comptes et premiers réglages.",
     symptoms: [
@@ -1212,7 +1251,7 @@ const problemPages = {
       "Loko vous accompagne à domicile aux Sables d’Olonne pour apprendre le numérique simplement : ordinateur, smartphone, Internet, mails, IA et usages du quotidien.",
     hero: "Apprendre le numérique aux Sables d’Olonne, simplement et à votre rythme",
     intro:
-      "Loko vous accompagne à domicile aux Sables d’Olonne pour apprendre à utiliser plus sereinement les outils numériques du quotidien. Ordinateur, smartphone, Internet, mails, intelligence artificielle ou usages de base : l’objectif est de rendre les choses plus simples, plus claires et plus accessibles, sans jargon.",
+      "Loko vous accompagne à domicile aux Sables d’Olonne pour apprendre à utiliser plus sereinement les outils numériques du quotidien. Ordinateur, smartphone, Internet, mails, intelligence artificielle ou usages de base : l’objectif est de rendre les choses plus simples, plus claires et plus accessibles, sans jargon. Loko accompagne aussi les seniors qui veulent reprendre confiance avec leur ordinateur, Internet ou leur TV, à leur rythme.",
     symptoms: [
       "Besoin d’apprendre à utiliser un ordinateur ou un téléphone plus sereinement",
       "Difficulté à comprendre certains usages numériques du quotidien",
@@ -1228,6 +1267,11 @@ const problemPages = {
       "Explications claires, à votre rythme, avec une approche rassurante",
     ],
     relatedPages: [
+      {
+        href: "/assistance-numerique-senior-les-sables-dolonne",
+        title: "Assistance numérique senior",
+        text: "Accompagnement à domicile pour les seniors qui veulent reprendre confiance avec le numérique.",
+      },
       {
         href: "/apprendre-ia-les-sables-dolonne",
         title: "Découverte de l’IA",
@@ -1614,6 +1658,72 @@ const problemPages = {
       {
         q: "Est-ce adapté si je suis souvent perdu avec mes mails ?",
         a: "Oui. L’objectif est justement de clarifier cet usage du quotidien avec des explications simples et concrètes.",
+      },
+    ],
+  },
+
+  "/assistance-numerique-senior-les-sables-dolonne": {
+    title: "Assistance numérique senior",
+    seoTitle: "Assistance numérique senior aux Sables d’Olonne | Loko",
+    seoDescription:
+      "Loko accompagne les seniors à domicile aux Sables d’Olonne pour utiliser plus simplement smartphone, ordinateur, Internet, imprimante, TV et services numériques du quotidien.",
+    hero: "Assistance numérique senior aux Sables d’Olonne",
+    intro:
+      "Loko aide les seniors, retraités ou personnes peu à l’aise avec le numérique à reprendre confiance, à domicile, à leur rythme et sans jargon. Smartphone, ordinateur, Wi-Fi, box Internet, imprimante, TV connectée ou démarches simples du quotidien : l’objectif est de rendre le numérique plus clair, plus rassurant et plus accessible. Loko intervient aux Sables d’Olonne, à Olonne-sur-Mer, au Château-d’Olonne, à L’Île-d’Olonne et dans les alentours.",
+    symptoms: [
+      "Utiliser un smartphone plus sereinement",
+      "Comprendre les réglages essentiels du téléphone ou de l’ordinateur",
+      "Remettre Internet ou le Wi-Fi en service",
+      "Connecter une imprimante ou la remettre en route",
+      "Utiliser une TV connectée ou une application du quotidien",
+      "Transférer des photos, contacts ou données entre appareils",
+      "Apprendre les bases sans se sentir jugé ou dépassé",
+    ],
+    help: [
+      "Explications simples, adaptées à votre rythme",
+      "Intervention à domicile, dans un cadre calme et rassurant",
+      "Possibilité de noter les étapes importantes pour reprendre ensuite",
+      "Accompagnement humain, local et sans jargon technique",
+      "Une aide qui respecte votre niveau, sans infantiliser",
+    ],
+    relatedPages: [
+      {
+        href: "/zone-intervention",
+        title: "Zone d’intervention",
+        text: "Voir les communes desservies autour des Sables d’Olonne.",
+      },
+      {
+        href: "/aide-smartphone-les-sables-dolonne",
+        title: "Aide smartphone",
+        text: "Pour mieux comprendre et utiliser votre téléphone au quotidien.",
+      },
+      {
+        href: "/apprendre-le-numerique-les-sables-dolonne",
+        title: "Apprendre le numérique",
+        text: "Pour découvrir les outils numériques du quotidien, simplement et à votre rythme.",
+      },
+      {
+        href: "/probleme-wifi-internet-les-sables-dolonne",
+        title: "Internet & Wi-Fi",
+        text: "Si le blocage concerne surtout la connexion, la box ou le réseau à domicile.",
+      },
+    ],
+    faq: [
+      {
+        q: "Est-ce réservé aux seniors ?",
+        a: "Non. Loko accompagne toute personne qui souhaite une aide claire et humaine avec le numérique. Cette page s’adresse surtout aux seniors, retraités ou personnes peu à l’aise, sans les mettre dans une case.",
+      },
+      {
+        q: "Pouvez-vous aider avec un smartphone ?",
+        a: "Oui. Loko peut vous aider à mieux comprendre votre téléphone, ses réglages essentiels, le transfert de données ou la prise en main globale, à domicile et sans jargon.",
+      },
+      {
+        q: "Pouvez-vous aider avec Internet ou la box ?",
+        a: "Oui. Loko intervient pour remettre en service une connexion Wi-Fi, reconnecter des appareils ou simplifier une installation Internet devenue confuse.",
+      },
+      {
+        q: "Comment prendre rendez-vous ?",
+        a: "Le plus simple est d’appeler Loko au 07 63 13 15 15 ou de choisir un créneau en ligne via la page rendez-vous.",
       },
     ],
   },
@@ -2062,6 +2172,8 @@ export default function LokoSite() {
   const isPrivacyPage = path === "/politique-confidentialite";
   const isMentionsPage = path === "/mentions-legales";
   const isCreditImpotPage = path === "/credit-impot";
+  const isTarifsPage = path === "/tarifs";
+  const isZonePage = path === "/zone-intervention";
   const currentPage = problemPages[path] || null;
 
   useEffect(() => {
@@ -2087,6 +2199,12 @@ export default function LokoSite() {
   }
   if (isCreditImpotPage) {
     return <CreditImpotPage />;
+  }
+  if (isTarifsPage) {
+    return <TarifsPage />;
+  }
+  if (isZonePage) {
+    return <ZoneInterventionPage />;
   }
   if (currentPage) {
     return <ProblemPage page={currentPage} />;
@@ -2236,6 +2354,277 @@ function CreditImpotPage() {
     </div>
   );
 }
+
+function StaticPageCta({ title = "Besoin d’aide ?" }) {
+  return (
+    <section style={styles.sectionAlt}>
+      <div style={styles.containerNarrow}>
+        <div style={styles.contactCard}>
+          <h2 style={styles.sectionTitle}>{title}</h2>
+          <p style={styles.sectionText}>
+            Appelez Loko au{" "}
+            <a href="tel:0763131515" style={styles.inlinePhoneLink}>
+              07 63 13 15 15
+            </a>{" "}
+            ou prenez rendez-vous en ligne.
+          </p>
+          <div style={styles.heroButtons}>
+            <HoverButton href="tel:0763131515" variant="primary">
+              Appeler Loko
+            </HoverButton>
+            <HoverButton href="/rendez-vous" variant="secondary">
+              Prendre rendez-vous
+            </HoverButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TarifsPage() {
+  const faq = [
+    {
+      q: "Combien coûte une intervention Loko ?",
+      a: "Une intervention standard à domicile est à 79 € TTC, soit 39,50 € après crédit d’impôt si la prestation est éligible. Une intervention urgente est à 99 € TTC, soit 49,50 € après crédit d’impôt dans les mêmes conditions.",
+    },
+    {
+      q: "Le déplacement est-il inclus ?",
+      a: "Dans la zone d’intervention habituelle de Loko, l’intervention à domicile est incluse dans le tarif annoncé. Pour une demande plus éloignée ou une situation particulière, Loko vous informe clairement avant l’intervention.",
+    },
+    {
+      q: "Quels problèmes pouvez-vous traiter ?",
+      a: "Loko intervient pour le Wi-Fi, la box Internet, le smartphone, l’ordinateur lent, l’imprimante, la TV connectée, le transfert de données et l’accompagnement numérique du quotidien — sans réparation lourde.",
+    },
+    {
+      q: "Le crédit d’impôt est-il possible ?",
+      a: "Certaines prestations d’assistance numérique à domicile peuvent être éligibles au crédit d’impôt de 50 %, selon la réglementation en vigueur et votre situation. Loko peut vous expliquer le principe simplement.",
+    },
+  ];
+
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Tarifs • Les Sables d’Olonne</div>
+            <h1 style={styles.heroTitle}>
+              Tarifs assistance numérique aux Sables d’Olonne
+            </h1>
+            <p style={styles.heroText}>
+              Loko intervient à domicile pour les petits problèmes numériques du
+              quotidien : Wi-Fi, box Internet, smartphone, ordinateur lent,
+              imprimante, TV connectée et transfert de données.{" "}
+              <HoverLink
+                href="/depannage-ordinateur-les-sables-dolonne"
+                baseStyle={styles.contactZoneLink}
+                hoverStyle={styles.contactZoneLinkHover}
+              >
+                Dépannage informatique
+              </HoverLink>
+              {" · "}
+              <HoverLink
+                href="/assistance-numerique-senior-les-sables-dolonne"
+                baseStyle={styles.contactZoneLink}
+                hoverStyle={styles.contactZoneLinkHover}
+              >
+                Assistance numérique senior
+              </HoverLink>
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Nos tarifs</h2>
+            <p style={styles.sectionText}>
+              Service à la personne pouvant être éligible au crédit d’impôt de
+              50 %, selon la prestation et votre situation.
+            </p>
+
+            <div style={styles.pricingGrid}>
+              {LOKO_PLANS.map((plan) => (
+                <div key={plan.title} style={styles.priceCardClickable}>
+                  <div style={styles.priceCardTopRow}>
+                    <div style={styles.cardTitle}>{plan.title}</div>
+                  </div>
+                  <div style={styles.price}>{plan.price}</div>
+                  <p style={styles.cardText}>
+                    {plan.beforeText}
+                    <span style={styles.taxPriceInlineBlue}>
+                      {plan.reducedPrice}
+                    </span>
+                    {plan.afterText}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.section}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.taxHeroCard}>
+              <div style={styles.taxHeroTop}>
+                <img
+                  src={logoCreditImpot}
+                  alt="Crédit d’impôt de 50 %"
+                  style={styles.taxLogo}
+                />
+                <div>
+                  <div style={styles.taxHeroLabel}>Crédit d’impôt</div>
+                  <div style={styles.taxHeroPriceLine}>
+                    79 € → 39,50 € après crédit d’impôt
+                  </div>
+                </div>
+              </div>
+              <p style={styles.taxHeroText}>
+                Certaines prestations d’assistance numérique à domicile peuvent
+                ouvrir droit à un crédit d’impôt de 50 %, selon la
+                réglementation en vigueur et l’éligibilité de la prestation.
+                Loko vous explique le principe simplement, sans promesse
+                excessive.
+              </p>
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <HoverButton
+                href="/credit-impot"
+                baseStyle={styles.creditButton}
+                hoverStyle={styles.creditButtonHover}
+              >
+                En savoir plus sur le crédit d’impôt
+              </HoverButton>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Questions fréquentes</h2>
+            <div style={styles.cardGridSingle}>
+              {faq.map((item) => (
+                <div key={item.q} style={styles.infoCard}>
+                  <h3 style={styles.cardTitle}>{item.q}</h3>
+                  <p style={styles.cardText}>{item.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <StaticPageCta title="Prêt à prendre rendez-vous ?" />
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+
+function ZoneInterventionPage() {
+  const cities = [
+    {
+      name: "Les Sables d’Olonne",
+      text: "À Les Sables d’Olonne, Loko intervient à domicile pour remettre en service une connexion Wi-Fi, configurer un smartphone, dépanner un ordinateur lent ou aider avec une imprimante.",
+    },
+    {
+      name: "Olonne-sur-Mer",
+      text: "À Olonne-sur-Mer, Loko peut intervenir à domicile pour remettre en service une connexion Wi-Fi, configurer un smartphone ou aider avec une imprimante.",
+    },
+    {
+      name: "Château-d’Olonne",
+      text: "Au Château-d’Olonne, Loko vous accompagne pour Internet, le Wi-Fi, la TV connectée, le transfert de données ou l’usage quotidien de vos appareils.",
+    },
+    {
+      name: "L’Île-d’Olonne",
+      text: "À L’Île-d’Olonne, Loko intervient à domicile pour les mêmes besoins du quotidien : connexion, smartphone, ordinateur, imprimante ou TV.",
+    },
+    {
+      name: "Talmont-Saint-Hilaire",
+      text: "À Talmont-Saint-Hilaire, Loko peut intervenir selon disponibilité pour vous aider avec vos appareils numériques, avec un contact simple et humain.",
+    },
+    {
+      name: "Alentours",
+      text: "Pour les communes voisines, contactez Loko pour vérifier la disponibilité. L’objectif reste le même : une aide claire, locale et à domicile.",
+    },
+  ];
+
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Local • Les Sables d’Olonne</div>
+            <h1 style={styles.heroTitle}>
+              Zone d’intervention Loko aux Sables d’Olonne et alentours
+            </h1>
+            <p style={styles.heroText}>
+              Loko intervient à domicile aux Sables d’Olonne et dans les
+              communes proches pour vous aider avec Internet, le Wi-Fi, le
+              smartphone, l’ordinateur, l’imprimante, la TV et le transfert de
+              données.{" "}
+              <HoverLink
+                href="/assistance-numerique-senior-les-sables-dolonne"
+                baseStyle={styles.contactZoneLink}
+                hoverStyle={styles.contactZoneLinkHover}
+              >
+                Assistance numérique senior
+              </HoverLink>
+            </p>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Communes desservies</h2>
+            <div style={styles.cardGridSingle}>
+              {cities.map((city) => (
+                <div key={city.name} style={styles.infoCard}>
+                  <h3 style={styles.cardTitle}>{city.name}</h3>
+                  <p style={styles.cardText}>{city.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.section}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Pourquoi un service local ?</h2>
+            <div style={styles.bulletPanel}>
+              <div style={styles.bulletItem}>
+                • Un contact humain, direct et rassurant
+              </div>
+              <div style={styles.bulletItem}>
+                • Une intervention à domicile, adaptée à votre situation
+              </div>
+              <div style={styles.bulletItem}>
+                • Des explications simples, sans jargon technique
+              </div>
+              <div style={styles.bulletItem}>
+                • Une aide adaptée aux seniors et aux personnes peu à l’aise
+                avec le numérique
+              </div>
+              <div style={styles.bulletItem}>
+                • Un service de proximité, pensé pour le quotidien
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <StaticPageCta title="Besoin d’une intervention près de chez vous ?" />
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+
 function StickyActionBar({ pageType = "default" }) {
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
@@ -2902,10 +3291,11 @@ function RendezVousPage() {
       <main>
         <section style={styles.heroSection}>
           <div style={styles.containerNarrow}>
-            <h1 style={styles.heroTitle}>Prendre rendez-vous</h1>
+            <h1 style={styles.heroTitle}>Prendre rendez-vous aux Sables d’Olonne</h1>
 
             <p style={styles.heroText}>
-              Choisissez la méthode la plus simple pour contacter Loko.
+              Choisissez la méthode la plus simple pour contacter Loko et
+              planifier une intervention à domicile.
             </p>
 
             <div style={styles.cardGridSingle}>
@@ -3010,12 +3400,22 @@ function PlanDuSitePage() {
       text: "Appeler, choisir un créneau ou envoyer une demande.",
     },
     {
+      href: "/tarifs",
+      title: "Tarifs",
+      text: "Tarifs d’intervention à domicile et informations sur le crédit d’impôt.",
+    },
+    {
+      href: "/zone-intervention",
+      title: "Zone d’intervention",
+      text: "Communes desservies autour des Sables d’Olonne.",
+    },
+    {
       href: "/probleme-wifi-internet-les-sables-dolonne",
       title: "Problème Wi-Fi / Internet",
       text: "Aide à domicile pour box, Wi-Fi, réseau et connexion.",
     },
     {
-      href: "/probleme-internet-les-sables-dolonne",
+      href: "/probleme-wifi-internet-les-sables-dolonne",
       title: "Problème Internet",
       text: "Aide à domicile pour les coupures Internet, les box sans connexion et les accès réseau indisponibles.",
     },
@@ -3061,8 +3461,8 @@ function PlanDuSitePage() {
     },
     {
       href: "/depannage-ordinateur-les-sables-dolonne",
-      title: "Dépannage ordinateur",
-      text: "Aide du quotidien sur ordinateur, mails, imprimante et fichiers.",
+      title: "Dépannage informatique à domicile",
+      text: "Aide aux Sables d’Olonne pour ordinateur lent, réglages, imprimante et usage du quotidien.",
     },
     {
       href: "/probleme-tv-box-les-sables-dolonne",
@@ -3078,6 +3478,11 @@ function PlanDuSitePage() {
       href: "/apprendre-le-numerique-les-sables-dolonne",
       title: "Apprendre le numérique",
       text: "Accompagnement à domicile pour apprendre à utiliser les outils numériques du quotidien.",
+    },
+    {
+      href: "/assistance-numerique-senior-les-sables-dolonne",
+      title: "Assistance numérique senior",
+      text: "Accompagnement à domicile pour les seniors qui veulent reprendre confiance avec le numérique.",
     },
     {
       href: "/apprendre-ia-les-sables-dolonne",
@@ -3463,6 +3868,11 @@ function SiteFooter() {
               Wi-Fi, smartphone, ordinateur, TV, transfert de données et
               découverte de l’IA.
             </p>
+            <FooterContactCard
+              title="Téléphone"
+              value="07 63 13 15 15"
+              href="tel:0763131515"
+            />
           </div>
 
           <div
@@ -3521,6 +3931,36 @@ function SiteFooter() {
                   hoverStyle={styles.footerLinkHover}
                 >
                   Plan du site
+                </HoverLink>
+                <HoverLink
+                  href="/tarifs"
+                  baseStyle={{
+                    ...styles.footerLink,
+                    ...(isMobile ? styles.footerLinkMobile : {}),
+                  }}
+                  hoverStyle={styles.footerLinkHover}
+                >
+                  Tarifs
+                </HoverLink>
+                <HoverLink
+                  href="/zone-intervention"
+                  baseStyle={{
+                    ...styles.footerLink,
+                    ...(isMobile ? styles.footerLinkMobile : {}),
+                  }}
+                  hoverStyle={styles.footerLinkHover}
+                >
+                  Zone d’intervention
+                </HoverLink>
+                <HoverLink
+                  href="/assistance-numerique-senior-les-sables-dolonne"
+                  baseStyle={{
+                    ...styles.footerLink,
+                    ...(isMobile ? styles.footerLinkMobile : {}),
+                  }}
+                  hoverStyle={styles.footerLinkHover}
+                >
+                  Assistance senior
                 </HoverLink>
                 <HoverLink
                   href="/cgv"
@@ -3607,22 +4047,7 @@ function HomePage() {
     },
   ];
 
-  const plans = [
-    {
-      title: "Intervention à domicile",
-      price: "79€",
-      beforeText: "79€ soit ",
-      reducedPrice: "39,50€",
-      afterText: " après crédit d’impôt (service à la personne).",
-    },
-    {
-      title: "Intervention à domicile urgente",
-      price: "99€",
-      beforeText: "99€ soit ",
-      reducedPrice: "49,50€",
-      afterText: " après crédit d’impôt (service à la personne).",
-    },
-  ];
+  const plans = LOKO_PLANS;
   const [search, setSearch] = useState("");
   const [isSearchButtonHovered, setIsSearchButtonHovered] = useState(false);
 
@@ -3674,7 +4099,9 @@ function HomePage() {
                   Loko est un service d’assistance numérique à domicile aux
                   Sables d’Olonne. Nous vous aidons avec Internet, le Wi-Fi, les
                   smartphones, les ordinateurs, la télévision et les transferts
-                  de données.
+                  de données — et pour le petit dépannage informatique du
+                  quotidien : ordinateur lent, imprimante ou connexion, sans
+                  jargon.
                 </p>
 
                 <div style={styles.heroButtons}>
@@ -3924,6 +4351,12 @@ function HomePage() {
                 </HoverLink>
               ))}
             </div>
+
+            <div style={{ marginTop: 24, textAlign: "center" }}>
+              <HoverButton href="/tarifs" variant="secondary">
+                Voir tous les tarifs
+              </HoverButton>
+            </div>
           </div>
         </section>
 
@@ -3984,11 +4417,21 @@ function HomePage() {
                 <h2 style={styles.sectionTitle}>Besoin d’aide ?</h2>
                 <p style={styles.sectionText}>
                   Loko intervient localement pour vous aider à mieux comprendre
-                  et utiliser vos appareils numériques à domicile.
+                  et utiliser vos appareils numériques à domicile. Loko
+                  accompagne aussi les seniors qui veulent reprendre confiance
+                  avec leur smartphone, leur ordinateur, Internet ou leur TV, à
+                  leur rythme.
                 </p>
                 <p style={styles.contactMuted}>
-                  Intervention à domicile aux Sables d’Olonne, Olonne-sur-Mer,
-                  Château d’Olonne et alentours.
+                  Loko intervient aux Sables d’Olonne, à Olonne-sur-Mer, au
+                  Château-d’Olonne, à L’Île-d’Olonne et dans les alentours.{" "}
+                  <HoverLink
+                    href="/zone-intervention"
+                    baseStyle={styles.contactZoneLink}
+                    hoverStyle={styles.contactZoneLinkHover}
+                  >
+                    Voir la zone d’intervention
+                  </HoverLink>
                 </p>
               </div>
               <div style={styles.contactCard}>
@@ -4230,7 +4673,7 @@ function ProblemPage({ page }) {
 
       <SiteFooter />
       <CookieBanner />
-      <StickyActionBar pageType="home" />
+      <StickyActionBar pageType="problem" />
     </div>
   );
 }
@@ -5951,6 +6394,19 @@ const styles = {
     color: "rgba(255,255,255,0.55)",
     marginTop: 14,
     fontSize: 16,
+  },
+  contactZoneLink: {
+    color: "#93c5fd",
+    textDecoration: "underline",
+    textUnderlineOffset: 3,
+  },
+  contactZoneLinkHover: {
+    color: "#ffffff",
+  },
+  inlinePhoneLink: {
+    color: "#ffffff",
+    fontWeight: 600,
+    textDecoration: "none",
   },
   backLink: {
     display: "inline-block",
