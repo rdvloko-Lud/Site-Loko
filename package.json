@@ -12,6 +12,9 @@
   "devDependencies": {
     "loader-utils": "3.2.1"
   },
+  "overrides": {
+    "typescript": "4.9.5"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "node scripts/generate-sitemap.js && react-scripts build",
