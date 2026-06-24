@@ -7,6 +7,11 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
 const DEFAULT_SITE_NAME = "Loko";
 const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY || "";
 const MIN_FORM_DELAY_MS = 3000;
+
+function normalizePath(pathname) {
+  if (!pathname || pathname === "/") return "/";
+  return pathname.replace(/\/+$/, "");
+}
 const BUSINESS_ID = `${SITE_URL}/#business`;
 const BUSINESS_PHONE = "+33763131515";
 const BUSINESS_EMAIL = "rdvloko@gmail.com";
@@ -2746,10 +2751,11 @@ function useGlobalAnimations() {
 export default function LokoSite() {
   useGlobalAnimations();
 
-  const path =
+  const path = normalizePath(
     typeof window !== "undefined" && window.location.pathname
       ? window.location.pathname
-      : "/";
+      : "/"
+  );
 
   const isRdvPage = path === "/rendez-vous";
   const isPlanPage = path === "/plan-du-site";
