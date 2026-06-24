@@ -1,0 +1,43 @@
+# Redirections 301 — consolidation des anciennes pages vers les piliers.
+# Format Cloudflare Pages : /ancien  /nouveau  301
+# NE PAS ajouter de règle SPA catch-all (/* /index.html 200) : cela écraserait
+# les pages prérendues. Le routing est assuré par les fichiers HTML statiques.
+
+# --- Domaine canonique : tout vers www (meilleur positionnement historique) ---
+# Doit rester en tête : normalise non-www -> www avant les règles de chemin.
+https://lokofr.com/*  https://www.lokofr.com/:splat  301
+
+# --- Wi-Fi / Internet ---
+/probleme-wifi-internet-les-sables-dolonne   /depannage-wifi-internet-les-sables-dolonne   301
+/wifi-ne-fonctionne-plus-les-sables-dolonne  /depannage-wifi-internet-les-sables-dolonne   301
+/wifi-lent-les-sables-dolonne                /depannage-wifi-internet-les-sables-dolonne   301
+/installation-box-internet-les-sables-dolonne /depannage-wifi-internet-les-sables-dolonne  301
+
+# --- Dépannage informatique (ordinateur, imprimante) ---
+/depannage-ordinateur-les-sables-dolonne     /depannage-informatique-les-sables-dolonne    301
+/ordinateur-lent-les-sables-dolonne          /depannage-informatique-les-sables-dolonne    301
+/imprimante-ne-fonctionne-plus-les-sables-dolonne /depannage-informatique-les-sables-dolonne 301
+
+# --- TV / box / streaming ---
+/probleme-tv-les-sables-dolonne              /depannage-tv-box-les-sables-dolonne          301
+/probleme-tv-box-les-sables-dolonne          /depannage-tv-box-les-sables-dolonne          301
+/probleme-box-tv-les-sables-dolonne          /depannage-tv-box-les-sables-dolonne          301
+/netflix-ne-fonctionne-plus-les-sables-dolonne /depannage-tv-box-les-sables-dolonne        301
+
+# --- Formation & seniors ---
+/apprendre-le-numerique-les-sables-dolonne   /formation-informatique-seniors-les-sables-dolonne 301
+/apprendre-ia-les-sables-dolonne             /formation-informatique-seniors-les-sables-dolonne 301
+/apprendre-internet-les-sables-dolonne       /formation-informatique-seniors-les-sables-dolonne 301
+/apprendre-mails-les-sables-dolonne          /formation-informatique-seniors-les-sables-dolonne 301
+/formation-windows-les-sables-dolonne        /formation-informatique-seniors-les-sables-dolonne 301
+/formation-macbook-les-sables-dolonne        /formation-informatique-seniors-les-sables-dolonne 301
+/formation-smartphone-les-sables-dolonne     /formation-informatique-seniors-les-sables-dolonne 301
+/assistance-numerique-senior-les-sables-dolonne /formation-informatique-seniors-les-sables-dolonne 301
+
+# --- Smartphone ---
+/aide-smartphone-les-sables-dolonne          /depannage-smartphone-les-sables-dolonne      301
+
+# --- Données & transferts ---
+/changement-telephone-les-sables-dolonne     /transfert-donnees-sauvegarde-les-sables-dolonne 301
+/transfert-de-donnees-les-sables-dolonne     /transfert-donnees-sauvegarde-les-sables-dolonne 301
+/transfert-donnees-telephone-les-sables-dolonne /transfert-donnees-sauvegarde-les-sables-dolonne 301
