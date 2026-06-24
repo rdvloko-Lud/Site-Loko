@@ -15,6 +15,7 @@ function normalizePath(pathname) {
 const BUSINESS_ID = `${SITE_URL}/#business`;
 const BUSINESS_PHONE = "+33763131515";
 const BUSINESS_EMAIL = "rdvloko@gmail.com";
+const LINKEDIN_URL = "https://www.linkedin.com/company/lokofr/";
 // Police du site — à appliquer aux modales (rendues hors du <div styles.page>).
 const UI_FONT =
   "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
@@ -128,7 +129,7 @@ const BUSINESS_ADDRESS = {
 const SOCIAL_LINKS = [
   "https://www.facebook.com/profile.php?id=61572843448082&locale=fr_FR",
   "https://www.instagram.com/lokolesables/",
-  "https://www.linkedin.com/company/110110832/",
+  LINKEDIN_URL,
 ];
 
 const defaultSeo = {
@@ -5886,7 +5887,7 @@ function SiteFooter() {
                 <InstagramIcon />
               </FooterSocialLink>
               <FooterSocialLink
-                href="https://www.linkedin.com/company/110110832/"
+                href={LINKEDIN_URL}
                 label="LinkedIn Loko"
               >
                 <LinkedInIcon />
