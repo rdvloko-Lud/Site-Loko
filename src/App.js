@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from
 import logoCreditImpot from "./Assets/logo-credit-impot.png";
 import { BLOG_POSTS } from "./blogData";
 import { getCityEnrichment } from "./cityEnrichment";
+import DemoVideoPage from "./demo-video/DemoVideoPage";
 const SITE_URL = "https://www.lokofr.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
 const DEFAULT_SITE_NAME = "Loko";
@@ -126,6 +127,16 @@ const BUSINESS_ADDRESS = {
   addressCountry: "FR",
 };
 
+// Coordonnées du centre des Sables d’Olonne (service à domicile : pas d’adresse
+// rue, on géolocalise la commune de rattachement pour le pack local).
+const BUSINESS_GEO = {
+  "@type": "GeoCoordinates",
+  latitude: 46.4969,
+  longitude: -1.7831,
+};
+const BUSINESS_MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=Loko+Les+Sables+d%27Olonne";
+
 const SOCIAL_LINKS = [
   "https://www.facebook.com/profile.php?id=61572843448082&locale=fr_FR",
   "https://www.instagram.com/lokolesables/",
@@ -160,6 +171,7 @@ const staticPagesSeo = {
     title: "Plan du site | Loko",
     description:
       "Accédez rapidement à toutes les pages du site Loko : services d’assistance numérique, prise de rendez-vous, informations légales et crédit d’impôt.",
+    robots: "noindex, follow",
   },
 
   "/credit-impot": {
@@ -2151,6 +2163,8 @@ function getGlobalBusinessSchema() {
     telephone: BUSINESS_PHONE,
     email: BUSINESS_EMAIL,
     address: BUSINESS_ADDRESS,
+    geo: BUSINESS_GEO,
+    hasMap: BUSINESS_MAP_URL,
     areaServed: BUSINESS_AREAS,
     aggregateRating: {
       "@type": "AggregateRating",
@@ -2159,6 +2173,17 @@ function getGlobalBusinessSchema() {
       bestRating: "5",
       worstRating: "1",
     },
+    review: GOOGLE_REVIEWS.slice(0, 5).map((r) => ({
+      "@type": "Review",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: String(r.rating),
+        bestRating: "5",
+        worstRating: "1",
+      },
+      author: { "@type": "Person", name: r.author },
+      reviewBody: r.text,
+    })),
     priceRange: "€€",
     sameAs: SOCIAL_LINKS,
     founder: {
@@ -2341,8 +2366,10 @@ function getBreadcrumbsForPath(path, currentPage) {
 }
 
 function getPostOgImage(post) {
-  if (!post?.cover) return DEFAULT_OG_IMAGE;
-  return post.cover.startsWith("http") ? post.cover : `${SITE_URL}${post.cover}`;
+  // Priorité : cover explicite -> carte OG générée (post.ogImage) -> image par défaut.
+  const img = post?.ogImage || post?.cover;
+  if (!img) return DEFAULT_OG_IMAGE;
+  return img.startsWith("http") ? img : `${SITE_URL}${img}`;
 }
 
 function getSchemas(path, currentPage) {
@@ -2803,7 +2830,12 @@ export default function LokoSite() {
       ? NEARBY_CITIES.find((c) => c.slug === villeParam) || null
       : null;
     page = <ProblemPage page={currentPage} originCity={originCity} />;
-  } else page = <HomePage />;
+  } else if (path === "/") page = <HomePage />;
+  else page = <NotFoundPage />;
+
+  // Page de démonstration vidéo Lockpit — 100 % autonome (ni header, ni footer,
+  // ni fond, ni modales). Hors sitemap / prérendu : outil promotionnel interne.
+  if (path === "/demo-video") return <DemoVideoPage />;
 
   return (
     <>
@@ -3317,6 +3349,74 @@ function ZoneInterventionPage() {
         </section>
 
         <StaticPageCta title="Besoin d’une intervention près de chez vous ?" />
+      </main>
+
+      <SiteFooter />
+      <CookieBanner />
+    </div>
+  );
+}
+function NotFoundPage() {
+  return (
+    <div style={styles.page}>
+      <SiteHeader />
+
+      <main>
+        <section style={styles.heroSection}>
+          <div style={styles.containerNarrow}>
+            <div style={styles.badge}>Erreur 404</div>
+            <h1 style={styles.heroTitle}>Cette page n’existe pas (ou plus)</h1>
+            <p style={styles.heroText}>
+              Le lien que vous avez suivi est peut-être erroné ou la page a été
+              déplacée. Pas d’inquiétude : voici les pages principales de Loko
+              pour retrouver ce que vous cherchez.
+            </p>
+            <div style={styles.heroButtons}>
+              <HoverButton href="/" variant="primary">
+                Retour à l’accueil
+              </HoverButton>
+              <HoverButton onClick={openContactModal} variant="secondary">
+                Prendre rendez-vous
+              </HoverButton>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.sectionAlt}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Nos services d’assistance</h2>
+            <div style={styles.cardGrid}>
+              {Object.entries(SERVICE_PILLARS).map(([href, p]) => (
+                <LinkCard key={href} href={href} title={p.title} text={p.hero} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.section}>
+          <div style={styles.containerNarrow}>
+            <h2 style={styles.sectionTitle}>Autres pages utiles</h2>
+            <div style={styles.cardGrid}>
+              <LinkCard
+                href="/tarifs"
+                title="Tarifs"
+                text="Les tarifs de l’assistance numérique à domicile, avec crédit d’impôt de 50 %."
+              />
+              <LinkCard
+                href="/zone-intervention"
+                title="Zone d’intervention"
+                text="Les communes desservies aux Sables d’Olonne et alentours."
+              />
+              <LinkCard
+                href="/blog"
+                title="Blog"
+                text="Astuces et conseils simples pour mieux vivre avec vos appareils."
+              />
+            </div>
+          </div>
+        </section>
+
+        <StaticPageCta title="Besoin d’aide tout de suite ?" />
       </main>
 
       <SiteFooter />

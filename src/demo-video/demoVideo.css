@@ -1,0 +1,199 @@
+/* Animations de la vidéo de démonstration — CSS pur, aucune dépendance. */
+
+.dv-reveal {
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease,
+    box-shadow 0.65s ease;
+  will-change: opacity, transform;
+}
+
+.dv-hidden {
+  opacity: 0;
+}
+
+.dv-hidden[data-dir="up"] {
+  transform: translateY(16px);
+}
+
+.dv-hidden[data-dir="down"] {
+  transform: translateY(-12px);
+}
+
+.dv-hidden[data-dir="left"] {
+  transform: translateX(-16px);
+}
+
+.dv-hidden[data-dir="right"] {
+  transform: translateX(18px);
+}
+
+.dv-hidden[data-dir="scale"] {
+  transform: scale(0.97);
+}
+
+/* Pose d'un élément : petit zoom + chute. */
+.dv-hidden[data-dir="drop"] {
+  transform: translateY(-10px) scale(1.08);
+}
+
+.dv-shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cartes / panneaux : passage du squelette à l'état final. */
+.dv-card {
+  transition:
+    background-color 0.7s ease,
+    border-color 0.7s ease,
+    box-shadow 0.7s ease;
+}
+
+.dv-card-skeleton {
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px dashed #d7d2c8;
+  box-shadow: none;
+}
+
+.dv-card-final {
+  background-color: #ffffff;
+  border: 1px solid rgba(28, 36, 51, 0.08);
+  box-shadow: 0 12px 30px -20px rgba(28, 36, 51, 0.35);
+}
+
+/* Scènes (site / ensemble). */
+.dv-scene {
+  position: absolute;
+  inset: 0;
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.dv-scene-hidden {
+  opacity: 0;
+  transform: translateX(26px) scale(0.99);
+  pointer-events: none;
+}
+
+.dv-scene-active {
+  opacity: 1;
+  transform: none;
+}
+
+/* Pulsation simulant un clic sur le bouton de prise de RDV. */
+@keyframes dv-click-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+.dv-click-pulse {
+  animation: dv-click-pulse 1.6s ease-out infinite;
+}
+
+/* Pastille de commune sur la carte de zone. */
+@keyframes dv-pin-pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Icône Lockpit animée : l'arc se dessine, l'aiguille balaie, le point se pose. */
+.dv-icon-arc {
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  animation: dv-arc-draw 1s ease 0.2s both;
+}
+
+@keyframes dv-arc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.dv-icon-hand {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: dv-hand-sweep 1.1s cubic-bezier(0.34, 1.4, 0.64, 1) 0.45s both;
+}
+
+@keyframes dv-hand-sweep {
+  from {
+    transform: rotate(-210deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.dv-icon-dot {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: dv-dot-pop 0.45s ease 0.35s both;
+}
+
+@keyframes dv-dot-pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Écrans intro / signature. */
+.dv-overlay {
+  transition: opacity 0.8s ease;
+}
+
+.dv-overlay-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes dv-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dv-line-in {
+  animation: dv-line-in 0.9s ease both;
+}
+
+/* Mot rotatif du hero. */
+@keyframes dv-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dv-word {
+  display: inline-block;
+  animation: dv-word-in 0.5s ease both;
+}

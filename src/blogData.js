@@ -7,6 +7,7 @@ export const BLOG_POSTS = [
     "seoTitle": "Pourquoi votre Wi-Fi rame le soir (et comment y remédier) | Blog Loko",
     "description": "Votre connexion ralentit tous les soirs aux Sables d'Olonne ? Voici les causes les plus fréquentes et des solutions simples à tester chez vous avant d'appeler.",
     "cover": "",
+    "ogImage": "/blog-og/wifi-rame-le-soir.jpg",
     "date": "2026-06-23",
     "dateLabel": "23 juin 2026",
     "readingMinutes": 2,

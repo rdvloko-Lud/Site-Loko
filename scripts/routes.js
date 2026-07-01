@@ -8,7 +8,9 @@ const SITE_URL = "https://www.lokofr.com";
 const staticPagesSeo = {
   "/": { indexable: true },
   "/rendez-vous": { indexable: true },
-  "/plan-du-site": { indexable: true },
+  // Plan du site (sitemap HTML) : accessible + maillage interne, mais hors sitemap XML
+  // et noindex côté app (faible valeur d'indexation directe).
+  "/plan-du-site": { indexable: false },
   "/credit-impot": { indexable: true },
   "/tarifs": { indexable: true },
   "/zone-intervention": { indexable: true },

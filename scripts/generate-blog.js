@@ -14,6 +14,15 @@ const BLOG_DIR = path.join(__dirname, "..", "content", "blog");
 const OUT_DATA = path.join(__dirname, "..", "src", "blogData.js");
 const OUT_ROUTES = path.join(__dirname, "blog-routes.js");
 
+// Manifeste des cartes OG générées par scripts/generate-og.js (tolérant s'il
+// n'existe pas encore : l'article retombera alors sur l'image OG par défaut).
+let ogManifest = {};
+try {
+  ogManifest = JSON.parse(fs.readFileSync(path.join(__dirname, "og-manifest.json"), "utf8"));
+} catch (e) {
+  ogManifest = {};
+}
+
 const MONTHS = [
   "janvier", "février", "mars", "avril", "mai", "juin",
   "juillet", "août", "septembre", "octobre", "novembre", "décembre",
@@ -136,6 +145,9 @@ if (fs.existsSync(BLOG_DIR)) {
         seoTitle: data.seoTitle || `${data.title || slug} | Blog Loko`,
         description: data.description || "",
         cover: data.cover || "",
+        // Image de partage social : cover explicite si fourni, sinon la carte OG
+        // générée automatiquement pour ce slug ("" => image OG par défaut du site).
+        ogImage: (data.cover || "").trim() || ogManifest[slug] || "",
         date: (data.date || "").toString(),
         dateLabel,
         readingMinutes: Math.max(1, Math.round(words / 200)),
