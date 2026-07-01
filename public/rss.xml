@@ -6,7 +6,14 @@
     <atom:link href="https://www.lokofr.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Astuces et conseils simples pour mieux vivre avec vos appareils : Wi-Fi, ordinateur, smartphone, TV et sécurité. Le blog Loko, écrit à partir de cas réels aux Sables d’Olonne.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Tue, 23 Jun 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Arnaques par mail et SMS : comment les reconnaître (et quoi faire)</title>
+      <link>https://www.lokofr.com/blog/reconnaitre-arnaques-mail-sms</link>
+      <guid isPermaLink="true">https://www.lokofr.com/blog/reconnaitre-arnaques-mail-sms</guid>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Faux SMS de colis, faux support, mail de votre banque… Voici comment reconnaître les arnaques les plus courantes et les bons réflexes, expliqués simplement.</description>
+    </item>
     <item>
       <title>Pourquoi votre Wi-Fi rame le soir (et comment y remédier)</title>
       <link>https://www.lokofr.com/blog/wifi-rame-le-soir</link>

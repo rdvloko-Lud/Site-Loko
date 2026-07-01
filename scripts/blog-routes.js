@@ -2,6 +2,6 @@
 // Source : content/blog/*.md
 module.exports = {
   blogIndex: "/blog",
-  blogPosts: ["/blog/wifi-rame-le-soir"],
-  blogMeta: {"/blog/wifi-rame-le-soir":"2026-06-23"},
+  blogPosts: ["/blog/reconnaitre-arnaques-mail-sms","/blog/wifi-rame-le-soir"],
+  blogMeta: {"/blog/reconnaitre-arnaques-mail-sms":"2026-07-01","/blog/wifi-rame-le-soir":"2026-06-23"},
 };
