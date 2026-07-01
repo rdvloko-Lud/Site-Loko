@@ -3,6 +3,7 @@ title: "Arnaques par mail et SMS : comment les reconnaître (et quoi faire)"
 description: "Faux SMS de colis, faux support, mail de votre banque… Voici comment reconnaître les arnaques les plus courantes et les bons réflexes, expliqués simplement."
 date: 2026-07-01
 tags: [Sécurité, Arnaques]
+cover: /blog/reconnaitre-arnaques-mail-sms.jpg
 relatedHref: /depannage-informatique-les-sables-dolonne
 relatedLabel: Dépannage informatique & sécurité
 ---
