@@ -3,6 +3,7 @@ title: "Pourquoi votre Wi-Fi rame le soir (et comment y remédier)"
 description: "Votre connexion ralentit tous les soirs aux Sables d'Olonne ? Voici les causes les plus fréquentes et des solutions simples à tester chez vous avant d'appeler."
 date: 2026-06-23
 tags: [Wi-Fi, Internet]
+cover: /blog/wifi-rame-le-soir.jpg
 relatedHref: /depannage-wifi-internet-les-sables-dolonne
 relatedLabel: Dépannage Wi-Fi & Internet
 ---
