@@ -2776,6 +2776,80 @@ function useGlobalAnimations() {
   }, []);
 }
 
+function ClosingBanner() {
+  const isMobile = useIsMobile();
+
+  return (
+    <div
+      style={{
+        ...styles.closingBanner,
+        ...(isMobile ? styles.closingBannerMobile : {}),
+      }}
+    >
+      <div style={styles.closingBannerText}>
+        Entreprise actuellement fermee pour conges jusqu'au 24 aout
+      </div>
+    </div>
+  );
+}
+
+const CLOSING_POPUP_KEY = "loko-closing-popup-seen";
+
+function ClosingPopup() {
+  const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const popupSeen = localStorage.getItem(CLOSING_POPUP_KEY);
+
+    if (!popupSeen) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  const handleClose = () => {
+    localStorage.setItem(CLOSING_POPUP_KEY, "true");
+    setIsVisible(false);
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <>
+      <div
+        style={styles.closingPopupOverlay}
+        onClick={handleClose}
+        aria-hidden="true"
+      />
+      <div
+        style={{
+          ...styles.closingPopup,
+          ...(isMobile ? styles.closingPopupMobile : {}),
+        }}
+      >
+        <div style={styles.closingPopupContent}>
+          <h2 style={styles.closingPopupTitle}>Fermeture temporaire</h2>
+          <p style={styles.closingPopupText}>
+            Loko est actuellement fermee pour conges jusqu'au 24 aout.
+            <br />
+            <br />
+            Nous serons ravis de vous accueillir a notre retour !
+          </p>
+          <button
+            type="button"
+            style={styles.closingPopupButton}
+            onClick={handleClose}
+          >
+            Compris
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function LokoSite() {
   useGlobalAnimations();
 
@@ -2820,8 +2894,8 @@ export default function LokoSite() {
   else if (blogPost) page = <BlogPostPage post={blogPost} />;
   else if (cityMatch) page = <HomePage city={cityMatch} />;
   else if (currentPage) {
-    // Si on arrive depuis une page ville (?ville=slug), on adapte le pilier à
-    // cette commune (titre + badge). Le canonical et le prérendu restent le hub.
+    // Si on arrive depuis une page ville (?ville=slug), on adapte le pilier a
+    // cette commune (titre + badge). Le canonical et le prerendu restent le hub.
     const villeParam =
       typeof window !== "undefined"
         ? new URLSearchParams(window.location.search).get("ville")
@@ -2833,16 +2907,18 @@ export default function LokoSite() {
   } else if (path === "/") page = <HomePage />;
   else page = <NotFoundPage />;
 
-  // Page de démonstration vidéo Lockpit — 100 % autonome (ni header, ni footer,
-  // ni fond, ni modales). Hors sitemap / prérendu : outil promotionnel interne.
+  // Page de demonstration video Lockpit — 100 % autonome (ni header, ni footer,
+  // ni fond, ni modales). Hors sitemap / prerendu : outil promotionnel interne.
   if (path === "/demo-video") return <DemoVideoPage />;
 
   return (
     <>
+      <ClosingBanner />
       <SiteBackground />
       {page}
       <ContactModal />
       <CreditModal />
+      <ClosingPopup />
     </>
   );
 }
@@ -10146,5 +10222,93 @@ const styles = {
   },
   footerLegalDot: {
     color: "rgba(255,255,255,0.22)",
+  },
+
+  closingBanner: {
+    position: "sticky",
+    top: 0,
+    zIndex: 25,
+    background: "#E85D04",
+    color: "#FFFFFF",
+    padding: "10px 24px",
+    textAlign: "center",
+    borderBottom: "1px solid rgba(0,0,0,0.1)",
+  },
+
+  closingBannerMobile: {
+    padding: "8px 16px",
+  },
+
+  closingBannerText: {
+    fontSize: 14,
+    fontWeight: 600,
+    lineHeight: 1.4,
+    margin: 0,
+  },
+
+  closingPopupOverlay: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 999,
+    background: "rgba(0,0,0,0.4)",
+    backdropFilter: "blur(4px)",
+    WebkitBackdropFilter: "blur(4px)",
+  },
+
+  closingPopup: {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 1000,
+    width: "min(480px, calc(100% - 48px))",
+    background: "#FFFFFF",
+    borderRadius: 24,
+    border: "1px solid rgba(0,0,0,0.08)",
+    boxShadow: "0 20px 80px rgba(0,0,0,0.35)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  closingPopupMobile: {
+    width: "calc(100% - 32px)",
+  },
+
+  closingPopupContent: {
+    padding: 32,
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 16,
+  },
+
+  closingPopupTitle: {
+    margin: 0,
+    fontSize: 28,
+    fontWeight: 800,
+    lineHeight: 1.2,
+    color: "#1C2433",
+  },
+
+  closingPopupText: {
+    margin: 0,
+    fontSize: 16,
+    lineHeight: 1.7,
+    color: "rgba(28,36,51,0.75)",
+  },
+
+  closingPopupButton: {
+    background: "#E85D04",
+    color: "#FFFFFF",
+    border: "none",
+    padding: "12px 28px",
+    borderRadius: 14,
+    fontWeight: 700,
+    fontSize: 16,
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    marginTop: 8,
   },
 };
