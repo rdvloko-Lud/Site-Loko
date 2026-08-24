@@ -2779,80 +2779,6 @@ function useGlobalAnimations() {
   }, []);
 }
 
-function ClosingBanner() {
-  const isMobile = useIsMobile();
-
-  return (
-    <div
-      style={{
-        ...styles.closingBanner,
-        ...(isMobile ? styles.closingBannerMobile : {}),
-      }}
-    >
-      <div style={styles.closingBannerText}>
-        Entreprise actuellement fermée pour congés jusqu'au 24 août
-      </div>
-    </div>
-  );
-}
-
-const CLOSING_POPUP_KEY = "loko-closing-popup-seen";
-
-function ClosingPopup() {
-  const [isVisible, setIsVisible] = useState(false);
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const popupSeen = localStorage.getItem(CLOSING_POPUP_KEY);
-
-    if (!popupSeen) {
-      setIsVisible(true);
-    }
-  }, []);
-
-  const handleClose = () => {
-    localStorage.setItem(CLOSING_POPUP_KEY, "true");
-    setIsVisible(false);
-  };
-
-  if (!isVisible) return null;
-
-  return (
-    <>
-      <div
-        style={styles.closingPopupOverlay}
-        onClick={handleClose}
-        aria-hidden="true"
-      />
-      <div
-        style={{
-          ...styles.closingPopup,
-          ...(isMobile ? styles.closingPopupMobile : {}),
-        }}
-      >
-        <div style={styles.closingPopupContent}>
-          <h2 style={styles.closingPopupTitle}>Fermeture temporaire</h2>
-          <p style={styles.closingPopupText}>
-            Loko est actuellement fermée pour congés jusqu'au 24 août.
-            <br />
-            <br />
-            Nous serons ravis de vous accueillir à notre retour !
-          </p>
-          <button
-            type="button"
-            style={styles.closingPopupButton}
-            onClick={handleClose}
-          >
-            Compris
-          </button>
-        </div>
-      </div>
-    </>
-  );
-}
-
 export default function LokoSite() {
   useGlobalAnimations();
 
@@ -2916,12 +2842,10 @@ export default function LokoSite() {
 
   return (
     <>
-      <ClosingBanner />
       <SiteBackground />
       {page}
       <ContactModal />
       <CreditModal />
-      <ClosingPopup />
     </>
   );
 }
@@ -4229,6 +4153,147 @@ function RendezVousContactForm() {
   );
 }
 
+// Autocomplétion d'adresse via la Base Adresse Nationale (api-adresse.data.gouv.fr).
+// Service public, sans clé ni compte : on n'envoie que ce que le visiteur tape.
+function AddressAutocomplete({ name, placeholder, required, style, onSelect }) {
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [highlight, setHighlight] = useState(-1);
+  const boxRef = useRef(null);
+
+  useEffect(() => {
+    const q = query.trim();
+    if (q.length < 4) {
+      setSuggestions([]);
+      return undefined;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5&autocomplete=1`,
+        { signal: controller.signal }
+      )
+        .then((r) => r.json())
+        .then((data) => {
+          setSuggestions(Array.isArray(data.features) ? data.features : []);
+          setHighlight(-1);
+        })
+        .catch(() => {
+          // Adresse indisponible : on laisse simplement la saisie libre.
+        });
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [query]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return undefined;
+    const onClickOutside = (e) => {
+      if (boxRef.current && !boxRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const choose = (feature) => {
+    const props = feature.properties || {};
+    // `name` = numéro + voie ; la ville part dans son propre champ.
+    setQuery(props.name || props.label || "");
+    setOpen(false);
+    setSuggestions([]);
+    if (onSelect) onSelect({ city: props.city || "", postcode: props.postcode || "" });
+  };
+
+  const onKeyDown = (e) => {
+    if (!open || !suggestions.length) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setHighlight((h) => (h + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setHighlight((h) => (h - 1 + suggestions.length) % suggestions.length);
+    } else if (e.key === "Enter" && highlight >= 0) {
+      e.preventDefault();
+      choose(suggestions[highlight]);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  return (
+    <div ref={boxRef} style={{ position: "relative", width: "100%" }}>
+      <input
+        type="text"
+        name={name}
+        placeholder={placeholder}
+        required={required}
+        style={{ ...style, width: "100%", boxSizing: "border-box" }}
+        value={query}
+        autoComplete="off"
+        onChange={(e) => {
+          setQuery(e.target.value);
+          setOpen(true);
+        }}
+        onFocus={() => setOpen(true)}
+        onKeyDown={onKeyDown}
+        aria-autocomplete="list"
+        aria-expanded={open && suggestions.length > 0}
+      />
+      {open && suggestions.length > 0 ? (
+        <ul
+          role="listbox"
+          style={{
+            position: "absolute",
+            zIndex: 30,
+            top: "calc(100% + 4px)",
+            left: 0,
+            right: 0,
+            margin: 0,
+            padding: 4,
+            listStyle: "none",
+            background: "#fff",
+            border: "1px solid rgba(28,36,51,0.16)",
+            borderRadius: 12,
+            boxShadow: "0 12px 30px rgba(28,36,51,0.12)",
+            maxHeight: 240,
+            overflowY: "auto",
+          }}
+        >
+          {suggestions.map((feature, i) => (
+            <li key={feature.properties.id || i}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={i === highlight}
+                onMouseEnter={() => setHighlight(i)}
+                onClick={() => choose(feature)}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "10px 12px",
+                  border: "none",
+                  borderRadius: 9,
+                  background: i === highlight ? "rgba(37,99,235,0.08)" : "transparent",
+                  color: "#1C2433",
+                  fontSize: 14.5,
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                }}
+              >
+                {feature.properties.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 // Réservation de créneaux — 100 % maison (Worker « loko-resa »).
 function BookingWidget() {
   const [slots, setSlots] = useState(null);
@@ -4236,6 +4301,7 @@ function BookingWidget() {
   const [day, setDay] = useState("");
   const [time, setTime] = useState("");
   const [lieu, setLieu] = useState("domicile");
+  const [ville, setVille] = useState("");
   const [formOpenedAt, setFormOpenedAt] = useState(() => Date.now());
   const [turnstileToken, setTurnstileToken] = useState("");
   const [sending, setSending] = useState(false);
@@ -4435,12 +4501,23 @@ function BookingWidget() {
           <input type="text" name="nom" placeholder="Votre nom" required style={styles.input} />
           <input type="tel" name="telephone" placeholder="Votre numéro" required style={styles.input} />
           <input type="email" name="email" placeholder="Votre email" required style={styles.input} />
+          {lieu === "domicile" ? (
+            <AddressAutocomplete
+              name="adresse"
+              placeholder="Adresse de l’intervention"
+              required
+              style={styles.input}
+              onSelect={({ city }) => setVille(city)}
+            />
+          ) : null}
           <input
             list="villes-resa"
             name="ville"
             placeholder="Votre ville"
             required
             style={styles.input}
+            value={ville}
+            onChange={(e) => setVille(e.target.value)}
           />
           <datalist id="villes-resa">
             <option value="Les Sables d’Olonne" />
@@ -4449,15 +4526,6 @@ function BookingWidget() {
             <option value="L’Île-d’Olonne" />
             <option value="Talmont-Saint-Hilaire" />
           </datalist>
-          {lieu === "domicile" ? (
-            <input
-              type="text"
-              name="adresse"
-              placeholder="Adresse de l’intervention"
-              required
-              style={styles.input}
-            />
-          ) : null}
           <input
             type="text"
             name="service"
@@ -10550,91 +10618,13 @@ const styles = {
     color: "rgba(255,255,255,0.22)",
   },
 
-  closingBanner: {
-    position: "sticky",
-    top: 0,
-    zIndex: 25,
-    background: "#E85D04",
-    color: "#FFFFFF",
-    padding: "10px 24px",
-    textAlign: "center",
-    borderBottom: "1px solid rgba(0,0,0,0.1)",
-  },
 
-  closingBannerMobile: {
-    padding: "8px 16px",
-  },
 
-  closingBannerText: {
-    fontSize: 14,
-    fontWeight: 600,
-    lineHeight: 1.4,
-    margin: 0,
-  },
 
-  closingPopupOverlay: {
-    position: "fixed",
-    inset: 0,
-    zIndex: 999,
-    background: "rgba(0,0,0,0.4)",
-    backdropFilter: "blur(4px)",
-    WebkitBackdropFilter: "blur(4px)",
-  },
 
-  closingPopup: {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: 1000,
-    width: "min(480px, calc(100% - 48px))",
-    background: "#FFFFFF",
-    borderRadius: 24,
-    border: "1px solid rgba(0,0,0,0.08)",
-    boxShadow: "0 20px 80px rgba(0,0,0,0.35)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 
-  closingPopupMobile: {
-    width: "calc(100% - 32px)",
-  },
 
-  closingPopupContent: {
-    padding: 32,
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 16,
-  },
 
-  closingPopupTitle: {
-    margin: 0,
-    fontSize: 28,
-    fontWeight: 800,
-    lineHeight: 1.2,
-    color: "#1C2433",
-  },
 
-  closingPopupText: {
-    margin: 0,
-    fontSize: 16,
-    lineHeight: 1.7,
-    color: "rgba(28,36,51,0.75)",
-  },
 
-  closingPopupButton: {
-    background: "#E85D04",
-    color: "#FFFFFF",
-    border: "none",
-    padding: "12px 28px",
-    borderRadius: 14,
-    fontWeight: 700,
-    fontSize: 16,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    marginTop: 8,
-  },
 };
