@@ -15,6 +15,10 @@
     }
   ],
 
+  // Liaison de service vers l'app interne OS-Loko : un Worker ne peut pas
+  // appeler un autre Worker de la même zone workers.dev en HTTP (erreur 1042).
+  "services": [{ "binding": "OS_APP", "service": "loko-app" }],
+
   // Cloudflare Email Sending (aucune clé API : c'est un binding natif).
   // Prérequis : `npx wrangler email sending enable lokofr.com`
   "send_email": [{ "name": "EMAIL" }],

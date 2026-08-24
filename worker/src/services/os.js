@@ -12,6 +12,16 @@ function ready(env) {
   return Boolean(env.OS_BASE_URL && env.SITE_SYNC_SECRET);
 }
 
+/**
+ * Un Worker ne peut pas joindre en HTTP un autre Worker de la même zone
+ * workers.dev (erreur Cloudflare 1042) : on passe par la liaison de service
+ * quand elle existe, et par fetch() sinon (développement local).
+ */
+function osFetch(env, url, init) {
+  const request = new Request(url, init);
+  return env.OS_APP ? env.OS_APP.fetch(request) : fetch(request);
+}
+
 function logError(action, error) {
   console.log(JSON.stringify({ level: "error", message: `OS-Loko: ${action}`, error: String(error) }));
 }
@@ -24,11 +34,15 @@ function logError(action, error) {
 export async function fetchBusyRanges(env, fromISO, toISO) {
   if (!ready(env)) return [];
   try {
-    const res = await fetch(
+    const res = await osFetch(
+      env,
       `${osUrl(env, "/api/public/availability")}?from=${encodeURIComponent(fromISO)}&to=${encodeURIComponent(toISO)}`,
       { headers: { "x-site-secret": env.SITE_SYNC_SECRET } }
     );
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      throw new Error(`HTTP ${res.status} — ${body.slice(0, 200)}`);
+    }
     const data = await res.json();
     if (!data.ok || !Array.isArray(data.busy)) throw new Error("réponse inattendue");
     return data.busy
@@ -59,7 +73,7 @@ export function findBusy(busy, startMs, endMs) {
 export async function pushBooking(env, payload) {
   if (!ready(env)) return null;
   try {
-    const res = await fetch(osUrl(env, "/api/public/booking"), {
+    const res = await osFetch(env, osUrl(env, "/api/public/booking"), {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-site-secret": env.SITE_SYNC_SECRET },
       body: JSON.stringify(payload),
@@ -77,7 +91,7 @@ export async function pushBooking(env, payload) {
 export async function cancelBooking(env, interventionId) {
   if (!ready(env) || !interventionId) return false;
   try {
-    const res = await fetch(osUrl(env, "/api/public/booking/cancel"), {
+    const res = await osFetch(env, osUrl(env, "/api/public/booking/cancel"), {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-site-secret": env.SITE_SYNC_SECRET },
       body: JSON.stringify({ interventionId }),
