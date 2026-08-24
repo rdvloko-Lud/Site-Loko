@@ -25,10 +25,12 @@
     "FROM_EMAIL": "contact@lokofr.com",
     "FROM_NAME": "Loko",
     "BUSINESS_NAME": "Loko",
-    "BUSINESS_PHONE": "07 63 13 15 15"
+    "BUSINESS_PHONE": "07 63 13 15 15",
+    "OS_BASE_URL": "https://loko-app.rdvloko.workers.dev"
   }
 
   // Secrets (npx wrangler secret put <NOM>) :
   //   ADMIN_PASSWORD     — mot de passe de la page /admin-rdv.html
   //   TURNSTILE_SECRET   — clé secrète Turnstile (facultatif mais recommandé)
+  //   SITE_SYNC_SECRET   — secret partagé avec OS-Loko (mêmes valeurs des deux côtés)
 }

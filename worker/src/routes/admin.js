@@ -2,6 +2,8 @@ import { json, adminOk } from "../http.js";
 import { slotsForDay, isWorkDay, formatSlot } from "../services/slots.js";
 import { sendEmail } from "../services/email.js";
 import { bookingCancelledHtml } from "../services/emailTemplates.js";
+import { cancelBooking, fetchBusyRanges, findBusy } from "../services/os.js";
+import { slotBounds } from "./bookings.js";
 
 /** GET /api/admin/bookings?from=&to= — RDV + créneaux bloqués. */
 export async function handleGetAdminBookings(request, url, env) {
@@ -15,6 +17,13 @@ export async function handleGetAdminBookings(request, url, env) {
   const cur = new Date(from + "T12:00:00Z");
   const end = new Date(to + "T12:00:00Z");
 
+  // Agenda d'OS-Loko, pour afficher aussi ce qui n'a pas été pris sur le site.
+  const busy = await fetchBusyRanges(
+    env,
+    new Date(from + "T00:00:00Z").toISOString(),
+    new Date(new Date(to + "T00:00:00Z").getTime() + 24 * 3600 * 1000).toISOString()
+  );
+
   while (cur <= end) {
     const dateStr = cur.toISOString().slice(0, 10);
     if (isWorkDay(dateStr)) {
@@ -24,8 +33,17 @@ export async function handleGetAdminBookings(request, url, env) {
           env.RESA_KV.get(`blocked:${slot}`),
         ]);
         const time = slot.slice(-5);
-        if (val) result.push({ slot, date: dateStr, time, type: "booked", ...JSON.parse(val) });
-        else if (blk) result.push({ slot, date: dateStr, time, type: "blocked" });
+        if (val) {
+          result.push({ slot, date: dateStr, time, type: "booked", ...JSON.parse(val) });
+          continue;
+        }
+        if (blk) {
+          result.push({ slot, date: dateStr, time, type: "blocked" });
+          continue;
+        }
+        const { startMs, endMs } = slotBounds(slot);
+        const os = findBusy(busy, startMs, endMs);
+        if (os) result.push({ slot, date: dateStr, time, type: "os", label: os.label, kind: os.kind });
       }
     }
     cur.setUTCDate(cur.getUTCDate() + 1);
@@ -52,16 +70,22 @@ export async function handlePostAdminCancel(request, env, ctx) {
   const existing = await env.RESA_KV.get(`booking:${slot}`);
   await env.RESA_KV.delete(`booking:${slot}`);
 
-  if (existing && notify) {
+  if (existing) {
     const booking = JSON.parse(existing);
     const { dateFormatted, timeFormatted } = formatSlot(slot);
-    ctx.waitUntil(
-      sendEmail(env, {
-        to: booking.email,
-        subject: `Rendez-vous annulé — ${dateFormatted} à ${timeFormatted}`,
-        html: bookingCancelledHtml({ nom: booking.nom, dateFormatted, timeFormatted }),
-      })
-    );
+
+    // L'intervention correspondante passe en « Annulée » dans OS-Loko.
+    ctx.waitUntil(cancelBooking(env, booking.osInterventionId));
+
+    if (notify) {
+      ctx.waitUntil(
+        sendEmail(env, {
+          to: booking.email,
+          subject: `Rendez-vous annulé — ${dateFormatted} à ${timeFormatted}`,
+          html: bookingCancelledHtml({ nom: booking.nom, dateFormatted, timeFormatted }),
+        })
+      );
+    }
   }
   return json(request, { ok: true });
 }

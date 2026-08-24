@@ -1,5 +1,14 @@
 import { json, corsHeaders } from "../http.js";
-import { slotsForDay, isWorkDay, isBookable, formatSlot, MAX_DAYS_AHEAD } from "../services/slots.js";
+import {
+  slotsForDay,
+  isWorkDay,
+  isBookable,
+  formatSlot,
+  slotToDate,
+  SLOT_MINUTES,
+  MAX_DAYS_AHEAD,
+} from "../services/slots.js";
+import { fetchBusyRanges, overlapsBusy, pushBooking } from "../services/os.js";
 import { validateBooking } from "../services/validate.js";
 import { sendEmail } from "../services/email.js";
 import { bookingAdminHtml, bookingClientHtml } from "../services/emailTemplates.js";
@@ -19,12 +28,20 @@ export async function handleGetSlots(request, url, env) {
   const end = new Date(to + "T12:00:00Z");
   const maxEnd = new Date(Date.now() + MAX_DAYS_AHEAD * 24 * 3600 * 1000);
 
+  // Agenda d'OS-Loko : interventions déjà planifiées et évènements personnels.
+  const busy = await fetchBusyRanges(
+    env,
+    new Date(from + "T00:00:00Z").toISOString(),
+    new Date(new Date(to + "T00:00:00Z").getTime() + 24 * 3600 * 1000).toISOString()
+  );
+
   while (cur <= end && cur <= maxEnd) {
     const dateStr = cur.toISOString().slice(0, 10);
     if (isWorkDay(dateStr)) {
       const available = [];
       for (const slot of slotsForDay(dateStr)) {
         if (!isBookable(slot)) continue;
+        if (isBusyInOs(busy, slot)) continue;
         const [booked, blocked] = await Promise.all([
           env.RESA_KV.get(`booking:${slot}`),
           env.RESA_KV.get(`blocked:${slot}`),
@@ -43,6 +60,18 @@ export async function handleGetSlots(request, url, env) {
       "Cache-Control": "no-store",
     },
   });
+}
+
+/** Bornes absolues d'un créneau, en millisecondes. */
+export function slotBounds(slot) {
+  const startMs = slotToDate(slot).getTime();
+  return { startMs, endMs: startMs + SLOT_MINUTES * 60 * 1000 };
+}
+
+function isBusyInOs(busy, slot) {
+  if (!busy.length) return false;
+  const { startMs, endMs } = slotBounds(slot);
+  return overlapsBusy(busy, startMs, endMs);
 }
 
 export async function handlePostBook(request, env, ctx) {
@@ -72,10 +101,44 @@ export async function handlePostBook(request, env, ctx) {
   ]);
   if (booked || blocked) return json(request, { error: "Créneau déjà réservé" }, 409);
 
+  // Dernière vérification côté agenda OS-Loko (le planning a pu bouger depuis
+  // l'affichage de la page).
+  const { startMs, endMs } = slotBounds(slot);
+  const busy = await fetchBusyRanges(env, new Date(startMs).toISOString(), new Date(endMs).toISOString());
+  if (overlapsBusy(busy, startMs, endMs)) {
+    return json(request, { error: "Créneau déjà réservé" }, 409);
+  }
+
   const booking = { ...data, ip, createdAt: new Date().toISOString() };
   await env.RESA_KV.put(`booking:${slot}`, JSON.stringify(booking));
 
   const { dateFormatted, timeFormatted } = formatSlot(slot);
+
+  // Report dans l'agenda d'OS-Loko : le client et l'intervention y sont créés.
+  // En cas d'échec, la réservation reste valable côté site et l'admin le signale.
+  ctx.waitUntil(
+    pushBooking(env, {
+      startsAt: new Date(startMs).toISOString(),
+      endsAt: new Date(endMs).toISOString(),
+      nom: data.nom,
+      email: data.email,
+      telephone: data.telephone,
+      ville: data.ville,
+      adresse: data.adresse,
+      service: data.service,
+      message: data.message,
+      lieu: data.lieu,
+    }).then(async (interventionId) => {
+      // Le RDV a pu être annulé entre-temps : on ne ressuscite pas la clé.
+      const current = await env.RESA_KV.get(`booking:${slot}`);
+      if (!current) return;
+      await env.RESA_KV.put(
+        `booking:${slot}`,
+        JSON.stringify({ ...JSON.parse(current), osInterventionId: interventionId, osSynced: Boolean(interventionId) })
+      );
+    })
+  );
+
   ctx.waitUntil(
     Promise.allSettled([
       sendEmail(env, {
