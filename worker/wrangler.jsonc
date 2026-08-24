@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "loko-resa",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+  "observability": { "enabled": true },
+
+  // KV : créer avec `npx wrangler kv namespace create RESA_KV`
+  // puis coller les ids retournés ci-dessous.
+  "kv_namespaces": [
+    {
+      "binding": "RESA_KV",
+      "id": "072db29222094f31a32ba69f2131df72",
+      "preview_id": "91fca9f8fb31459b87d42cd009f96a3f"
+    }
+  ],
+
+  // Cloudflare Email Sending (aucune clé API : c'est un binding natif).
+  // Prérequis : `npx wrangler email sending enable lokofr.com`
+  "send_email": [{ "name": "EMAIL" }],
+
+  "vars": {
+    "SITE_ORIGIN": "https://www.lokofr.com",
+    "NOTIF_EMAIL": "rdvloko@gmail.com",
+    "FROM_EMAIL": "contact@lokofr.com",
+    "FROM_NAME": "Loko",
+    "BUSINESS_NAME": "Loko",
+    "BUSINESS_PHONE": "07 63 13 15 15"
+  }
+
+  // Secrets (npx wrangler secret put <NOM>) :
+  //   ADMIN_PASSWORD     — mot de passe de la page /admin-rdv.html
+  //   TURNSTILE_SECRET   — clé secrète Turnstile (facultatif mais recommandé)
+}

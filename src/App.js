@@ -7,6 +7,9 @@ const SITE_URL = "https://www.lokofr.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
 const DEFAULT_SITE_NAME = "Loko";
 const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY || "";
+// API maison (Worker Cloudflare « loko-resa ») : contact + réservation de créneaux.
+const API_BASE =
+  process.env.REACT_APP_API_BASE || "https://loko-resa.rdvloko.workers.dev";
 const MIN_FORM_DELAY_MS = 3000;
 
 function normalizePath(pathname) {
@@ -2787,7 +2790,7 @@ function ClosingBanner() {
       }}
     >
       <div style={styles.closingBannerText}>
-        Entreprise actuellement fermee pour conges jusqu'au 24 aout
+        Entreprise actuellement fermée pour congés jusqu'au 24 août
       </div>
     </div>
   );
@@ -2832,10 +2835,10 @@ function ClosingPopup() {
         <div style={styles.closingPopupContent}>
           <h2 style={styles.closingPopupTitle}>Fermeture temporaire</h2>
           <p style={styles.closingPopupText}>
-            Loko est actuellement fermee pour conges jusqu'au 24 aout.
+            Loko est actuellement fermée pour congés jusqu'au 24 août.
             <br />
             <br />
-            Nous serons ravis de vous accueillir a notre retour !
+            Nous serons ravis de vous accueillir à notre retour !
           </p>
           <button
             type="button"
@@ -3644,13 +3647,14 @@ function PrivacyPage() {
 
               <h2 style={styles.legalArticleTitle}>5. Stockage et partage</h2>
               <p style={styles.legalText}>
-                Les données transmises via le formulaire de contact sont
-                traitées par{" "}
-                <strong>Formspree</strong> (prestataire américain) puis
-                transmises à Loko par email. La prise de rendez-vous en ligne
-                peut passer par <strong>Notion Calendar</strong>. Les pages
-                villes peuvent intégrer une carte <strong>Google Maps</strong>{" "}
-                si vous acceptez les cookies tiers.
+                Les données transmises via le formulaire de contact et la
+                prise de rendez-vous en ligne sont traitées directement par Loko
+                sur son propre serveur, hébergé par{" "}
+                <strong>Cloudflare</strong> (données stockées et emails envoyés
+                depuis l’Union européenne), sans intermédiaire commercial. Les
+                pages villes peuvent intégrer une carte{" "}
+                <strong>Google Maps</strong> si vous acceptez les cookies
+                tiers.
               </p>
               <p style={styles.legalText}>
                 Loko ne vend, ne loue et ne cède pas vos données à des tiers à
@@ -4101,26 +4105,59 @@ function CGVPage() {
   );
 }
 function RendezVousContactForm() {
-  const [formOpenedAt] = useState(() => Date.now());
+  const [formOpenedAt, setFormOpenedAt] = useState(() => Date.now());
   const [turnstileToken, setTurnstileToken] = useState("");
   const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     const spamError = validateFormSpam(formOpenedAt, turnstileToken);
     if (spamError) {
-      e.preventDefault();
       setError(spamError);
+      return;
+    }
+    setSending(true);
+    setError("");
+    const values = formValues(form);
+    const res = await postToApi("/api/contact", {
+      nom: values.nom,
+      email: values.email,
+      telephone: values.telephone,
+      ville: values.ville,
+      message: values.message,
+      consent: Boolean(values.consent),
+      website: values._gotcha || "",
+      turnstileToken,
+    });
+    setSending(false);
+    if (res.ok) {
+      setSent(true);
+      form.reset();
+      setFormOpenedAt(Date.now());
+      setTurnstileToken("");
+    } else {
+      setError(res.error);
     }
   };
 
+  if (sent) {
+    return (
+      <div style={styles.form}>
+        <p style={{ fontWeight: 700, margin: 0 }}>Message envoyé !</p>
+        <p style={{ margin: 0, color: "rgba(28,36,51,0.66)" }}>
+          Merci, je vous recontacte au plus vite. Pour une urgence, appelez le{" "}
+          07 63 13 15 15.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
-      <form
-        action="https://formspree.io/f/mjgjkbjo"
-        method="POST"
-        onSubmit={handleSubmit}
-        style={styles.form}
-      >
+      <form onSubmit={handleSubmit} style={styles.form}>
         <FormSpamFields
           formOpenedAt={formOpenedAt}
           onTurnstileToken={setTurnstileToken}
@@ -4180,11 +4217,281 @@ function RendezVousContactForm() {
         {error ? (
           <div style={{ color: "#E5484D", fontSize: 14 }}>{error}</div>
         ) : null}
-        <button type="submit" style={styles.submitButton}>
-          Envoyer la demande
+        <button
+          type="submit"
+          disabled={sending}
+          style={{ ...styles.submitButton, opacity: sending ? 0.7 : 1 }}
+        >
+          {sending ? "Envoi…" : "Envoyer la demande"}
         </button>
       </form>
     </>
+  );
+}
+
+// Réservation de créneaux — 100 % maison (Worker « loko-resa »).
+function BookingWidget() {
+  const [slots, setSlots] = useState(null);
+  const [loadError, setLoadError] = useState("");
+  const [day, setDay] = useState("");
+  const [time, setTime] = useState("");
+  const [lieu, setLieu] = useState("domicile");
+  const [formOpenedAt, setFormOpenedAt] = useState(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const [confirmed, setConfirmed] = useState(null);
+  const [showAllDays, setShowAllDays] = useState(false);
+
+  const loadSlots = useCallback(() => {
+    const from = new Date().toISOString().slice(0, 10);
+    const to = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
+    setLoadError("");
+    fetch(`${API_BASE}/api/slots?from=${from}&to=${to}`)
+      .then((r) => r.json())
+      .then((data) => setSlots(data))
+      .catch(() =>
+        setLoadError(
+          "Impossible de charger les disponibilités. Appelez le 07 63 13 15 15."
+        )
+      );
+  }, []);
+
+  useEffect(loadSlots, [loadSlots]);
+
+  const days = slots ? Object.keys(slots).sort() : [];
+
+  const dayLabel = (dateStr) =>
+    new Date(dateStr + "T12:00:00Z").toLocaleDateString("fr-FR", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
+
+  const submit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const spamError = validateFormSpam(formOpenedAt, turnstileToken);
+    if (spamError) {
+      setError(spamError);
+      return;
+    }
+    setSending(true);
+    setError("");
+    const values = formValues(form);
+    const res = await postToApi("/api/book", {
+      slot: `${day}:${time}`,
+      nom: values.nom,
+      email: values.email,
+      telephone: values.telephone,
+      ville: values.ville,
+      adresse: values.adresse,
+      service: values.service,
+      message: values.message,
+      lieu,
+      consent: Boolean(values.consent),
+      website: values._gotcha || "",
+      turnstileToken,
+    });
+    setSending(false);
+    if (res.ok) {
+      setConfirmed(res.data);
+    } else {
+      setError(res.error);
+      // Le créneau vient peut-être d'être pris : on rafraîchit la grille.
+      loadSlots();
+      setFormOpenedAt(Date.now());
+      setTurnstileToken("");
+    }
+  };
+
+  const chip = (active) => ({
+    padding: "10px 14px",
+    borderRadius: 999,
+    border: `1px solid ${active ? "#2563EB" : "rgba(28,36,51,0.16)"}`,
+    background: active ? "#2563EB" : "#fff",
+    color: active ? "#fff" : "#1C2433",
+    fontWeight: 600,
+    fontSize: 14,
+    cursor: "pointer",
+    fontFamily: "inherit",
+  });
+  const chipRow = { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 };
+  const label = {
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+    color: "rgba(28,36,51,0.6)",
+    marginTop: 18,
+  };
+
+  if (confirmed) {
+    return (
+      <div style={styles.infoCard} id="creneaux">
+        <h3 style={styles.cardTitle}>✅ Rendez-vous confirmé</h3>
+        <p style={styles.cardText}>
+          C’est noté pour le <strong>{confirmed.dateFormatted}</strong> à{" "}
+          <strong>{confirmed.timeFormatted}</strong>. Vous recevez un email de
+          confirmation. En cas d’imprévu, appelez le 07 63 13 15 15.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.infoCard} id="creneaux">
+      <h3 style={styles.cardTitle}>📅 Choisir un créneau</h3>
+      <p style={styles.cardText}>
+        Sélectionnez le jour et l’heure qui vous arrangent : le rendez-vous est
+        réservé immédiatement.
+      </p>
+
+      {loadError ? <div style={{ color: "#E5484D", fontSize: 14 }}>{loadError}</div> : null}
+      {!slots && !loadError ? (
+        <p style={styles.cardText}>Chargement des disponibilités…</p>
+      ) : null}
+      {slots && !days.length ? (
+        <p style={styles.cardText}>
+          Aucun créneau disponible pour le moment. Appelez le 07 63 13 15 15 ou
+          utilisez le formulaire ci-dessous.
+        </p>
+      ) : null}
+
+      {days.length ? (
+        <>
+          <div style={label}>Jour</div>
+          <div style={chipRow}>
+            {(showAllDays ? days : days.slice(0, 8)).map((d) => (
+              <button
+                key={d}
+                type="button"
+                style={chip(d === day)}
+                onClick={() => {
+                  setDay(d);
+                  setTime("");
+                  setError("");
+                }}
+              >
+                {dayLabel(d)}
+              </button>
+            ))}
+            {!showAllDays && days.length > 8 ? (
+              <button
+                type="button"
+                style={{ ...chip(false), color: "#2563EB" }}
+                onClick={() => setShowAllDays(true)}
+              >
+                Plus de dates
+              </button>
+            ) : null}
+          </div>
+        </>
+      ) : null}
+
+      {day ? (
+        <>
+          <div style={label}>Heure</div>
+          <div style={chipRow}>
+            {(slots[day] || []).map((t) => (
+              <button
+                key={t}
+                type="button"
+                style={chip(t === time)}
+                onClick={() => {
+                  setTime(t);
+                  setError("");
+                }}
+              >
+                {t.replace(":", "h")}
+              </button>
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {day && time ? (
+        <form onSubmit={submit} style={{ ...styles.form, marginTop: 18 }}>
+          <FormSpamFields
+            formOpenedAt={formOpenedAt}
+            onTurnstileToken={setTurnstileToken}
+          />
+          <div style={{ display: "flex", gap: 8 }}>
+            <button
+              type="button"
+              style={chip(lieu === "domicile")}
+              onClick={() => setLieu("domicile")}
+            >
+              À domicile
+            </button>
+            <button
+              type="button"
+              style={chip(lieu === "distance")}
+              onClick={() => setLieu("distance")}
+            >
+              À distance
+            </button>
+          </div>
+          <input type="text" name="nom" placeholder="Votre nom" required style={styles.input} />
+          <input type="tel" name="telephone" placeholder="Votre numéro" required style={styles.input} />
+          <input type="email" name="email" placeholder="Votre email" required style={styles.input} />
+          <input
+            list="villes-resa"
+            name="ville"
+            placeholder="Votre ville"
+            required
+            style={styles.input}
+          />
+          <datalist id="villes-resa">
+            <option value="Les Sables d’Olonne" />
+            <option value="Olonne-sur-Mer" />
+            <option value="Château-d’Olonne" />
+            <option value="L’Île-d’Olonne" />
+            <option value="Talmont-Saint-Hilaire" />
+          </datalist>
+          {lieu === "domicile" ? (
+            <input
+              type="text"
+              name="adresse"
+              placeholder="Adresse de l’intervention"
+              required
+              style={styles.input}
+            />
+          ) : null}
+          <input
+            type="text"
+            name="service"
+            placeholder="Votre besoin (Wi-Fi, ordinateur, smartphone…)"
+            style={styles.input}
+          />
+          <textarea
+            name="message"
+            placeholder="Précisions (facultatif)"
+            style={styles.textarea}
+          />
+          <label style={styles.formConsentLabel}>
+            <input type="checkbox" name="consent" required />
+            <span>
+              J’accepte que mes données soient traitées conformément à la{" "}
+              <a href="/politique-confidentialite" style={styles.formConsentLink}>
+                politique de confidentialité
+              </a>
+              .
+            </span>
+          </label>
+          {error ? <div style={{ color: "#E5484D", fontSize: 14 }}>{error}</div> : null}
+          <button
+            type="submit"
+            disabled={sending}
+            style={{ ...styles.submitButton, opacity: sending ? 0.7 : 1 }}
+          >
+            {sending
+              ? "Réservation…"
+              : `Réserver le ${dayLabel(day)} à ${time.replace(":", "h")}`}
+          </button>
+        </form>
+      ) : null}
+    </div>
   );
 }
 
@@ -4212,19 +4519,8 @@ function RendezVousPage() {
                 </p>
               </a>
 
-              {/* 📅 Calendrier Notion */}
-              <a
-                href="https://calendar.notion.so/meet/ludericgelot/rdvloko"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.linkCard}
-              >
-                <h3 style={styles.cardTitle}>📅 Choisir un créneau</h3>
-                <p style={styles.cardText}>
-                  Consultez les disponibilités et choisissez un moment qui vous
-                  convient.
-                </p>
-              </a>
+              {/* 📅 Réservation de créneau (API maison) */}
+              <BookingWidget />
 
               {/* 📧 Mail */}
               {/* 📝 Formulaire */}
@@ -4759,6 +5055,41 @@ function validateFormSpam(formOpenedAt, turnstileToken) {
   return "";
 }
 
+// Envoi vers l'API maison. Renvoie { ok, error }.
+async function postToApi(path, payload) {
+  try {
+    const res = await fetch(`${API_BASE}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) return { ok: true, data };
+    return {
+      ok: false,
+      error:
+        data.error ||
+        "Une erreur est survenue. Réessayez ou appelez-nous directement.",
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      error:
+        "Connexion impossible. Réessayez ou appelez le 07 63 13 15 15.",
+    };
+  }
+}
+
+// Récupère les champs d'un formulaire sous forme d'objet simple.
+function formValues(form) {
+  const fd = new FormData(form);
+  const out = {};
+  fd.forEach((value, key) => {
+    out[key] = typeof value === "string" ? value : "";
+  });
+  return out;
+}
+
 function ContactOption({ icon, title, text, href, onClick, external }) {
   const [h, setH] = useState(false);
   const style = {
@@ -4878,23 +5209,20 @@ function ContactModal() {
     }
     setSending(true);
     setError("");
-    try {
-      const res = await fetch("https://formspree.io/f/mjgjkbjo", {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) setStep("sent");
-      else
-        setError(
-          "Une erreur est survenue. Réessayez ou appelez-nous directement."
-        );
-    } catch (err) {
-      setError(
-        "Une erreur est survenue. Réessayez ou appelez-nous directement."
-      );
-    }
+    const values = formValues(form);
+    const res = await postToApi("/api/contact", {
+      nom: values.nom,
+      email: values.email,
+      telephone: values.telephone,
+      ville: values.ville,
+      message: values.message,
+      consent: Boolean(values.consent),
+      website: values._gotcha || "",
+      turnstileToken,
+    });
     setSending(false);
+    if (res.ok) setStep("sent");
+    else setError(res.error);
   };
 
   const input = {
@@ -5001,8 +5329,7 @@ function ContactModal() {
                 icon={<IconCalendar />}
                 title="Choisir un créneau"
                 text="Consultez les disponibilités en ligne."
-                href="https://calendar.notion.so/meet/ludericgelot/rdvloko"
-                external
+                href="/rendez-vous#creneaux"
               />
               <ContactOption
                 icon={<IconSend />}
@@ -7189,8 +7516,7 @@ function HomePage({ city = null }) {
                   <ContactQuickButton
                     icon={<IconCalendar />}
                     label="Planning"
-                    href="https://calendar.notion.so/meet/ludericgelot/rdvloko"
-                    external
+                    href="/rendez-vous#creneaux"
                   />
                   <ContactQuickButton
                     icon={<IconMail />}

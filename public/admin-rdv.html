@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin — Rendez-vous Loko</title>
+    <style>
+      :root {
+        --cream: #fbf8f3;
+        --ink: #1c2433;
+        --blue: #2563eb;
+        --line: rgba(28, 36, 51, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; background: var(--cream); color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      }
+      .wrap { max-width: 900px; margin: 0 auto; padding: 28px 18px 60px; }
+      h1 { font-size: 24px; letter-spacing: -0.02em; margin: 0 0 4px; }
+      .sub { color: rgba(28, 36, 51, 0.6); font-size: 14px; margin: 0 0 22px; }
+      .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+      input, select, button { font: inherit; }
+      input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+      button { border: none; border-radius: 12px; padding: 11px 16px; font-weight: 700; cursor: pointer; background: var(--ink); color: var(--cream); }
+      button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+      button.danger { background: #e5484d; color: #fff; }
+      .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+      .tabs button { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+      .tabs button[aria-selected="true"] { background: var(--blue); color: #fff; border-color: var(--blue); }
+      .row { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+      .tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--blue); }
+      .muted { color: rgba(28, 36, 51, 0.6); font-size: 14px; }
+      pre { white-space: pre-wrap; font: inherit; margin: 8px 0 0; }
+      .err { color: #e5484d; font-size: 14px; }
+      .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Rendez-vous &amp; messages</h1>
+      <p class="sub">Loko — administration</p>
+
+      <div id="login" class="card">
+        <label class="muted" for="pwd">Mot de passe</label>
+        <input id="pwd" type="password" autocomplete="current-password" style="margin: 8px 0 12px" />
+        <button id="loginBtn">Se connecter</button>
+        <div id="loginErr" class="err" style="margin-top: 10px"></div>
+      </div>
+
+      <div id="app" hidden>
+        <div class="tabs">
+          <button id="tabRdv" aria-selected="true">Rendez-vous</button>
+          <button id="tabMsg" aria-selected="false">Messages</button>
+          <button class="ghost" id="refresh">Rafraîchir</button>
+          <button class="ghost" id="logout">Déconnexion</button>
+        </div>
+        <div id="content"></div>
+      </div>
+    </div>
+
+    <script>
+      var API = "https://loko-resa.rdvloko.workers.dev";
+      var token = sessionStorage.getItem("loko_admin") || "";
+      var view = "rdv";
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+      function api(path, options) {
+        options = options || {};
+        options.headers = Object.assign(
+          { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          options.headers || {}
+        );
+        return fetch(API + path, options).then(function (r) {
+          if (r.status === 401) { logout(); throw new Error("Session expirée"); }
+          return r.json();
+        });
+      }
+      function logout() {
+        token = ""; sessionStorage.removeItem("loko_admin");
+        document.getElementById("app").hidden = true;
+        document.getElementById("login").hidden = false;
+      }
+      function ymd(d) { return d.toISOString().slice(0, 10); }
+
+      function renderBookings(items) {
+        if (!items.length) return '<div class="card muted">Aucun rendez-vous sur les 60 prochains jours.</div>';
+        return items
+          .map(function (b) {
+            if (b.type === "blocked") {
+              return (
+                '<div class="card"><div class="row"><div><span class="tag">Bloqué</span><div><strong>' +
+                esc(b.date) + " · " + esc(b.time) +
+                '</strong></div></div><button class="ghost" data-unblock="' + esc(b.slot) + '">Débloquer</button></div></div>'
+              );
+            }
+            return (
+              '<div class="card"><div class="row"><div>' +
+              '<span class="tag">' + (b.lieu === "distance" ? "À distance" : "À domicile") + "</span>" +
+              "<div><strong>" + esc(b.date) + " · " + esc(b.time) + "</strong></div>" +
+              '<div style="margin-top:6px"><strong>' + esc(b.nom) + "</strong></div>" +
+              '<div class="muted">' + esc(b.telephone) + " · " + esc(b.email) + "</div>" +
+              (b.adresse || b.ville ? '<div class="muted">' + esc([b.adresse, b.ville].filter(Boolean).join(", ")) + "</div>" : "") +
+              (b.service ? '<div class="muted">Besoin : ' + esc(b.service) + "</div>" : "") +
+              (b.message ? "<pre>" + esc(b.message) + "</pre>" : "") +
+              '</div><div class="actions"><button class="danger" data-cancel="' + esc(b.slot) + '">Annuler</button></div>' +
+              "</div></div>"
+            );
+          })
+          .join("");
+      }
+
+      function renderContacts(items) {
+        if (!items.length) return '<div class="card muted">Aucun message.</div>';
+        return items
+          .map(function (c) {
+            return (
+              '<div class="card"><div class="row"><div>' +
+              '<div class="muted">' + esc(new Date(c.createdAt).toLocaleString("fr-FR")) + "</div>" +
+              "<div><strong>" + esc(c.nom) + "</strong></div>" +
+              '<div class="muted">' + esc(c.email) + (c.telephone ? " · " + esc(c.telephone) : "") + (c.ville ? " · " + esc(c.ville) : "") + "</div>" +
+              "<pre>" + esc(c.message) + "</pre>" +
+              '</div><div class="actions">' +
+              '<a href="mailto:' + esc(c.email) + '"><button class="ghost">Répondre</button></a>' +
+              '<button class="danger" data-delcontact="' + esc(c.id) + '">Supprimer</button>' +
+              "</div></div></div>"
+            );
+          })
+          .join("");
+      }
+
+      function load() {
+        var content = document.getElementById("content");
+        content.innerHTML = '<div class="card muted">Chargement…</div>';
+        if (view === "rdv") {
+          var from = ymd(new Date());
+          var to = ymd(new Date(Date.now() + 60 * 864e5));
+          api("/api/admin/bookings?from=" + from + "&to=" + to)
+            .then(function (items) { content.innerHTML = renderBookings(items); })
+            .catch(function (e) { content.innerHTML = '<div class="card err">' + esc(e.message) + "</div>"; });
+        } else {
+          api("/api/admin/contacts")
+            .then(function (items) { content.innerHTML = renderContacts(items); })
+            .catch(function (e) { content.innerHTML = '<div class="card err">' + esc(e.message) + "</div>"; });
+        }
+      }
+
+      document.getElementById("content").addEventListener("click", function (e) {
+        var t = e.target;
+        if (t.dataset.cancel) {
+          if (!confirm("Annuler ce rendez-vous ? Le client recevra un email.")) return;
+          api("/api/admin/cancel", { method: "POST", body: JSON.stringify({ slot: t.dataset.cancel }) }).then(load);
+        } else if (t.dataset.unblock) {
+          api("/api/admin/block", { method: "POST", body: JSON.stringify({ slot: t.dataset.unblock, action: "unblock" }) }).then(load);
+        } else if (t.dataset.delcontact) {
+          if (!confirm("Supprimer ce message ?")) return;
+          api("/api/admin/contact", { method: "DELETE", body: JSON.stringify({ id: t.dataset.delcontact }) }).then(load);
+        }
+      });
+
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        var pwd = document.getElementById("pwd").value;
+        fetch(API + "/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: pwd }),
+        })
+          .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            if (!res.ok) { document.getElementById("loginErr").textContent = res.d.error || "Erreur"; return; }
+            token = pwd;
+            sessionStorage.setItem("loko_admin", pwd);
+            document.getElementById("login").hidden = true;
+            document.getElementById("app").hidden = false;
+            load();
+          });
+      });
+      document.getElementById("pwd").addEventListener("keydown", function (e) {
+        if (e.key === "Enter") document.getElementById("loginBtn").click();
+      });
+      document.getElementById("refresh").addEventListener("click", load);
+      document.getElementById("logout").addEventListener("click", logout);
+      document.getElementById("tabRdv").addEventListener("click", function () {
+        view = "rdv";
+        this.setAttribute("aria-selected", "true");
+        document.getElementById("tabMsg").setAttribute("aria-selected", "false");
+        load();
+      });
+      document.getElementById("tabMsg").addEventListener("click", function () {
+        view = "msg";
+        this.setAttribute("aria-selected", "true");
+        document.getElementById("tabRdv").setAttribute("aria-selected", "false");
+        load();
+      });
+
+      if (token) {
+        document.getElementById("login").hidden = true;
+        document.getElementById("app").hidden = false;
+        load();
+      }
+    </script>
+  </body>
+</html>
