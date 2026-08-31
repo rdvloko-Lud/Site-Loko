@@ -1793,7 +1793,11 @@ const SERVICE_PILLARS = {
         a: "Oui : on fait le tri, on libère de l’espace et on met en place de quoi éviter que ça se reproduise.",
       },
       {
-        q: "Pouvez-vous m’apprendre à m’en servir, pas seulement le réparer ?",
+        q: "Réparez-vous les téléphones cassés (écran, batterie) ?",
+        a: "Non. Loko ne fait pas de réparation matérielle : ni changement d’écran, ni batterie, ni micro-soudure. Pour ça, il faut un réparateur avec un atelier. Loko intervient sur l’usage : téléphone plein, réglages, applications, mails, transfert vers un nouvel appareil.",
+      },
+      {
+        q: "Pouvez-vous m’apprendre à m’en servir ?",
         a: "Bien sûr. L’accompagnement peut être uniquement de la prise en main, à votre rythme.",
       },
       {
@@ -1970,7 +1974,7 @@ const NEARBY_CITIES = [
     timeMin: 12,
     neighbors: ["Château-d’Olonne", "Talmont-Saint-Hilaire"],
     local:
-      "Commune paisible juste à l’est du Château-d’Olonne, Sainte-Foy est essentiellement résidentielle et entourée de campagne. Loko s’y déplace à domicile pour installer, réparer et expliquer vos ordinateurs, box, smartphones et téléviseurs, simplement.",
+      "Commune paisible juste à l’est du Château-d’Olonne, Sainte-Foy est essentiellement résidentielle et entourée de campagne. Loko s’y déplace à domicile pour installer, régler et expliquer vos ordinateurs, box, smartphones et téléviseurs, simplement.",
   },
   {
     slug: "brem-sur-mer",
