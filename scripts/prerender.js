@@ -61,9 +61,15 @@ function startServer(indexHtml) {
   });
 }
 
+// IMPORTANT (SEO) : on écrit `/foo.html` et NON `/foo/index.html`.
+// Cloudflare Pages sert alors la page sur `/foo` (sans slash final) et redirige
+// `/foo/` -> `/foo`. Avec `/foo/index.html`, Pages faisait l'inverse (308 vers
+// `/foo/`) alors que le sitemap et les canonical déclarent `/foo` : Google voyait
+// « page avec redirection » sur les URL du sitemap et « autre page avec balise
+// canonique correcte » sur les URL réellement servies -> non-indexation massive.
 function outFileForRoute(route) {
   if (route === "/") return path.join(BUILD_DIR, "index.html");
-  return path.join(BUILD_DIR, route.replace(/^\//, ""), "index.html");
+  return path.join(BUILD_DIR, `${route.replace(/^\//, "")}.html`);
 }
 
 async function run() {

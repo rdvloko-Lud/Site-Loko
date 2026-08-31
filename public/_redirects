@@ -41,3 +41,15 @@ https://lokofr.com/*  https://www.lokofr.com/:splat  301
 /changement-telephone-les-sables-dolonne     /transfert-donnees-sauvegarde-les-sables-dolonne 301
 /transfert-de-donnees-les-sables-dolonne     /transfert-donnees-sauvegarde-les-sables-dolonne 301
 /transfert-donnees-telephone-les-sables-dolonne /transfert-donnees-sauvegarde-les-sables-dolonne 301
+
+# --- Anciennes URL de la version precedente du site (identifiees via Search
+# Console : elles renvoyaient un 200 sur la page « non trouvee » = soft 404,
+# donc aucun transfert de popularite vers les pages actuelles). ---
+/faq                                  /                                                  301
+/conditions-dutilisation              /cgv                                               301
+/politique-de-confidentialit          /politique-confidentialite                         301
+/blank                                /                                                  301
+/services-store/formation             /formation-informatique-seniors-les-sables-dolonne 301
+/services-store/p/sauvetage-donne     /transfert-donnees-sauvegarde-les-sables-dolonne   301
+/services-store/p/sauvetage-coaching  /formation-informatique-seniors-les-sables-dolonne 301
+/services-store/*                     /tarifs                                            301

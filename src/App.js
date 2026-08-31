@@ -12,6 +12,17 @@ const API_BASE =
   process.env.REACT_APP_API_BASE || "https://loko-resa.rdvloko.workers.dev";
 const MIN_FORM_DELAY_MS = 3000;
 
+// --- Conversions GA4 -------------------------------------------------------
+// Envoie un événement à GA4 (gtag est chargé dans public/index.html).
+// À marquer comme « événement clé » côté interface GA4 :
+//   - appel_telephone : clic sur un lien tel:
+//   - formulaire_envoye : formulaire de contact envoyé avec succès
+//   - rendez_vous_confirme : créneau réservé et confirmé
+function trackConversion(name, params) {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  window.gtag("event", name, params || {});
+}
+
 function normalizePath(pathname) {
   if (!pathname || pathname === "/") return "/";
   return pathname.replace(/\/+$/, "");
@@ -2810,6 +2821,17 @@ export default function LokoSite() {
     applySeoMeta(seoData);
   }, [path, currentPage]);
 
+  // Conversion GA4 : tout clic sur un lien tel: du site (delegation, pour ne pas
+  // avoir a instrumenter les ~10 boutons d'appel un par un).
+  useEffect(() => {
+    const onClick = (e) => {
+      const link = e.target.closest?.('a[href^="tel:"]');
+      if (link) trackConversion("appel_telephone", { link_url: link.getAttribute("href") });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
   let page;
   if (isRdvPage) page = <RendezVousPage />;
   else if (isPlanPage) page = <PlanDuSitePage />;
@@ -4058,6 +4080,7 @@ function RendezVousContactForm() {
     });
     setSending(false);
     if (res.ok) {
+      trackConversion("formulaire_envoye", { form_name: "contact" });
       setSent(true);
       form.reset();
       setFormOpenedAt(Date.now());
@@ -4361,6 +4384,7 @@ function BookingWidget() {
     });
     setSending(false);
     if (res.ok) {
+      trackConversion("rendez_vous_confirme", { lieu });
       setConfirmed(res.data);
     } else {
       setError(res.error);
@@ -5289,8 +5313,12 @@ function ContactModal() {
       turnstileToken,
     });
     setSending(false);
-    if (res.ok) setStep("sent");
-    else setError(res.error);
+    if (res.ok) {
+      trackConversion("formulaire_envoye", { form_name: "contact_modal" });
+      setStep("sent");
+    } else {
+      setError(res.error);
+    }
   };
 
   const input = {
