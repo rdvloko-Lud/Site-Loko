@@ -15,6 +15,11 @@ const staticPagesSeo = {
   "/tarifs": { indexable: true },
   "/zone-intervention": { indexable: true },
 
+  // Page 404 : prerendue en `build/404.html`, que Cloudflare Pages sert
+  // automatiquement AVEC un vrai statut 404 pour tout chemin inconnu.
+  // Sans elle, les URL inconnues repondaient 200 (soft 404).
+  "/404": { indexable: false },
+
   "/cgv": { indexable: false },
   "/politique-confidentialite": { indexable: false },
   "/mentions-legales": { indexable: false },
