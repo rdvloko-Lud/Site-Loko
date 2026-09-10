@@ -39,7 +39,7 @@ const UI_FONT =
 const GOOGLE_REVIEWS_URL =
   "https://www.google.com/search?q=Loko+Les+Sables+d%27Olonne&hl=fr";
 
-// Vrais avis de la page Google de Loko (note 5/5, 33 avis).
+// Vrais avis de la page Google de Loko (note 5/5, 38 avis).
 const GOOGLE_REVIEWS = [
   {
     author: "Sybille Sauvez",
@@ -158,9 +158,10 @@ const SOCIAL_LINKS = [
 ];
 
 const defaultSeo = {
-  title: "Assistance numérique à domicile aux Sables d’Olonne | Loko",
+  title:
+    "Dépannage informatique à domicile aux Sables d’Olonne | Formation seniors, TV & box — Loko",
   description:
-    "Loko propose une assistance numérique à domicile aux Sables d’Olonne : Wi-Fi, Internet, smartphone, ordinateur, TV, transfert de données et découverte de l’IA.",
+    "Loko intervient à domicile aux Sables d’Olonne : dépannage informatique, assistance informatique au quotidien, formation informatique pour seniors et dépannage TV & box. Crédit d’impôt de 50 %.",
   robots: "index, follow",
   canonical: `${SITE_URL}/`,
   ogType: "website",
@@ -170,9 +171,10 @@ const defaultSeo = {
 
 const staticPagesSeo = {
   "/": {
-    title: "Assistance numérique à domicile aux Sables d’Olonne | Loko",
+    title:
+      "Dépannage informatique à domicile aux Sables d’Olonne | Formation seniors, TV & box — Loko",
     description:
-      "Loko intervient à domicile aux Sables d’Olonne pour vous aider avec Internet, le Wi-Fi, les smartphones, les ordinateurs, la télévision, les transferts de données et l’intelligence artificielle.",
+      "Loko intervient à domicile aux Sables d’Olonne : dépannage informatique, assistance informatique au quotidien, formation informatique pour seniors et dépannage TV & box. Crédit d’impôt de 50 %.",
   },
 
   "/rendez-vous": {
@@ -1553,39 +1555,242 @@ const SERVICE_PILLARS = {
     title: "Dépannage informatique",
     art: "ordinateur",
     seoTitle:
-      "Dépannage informatique aux Sables d’Olonne | Ordinateur, imprimante à domicile — Loko",
+      "Dépannage informatique aux Sables d’Olonne | Mon ordinateur ne s’allume plus — Loko",
     seoDescription:
-      "Dépannage informatique à domicile aux Sables d’Olonne : ordinateur lent, imprimante, écran, virus et sécurité, mails ou fichiers introuvables. Diagnostic clair, sans passer par une boutique.",
+      "Mon ordinateur ne s’allume plus, il est lent, l’imprimante ne marche plus, j’ai perdu mes photos : Loko se déplace à domicile aux Sables d’Olonne pour la panne du jour, souvent sous 24 à 48 h. Crédit d’impôt 50 %.",
     hero:
-      "Un souci d’ordinateur ou d’imprimante aux Sables d’Olonne ? Loko remet tout en route à domicile.",
+      "Une panne d’ordinateur ou d’imprimante aux Sables d’Olonne ? Loko se déplace et remet tout en route.",
     intro:
-      "Loko intervient à domicile aux Sables d’Olonne pour le dépannage informatique du quotidien : ordinateur lent, imprimante, écran ou périphérique qui ne répond plus, virus ou sécurité, mails et fichiers introuvables. Pas besoin de boutique ni d’entreprise informatique : on identifie la cause chez vous et on remet tout en marche.",
+      "Cette page, c’est pour quand quelque chose est cassé maintenant : l’ordinateur ne s’allume plus, il rame au point d’être inutilisable, l’imprimante refuse d’imprimer, une fenêtre alarmante s’est ouverte, ou des photos ont disparu. Loko se déplace à votre domicile aux Sables d’Olonne, trouve d’où vient la panne et la règle sur place, en une intervention quand c’est possible. Si vous cherchez plutôt quelqu’un qui passe régulièrement pour éviter que ça arrive, c’est l’assistance informatique.",
     symptoms: [
-      "Ordinateur lent, qui se bloque ou met longtemps à démarrer",
-      "Imprimante qui n’imprime plus ou n’est plus reconnue",
-      "Écran, clavier ou périphérique qui ne répond plus",
-      "Virus, pop-ups, arnaque par mail ou doute sur la sécurité",
-      "Mails, photos ou fichiers introuvables ou mal organisés",
-      "Appareil qui ne répond plus après une mise à jour ou un changement",
+      "Mon ordinateur ne s’allume plus, ou il s’éteint tout seul",
+      "Mon ordinateur est lent : que faire ? Il met dix minutes à démarrer",
+      "Mon imprimante ne marche plus, ou je n’arrive pas à l’installer",
+      "Je n’arrive plus à ouvrir mes mails, ou ils ont disparu",
+      "J’ai perdu mes photos et je voudrais les récupérer",
+      "Une fenêtre dit que mon ordinateur est infecté et me demande d’appeler",
+      "L’écran est noir, le clavier ou la souris ne répondent plus",
+      "Depuis la dernière mise à jour, plus rien ne fonctionne comme avant",
     ],
     help: [
-      "Diagnostic clair de la panne, à domicile",
-      "Remise en route de l’ordinateur, de l’imprimante ou des périphériques",
-      "Suppression de virus et conseils de sécurité contre les arnaques",
-      "Nettoyage et optimisation pour retrouver un appareil fluide",
-      "Explications simples pour comprendre ce qui s’était passé",
-      "Conseils pour éviter que le problème revienne",
+      "Déplacement à domicile pour la panne du moment, sur rendez-vous rapide",
+      "Diagnostic sur place : on cherche la cause avant de toucher quoi que ce soit",
+      "Ordinateur qui ne démarre plus : remise en route ou récupération des données",
+      "Ordinateur lent : nettoyage, désencombrement, désactivation de ce qui ralentit",
+      "Installation d’une imprimante, reconnexion au Wi-Fi et à l’ordinateur",
+      "Récupération de photos, de mails et de fichiers qu’on croyait perdus",
+      "Suppression de virus, de pop-ups et vérification après une arnaque",
+      "Ce qui s’est passé, expliqué en français, et comment l’éviter la prochaine fois",
+    ],
+    sections: [
+      {
+        title: "« Mon ordinateur ne s’allume plus » : ce qu’on vérifie",
+        paragraphs: [
+          "C’est la phrase qu’on entend le plus souvent au téléphone, et elle recouvre en réalité plusieurs situations très différentes. Un ordinateur qui ne s’allume vraiment pas, un ordinateur qui s’allume mais reste sur un écran noir, un ordinateur qui tourne mais n’affiche rien : ce ne sont pas les mêmes pannes, ni les mêmes solutions.",
+          "C’est pour ça qu’un diagnostic au téléphone ne suffit presque jamais. Sur place, on reprend dans l’ordre : alimentation, écran, démarrage, système. Dans beaucoup de cas, la machine repart le jour même. Et si elle est vraiment morte, la priorité devient de récupérer ce qu’il y a dedans avant toute chose.",
+        ],
+        bullets: [
+          "Chargeur, batterie, prise ou multiprise hors service",
+          "L’ordinateur démarre mais l’écran reste noir",
+          "Windows ou macOS bloqué sur le logo au démarrage",
+          "Disque dur en fin de vie : on sauve les données en priorité",
+          "Mise à jour interrompue qui empêche le démarrage",
+        ],
+      },
+      {
+        title: "« Mon ordinateur est lent, que faire ? »",
+        paragraphs: [
+          "Un ordinateur lent n’est pas forcément un ordinateur à jeter. Dans la grande majorité des cas, la lenteur vient de ce qui s’est accumulé au fil des années : des programmes qui se lancent tout seuls au démarrage, un disque plein à ras bord, plusieurs antivirus qui se gênent, un navigateur alourdi par des extensions, ou un disque dur mécanique là où un SSD changerait tout.",
+          "Loko fait le tri sur place, vous montre ce qui ralentissait vraiment, et vous dit honnêtement si un remplacement vaut le coup ou non. Il arrive qu’une machine de sept ans reparte pour trois ans ; il arrive aussi qu’on vous conseille d’arrêter les frais. Dans les deux cas, vous saurez pourquoi.",
+        ],
+      },
+      {
+        title: "« Je n’arrive plus à ouvrir mes mails »",
+        paragraphs: [
+          "Les mails sont, de loin, le premier motif d’appel. Le mot de passe qui ne passe plus, la boîte qui ne se remplit plus, les messages qui ont disparu, un nouvel ordinateur sur lequel la messagerie n’a jamais été configurée, ou une pièce jointe impossible à ouvrir.",
+          "Ce sont rarement des pannes graves, mais ce sont des blocages très pénibles : sans mails, on ne reçoit plus ses factures, ses rendez-vous médicaux ni ses courriers administratifs. Loko remet l’accès en place, retrouve les messages quand c’est possible, et note vos identifiants dans un endroit sûr que vous savez retrouver.",
+        ],
+      },
+      {
+        title: "« Comment installer une imprimante ? »",
+        paragraphs: [
+          "Une imprimante neuve qui reste dans son carton parce que l’installation demande un compte, une application et un code Wi-Fi, c’est une situation quotidienne. Idem pour l’imprimante qui marchait très bien et qui, du jour au lendemain, n’est « plus détectée » — souvent après un changement de box ou une mise à jour.",
+          "Loko installe l’imprimante, la connecte au Wi-Fi et à tous les ordinateurs, téléphones et tablettes de la maison, vérifie le scan autant que l’impression, et vous montre où l’on achète les bonnes cartouches sans se tromper de référence.",
+        ],
+      },
+      {
+        title: "« J’ai perdu mes photos, peut-on les récupérer ? »",
+        paragraphs: [
+          "Souvent, les photos ne sont pas perdues : elles sont ailleurs. Sur un compte iCloud ou Google auquel personne n’est connecté, dans une corbeille pas encore vidée, sur une carte mémoire, ou sur l’ancien téléphone resté dans un tiroir. Le premier réflexe est donc de chercher avant de conclure.",
+          "Quand la disparition est réelle — carte formatée, dossier effacé, disque défaillant — on tente une récupération sur place. Ce n’est jamais garanti, et on vous le dit d’emblée plutôt qu’après. Une règle importante : si vous pensez avoir effacé quelque chose, cessez d’utiliser l’appareil et appelez. Chaque heure d’utilisation supplémentaire réduit les chances de tout retrouver.",
+        ],
+      },
+      {
+        title: "Dépannage ponctuel ou accompagnement régulier ?",
+        paragraphs: [
+          "Cette page traite de la panne : quelque chose ne fonctionne plus, on vient, on répare. C’est une intervention unique, sans suite ni engagement.",
+          "Si votre besoin est plutôt d’avoir quelqu’un qui repasse de temps en temps — pour les mises à jour, les sauvegardes, les questions qui s’accumulent, ou simplement pour être tranquille — c’est l’assistance informatique qui correspond. Les deux se complètent : beaucoup de gens découvrent Loko par une panne, puis gardent un rendez-vous régulier ensuite.",
+        ],
+      },
     ],
     relatedPages: [
       {
-        href: "/depannage-wifi-internet-les-sables-dolonne",
-        title: "Dépannage Wi-Fi & Internet",
-        text: "Box, connexion instable, réseau faible : on remet l’accès en place.",
+        href: "/assistance-informatique-les-sables-dolonne",
+        title: "Assistance informatique",
+        text: "Plutôt qu’attendre la panne : un suivi régulier, des sauvegardes et quelqu’un à appeler.",
       },
       {
-        href: "/depannage-tv-box-les-sables-dolonne",
-        title: "Dépannage TV & appareils connectés",
-        text: "TV, box, streaming : on remet l’image et le son en place.",
+        href: "/depannage-wifi-internet-les-sables-dolonne",
+        title: "Dépannage Wi-Fi & Internet",
+        text: "Box, connexion instable, wifi qui coupe : on remet l’accès en place.",
+      },
+      {
+        href: "/transfert-donnees-sauvegarde-les-sables-dolonne",
+        title: "Données & sauvegarde",
+        text: "Récupérer ses photos, changer d’appareil sans rien perdre.",
+      },
+      {
+        href: "/formation-informatique-seniors-les-sables-dolonne",
+        title: "Formation informatique seniors",
+        text: "Après la panne, apprendre à s’en servir sereinement, à votre rythme.",
+      },
+    ],
+    faq: [
+      {
+        q: "Mon ordinateur ne s’allume plus du tout, pouvez-vous venir ?",
+        a: "Oui, c’est le motif d’appel le plus fréquent. Loko se déplace à domicile, teste l’alimentation, l’écran et le démarrage dans l’ordre, et remet la machine en route quand c’est possible. Si le matériel est réellement hors service, la priorité devient de récupérer vos données avant toute chose.",
+      },
+      {
+        q: "Mon ordinateur est très lent, que faire avant de le remplacer ?",
+        a: "N’achetez rien tout de suite. Dans la plupart des cas, la lenteur vient de programmes qui se lancent au démarrage, d’un disque plein ou d’un disque dur ancien. On nettoie, on mesure la différence, et on vous dit franchement si un remplacement se justifie encore.",
+      },
+      {
+        q: "Pouvez-vous installer une imprimante achetée en magasin ?",
+        a: "Oui : déballage, installation, connexion au Wi-Fi, liaison avec l’ordinateur, le téléphone et la tablette, test de l’impression et du scan. Vous repartez avec une imprimante qui marche depuis tous vos appareils, pas avec un carton ouvert.",
+      },
+      {
+        q: "Faut-il apporter l’ordinateur ou venez-vous à domicile ?",
+        a: "Loko se déplace chez vous aux Sables d’Olonne et dans les communes voisines : tout se fait à domicile, sans avoir à débrancher ni transporter votre matériel.",
+      },
+      {
+        q: "Sous combien de temps intervenez-vous en cas de panne ?",
+        a: "Le plus souvent sous 24 à 48 h, selon les créneaux disponibles. Pour une situation vraiment bloquante, il existe une intervention urgente ; le mieux reste d’appeler et d’expliquer la situation, on voit tout de suite ce qui est possible.",
+      },
+      {
+        q: "Une fenêtre dit que mon ordinateur est infecté et me demande d’appeler un numéro : que faire ?",
+        a: "N’appelez surtout pas ce numéro et ne donnez aucun code : c’est une arnaque très répandue. Éteignez l’ordinateur et appelez Loko. On nettoie le message, on vérifie que rien n’a été installé et, si vous avez déjà été en contact avec eux, on contrôle vos comptes et vos mots de passe.",
+      },
+      {
+        q: "Réparez-vous le matériel cassé ?",
+        a: "Loko se concentre sur le dépannage, le réglage et la remise en route. En cas de panne purement matérielle — écran cassé, carte mère morte — on vous le dit clairement sur place et on vous oriente vers la bonne solution plutôt que de multiplier les interventions.",
+      },
+      {
+        q: "Le dépannage est-il éligible au crédit d’impôt ?",
+        a: "Pour les prestations d’assistance éligibles au service à la personne, vous bénéficiez d’un crédit d’impôt de 50 % : une intervention à 79 € revient à 39,50 €.",
+      },
+      {
+        q: "Combien de temps dure une intervention ?",
+        a: "Comptez en général une heure à une heure et demie. L’objectif est toujours d’aller à l’essentiel et de vous laisser avec une situation claire, pas de faire durer.",
+      },
+    ],
+  },
+
+  "/assistance-informatique-les-sables-dolonne": {
+    title: "Assistance informatique",
+    art: "assistance",
+    seoTitle:
+      "Assistance informatique aux Sables d’Olonne | Suivi à domicile toute l’année — Loko",
+    seoDescription:
+      "Assistance informatique à domicile aux Sables d’Olonne : quelqu’un qui passe régulièrement pour les mises à jour, les sauvegardes et vos questions du quotidien. Sans abonnement, crédit d’impôt 50 %.",
+    hero:
+      "Quelqu’un à appeler pour vos appareils, toute l’année, aux Sables d’Olonne.",
+    intro:
+      "L’assistance informatique, ce n’est pas la panne : c’est ce qu’on met en place pour ne plus la subir. Loko passe chez vous à un rythme choisi — tous les mois, tous les trimestres, ou simplement quand vous appelez — pour faire les mises à jour, vérifier que la sauvegarde tourne vraiment, faire le ménage, et répondre aux questions que vous notez entre deux visites. Vous n’avez plus à décider seul si un mail est louche ou si une mise à jour est à installer : il y a quelqu’un à qui demander.",
+    symptoms: [
+      "Des petites questions s’accumulent et personne à qui les poser",
+      "Je n’ose plus rien installer ni cliquer sur « accepter » tout seul",
+      "Je ne sais pas si mes photos et mes documents sont sauvegardés",
+      "Mes enfants n’ont plus le temps de tout me réexpliquer au téléphone",
+      "Des messages me demandent de mettre à jour, je ne sais pas si c’est vrai",
+      "Chaque année le même problème revient et je repars de zéro",
+      "Je reçois des mails douteux et je ne sais pas lesquels sont des arnaques",
+      "Je voudrais juste que ça marche, sans avoir à comprendre",
+    ],
+    help: [
+      "Un rendez-vous régulier, à un rythme que vous choisissez",
+      "Mises à jour du système et des applications, faites proprement",
+      "Sauvegarde mise en place, puis vérifiée à chaque passage",
+      "Nettoyage et entretien avant que la lenteur ne devienne un problème",
+      "Vos questions notées d’une fois sur l’autre, reprises calmement",
+      "Contrôle des mots de passe et des accès importants",
+      "Un numéro à appeler en cas de doute, avant de cliquer",
+      "Le même interlocuteur à chaque fois, qui connaît votre installation",
+    ],
+    sections: [
+      {
+        title: "Assistance ou dépannage : quelle différence ?",
+        paragraphs: [
+          "Le dépannage répond à une panne : quelque chose ne marche plus, on vient, on répare, l’affaire est close. C’est ponctuel, et c’est très bien quand le problème est isolé.",
+          "L’assistance, c’est l’inverse : on n’attend pas la panne. Le but est que vos appareils restent en bon état, que vos données soient à l’abri, et surtout que vous ayez quelqu’un vers qui vous tourner quand vous hésitez. Beaucoup de gens commencent par un dépannage, puis se rendent compte que ce qui leur manquait, c’était simplement d’avoir un interlocuteur.",
+        ],
+        bullets: [
+          "Dépannage : une panne, une intervention, c’est réglé",
+          "Assistance : un suivi dans la durée, à votre rythme",
+          "Dépannage : on répare ce qui est cassé",
+          "Assistance : on évite que ça casse, et on répond aux questions",
+        ],
+      },
+      {
+        title: "Ce qu’on fait à chaque passage",
+        paragraphs: [
+          "Une visite d’assistance dure environ une heure et demie. Il n’y a pas de programme figé : on commence toujours par vos questions, parce que ce sont elles qui comptent le plus. Ensuite vient l’entretien de fond, celui auquel personne ne pense.",
+        ],
+        bullets: [
+          "On reprend la liste de ce que vous avez noté depuis la dernière fois",
+          "Mises à jour du système, du navigateur et des applications",
+          "Vérification que la sauvegarde a bien tourné — et qu’elle est lisible",
+          "Espace disque, démarrage, lenteurs qui s’installent doucement",
+          "Boîte mail : tri, encombrement, messages suspects reçus",
+          "État du Wi-Fi et des appareils connectés du logement",
+          "Une ou deux choses apprises, notées sur une fiche que vous gardez",
+        ],
+      },
+      {
+        title: "Sans abonnement et sans engagement",
+        paragraphs: [
+          "Il n’y a pas de contrat à signer, pas de prélèvement mensuel, pas de formule à choisir. Chaque intervention se règle à la fin, au tarif habituel, et vous décidez à chaque fois si vous souhaitez un prochain rendez-vous.",
+          "Concrètement, certaines personnes prennent un rendez-vous par mois, d’autres deux par an, d’autres appellent uniquement quand une question se pose. C’est vous qui fixez le rythme, et il peut changer en cours de route.",
+        ],
+      },
+      {
+        title: "Pour un parent qui vit seul",
+        paragraphs: [
+          "Une bonne partie des demandes d’assistance vient des enfants, souvent installés loin. L’inquiétude est presque toujours la même : est-ce qu’il ou elle va se faire avoir par un faux mail, est-ce que les photos de famille sont sauvegardées quelque part, est-ce que quelqu’un vérifie que tout va bien.",
+          "Un passage régulier répond à cela sans être intrusif. Vous pouvez prendre le rendez-vous, être informé après chaque visite, et savoir que votre parent a un numéro local à appeler avant de cliquer sur quoi que ce soit de douteux. L’objectif reste son autonomie, pas sa dépendance.",
+        ],
+      },
+      {
+        title: "Crédit d’impôt de 50 %",
+        paragraphs: [
+          "L’assistance informatique à domicile relève du service à la personne. Pour les prestations éligibles, la moitié de la somme vous est restituée en crédit d’impôt : une intervention à 79 € revient à 39,50 €. L’attestation vous est fournie, sans dossier à monter de votre côté.",
+        ],
+      },
+    ],
+    relatedPages: [
+      {
+        href: "/depannage-informatique-les-sables-dolonne",
+        title: "Dépannage informatique",
+        text: "Une panne maintenant ? Ordinateur, imprimante, mails : on se déplace et on répare.",
+      },
+      {
+        href: "/transfert-donnees-sauvegarde-les-sables-dolonne",
+        title: "Données & sauvegarde",
+        text: "Mettre ses photos et ses documents à l’abri, une bonne fois pour toutes.",
+      },
+      {
+        href: "/formation-informatique-seniors-les-sables-dolonne",
+        title: "Formation informatique seniors",
+        text: "Apprendre à faire soi-même, à son rythme et sans jargon.",
       },
       {
         href: "/",
@@ -1595,24 +1800,44 @@ const SERVICE_PILLARS = {
     ],
     faq: [
       {
-        q: "Faut-il apporter l’ordinateur ou venez-vous à domicile ?",
-        a: "Loko se déplace chez vous aux Sables d’Olonne : tout se fait à domicile, sans avoir à transporter votre matériel.",
+        q: "Quelle différence avec le dépannage informatique ?",
+        a: "Le dépannage règle une panne précise, une fois. L’assistance est un accompagnement dans la durée : on passe régulièrement pour les mises à jour, les sauvegardes et vos questions, afin d’éviter les pannes plutôt que de les subir. Les deux sont possibles, et beaucoup de clients commencent par un dépannage.",
       },
       {
-        q: "Réparez-vous le matériel cassé ?",
-        a: "Loko se concentre sur le dépannage, le réglage et la remise en route. En cas de panne purement matérielle, vous êtes orienté vers la bonne solution.",
+        q: "Faut-il souscrire un abonnement ?",
+        a: "Non. Aucun contrat, aucun prélèvement automatique. Chaque intervention se règle à la fin et vous décidez à ce moment-là si vous voulez un prochain rendez-vous.",
       },
       {
-        q: "Le dépannage est-il éligible au crédit d’impôt ?",
-        a: "Pour les prestations d’assistance éligibles au service à la personne, vous pouvez bénéficier d’un crédit d’impôt de 50 %.",
+        q: "À quelle fréquence faut-il un passage ?",
+        a: "Cela dépend de votre usage. Une fois par mois pour ceux qui ont beaucoup de questions, deux à quatre fois par an pour un simple entretien. On en discute ensemble après la première visite, sans rien imposer.",
       },
       {
-        q: "Combien de temps dure une intervention ?",
-        a: "Cela dépend du problème, mais l’objectif est toujours d’aller à l’essentiel et de vous laisser avec une situation claire.",
+        q: "Que faites-vous exactement pendant une visite ?",
+        a: "On commence par les questions que vous avez notées, puis on fait les mises à jour, on vérifie que la sauvegarde fonctionne réellement, on contrôle l’espace disque et les lenteurs, on regarde la boîte mail et le Wi-Fi. Vous gardez une fiche écrite de ce qui a été fait.",
       },
       {
-        q: "Intervenez-vous en cas de virus ou de problème de sécurité ?",
-        a: "Oui : suppression de virus et de pop-ups, vérification des mots de passe et conseils simples pour vous protéger des arnaques par mail ou par téléphone.",
+        q: "Puis-je vous appeler entre deux rendez-vous ?",
+        a: "Oui, c’est même l’intérêt principal. Un doute sur un mail, une fenêtre inhabituelle, une manipulation avant de cliquer : mieux vaut un appel de deux minutes qu’une intervention de deux heures ensuite.",
+      },
+      {
+        q: "Est-ce adapté à une personne âgée qui vit seule ?",
+        a: "Oui, c’est même la situation la plus fréquente. Un passage régulier permet de garder les appareils en état, de sauvegarder les photos et d’avoir quelqu’un de local à appeler avant de répondre à un message suspect.",
+      },
+      {
+        q: "Puis-je organiser l’assistance pour mon père ou ma mère ?",
+        a: "Oui. Vous pouvez prendre le rendez-vous, expliquer la situation et être tenu au courant après chaque visite. L’intervention se fait à son domicile, avec le même interlocuteur à chaque fois.",
+      },
+      {
+        q: "Intervenez-vous aussi pour une petite activité ou une association ?",
+        a: "Pour les particuliers et les usages du quotidien, oui, sans réserve. Pour un usage professionnel, appelez : on regarde ensemble si le besoin entre dans ce que Loko sait faire, plutôt que de promettre à l’aveugle.",
+      },
+      {
+        q: "L’assistance est-elle éligible au crédit d’impôt de 50 % ?",
+        a: "Oui, pour les prestations éligibles au service à la personne : 50 % de la somme vous est restituée en crédit d’impôt, soit 39,50 € pour une intervention à 79 €.",
+      },
+      {
+        q: "Intervenez-vous en dehors des Sables d’Olonne ?",
+        a: "Oui, dans toutes les communes voisines : Olonne-sur-Mer, Château-d’Olonne, Talmont-Saint-Hilaire, Les Achards, Saint-Gilles-Croix-de-Vie et alentours, sans supplément de déplacement.",
       },
     ],
   },
@@ -1621,45 +1846,102 @@ const SERVICE_PILLARS = {
     title: "Dépannage Wi-Fi & Internet",
     art: "wifi",
     seoTitle:
-      "Dépannage Wi-Fi et Internet aux Sables d’Olonne | Box, connexion, réseau — Loko",
+      "Dépannage Wi-Fi et Internet aux Sables d’Olonne | Wifi qui coupe, box — Loko",
     seoDescription:
-      "Loko remet votre Internet en place à domicile aux Sables d’Olonne : installation de box, Wi-Fi faible ou instable, appareils qui ne se connectent plus. Simple et efficace.",
+      "Mon wifi coupe tout le temps, je n’ai plus internet, la box clignote en rouge : Loko remet votre connexion en place à domicile aux Sables d’Olonne. Installation de box, Wi-Fi faible, appareils qui ne se connectent plus.",
     hero:
       "Internet en panne ou Wi-Fi capricieux aux Sables d’Olonne ? Loko remet tout en place à domicile.",
     intro:
-      "Loko intervient à domicile aux Sables d’Olonne pour vos soucis d’Internet et de Wi-Fi : nouvelle box à installer, connexion qui coupe, réseau trop faible dans certaines pièces, appareils qui refusent de se connecter. L’objectif est de retrouver une connexion stable, claire et agréable à utiliser.",
+      "Loko intervient à domicile aux Sables d’Olonne pour vos soucis d’Internet et de Wi-Fi : nouvelle box à installer, wifi qui coupe sans arrêt, réseau trop faible dans certaines pièces, appareils qui refusent de se connecter, box qui clignote en rouge. L’objectif est de retrouver une connexion stable, claire et agréable à utiliser.",
     symptoms: [
-      "Internet qui coupe, rame ou devient pénible à utiliser",
-      "Wi-Fi faible ou absent dans certaines pièces du logement",
-      "Nouvelle box ou changement d’opérateur difficile à mettre en place",
-      "Téléphone, TV ou ordinateur qui ne se connecte plus correctement",
-      "Installation réseau confuse ou peu claire au quotidien",
+      "Mon wifi coupe tout le temps, ou il faut relancer la box chaque jour",
+      "Je n’ai plus internet du tout, la box clignote en rouge",
+      "Le wifi ne passe pas dans la chambre, le bureau ou l’étage",
+      "Internet rame le soir, les vidéos s’arrêtent pour charger",
+      "J’ai changé d’opérateur et plus rien n’est branché comme avant",
+      "Mon téléphone, ma TV ou mon imprimante ne se connectent plus au wifi",
+      "Je ne retrouve pas mon mot de passe wifi pour connecter un appareil",
+      "Je ne sais pas si le problème vient de chez moi ou de l’opérateur",
     ],
     help: [
       "Installation et mise en service de votre box Internet",
-      "Connexion de tous vos appareils au bon réseau Wi-Fi",
-      "Amélioration simple d’un Wi-Fi trop faible ou irrégulier",
+      "Wifi qui coupe : on cherche la cause réelle, pas seulement le symptôme",
+      "Mesure de la couverture pièce par pièce, répéteur ou réseau maillé si besoin",
+      "Reconnexion de tous vos appareils au bon réseau Wi-Fi",
+      "Nom du réseau et mot de passe simplifiés, et notés quelque part",
+      "Vérification avant d’appeler l’opérateur : on sait quoi lui dire",
       "Explications claires pour rester autonome ensuite",
-      "Conseils pour une installation stable et durable",
+    ],
+    sections: [
+      {
+        title: "« Mon wifi coupe tout le temps » : d’où ça vient",
+        paragraphs: [
+          "Une coupure de Wi-Fi et une coupure d’Internet ne sont pas la même chose, et c’est la première question à trancher. Si la box a bien Internet mais que le signal ne tient pas jusqu’à vous, l’opérateur n’y pourra rien : le problème est dans le logement.",
+          "Sur place, on regarde d’abord où est posée la box — trop souvent dans un placard d’entrée, derrière un meuble ou au ras du sol. Ensuite viennent les causes classiques : murs en pierre, canaux Wi-Fi encombrés par les voisins, box vieillissante, ou tout simplement trop d’appareils connectés en même temps.",
+        ],
+        bullets: [
+          "Box enfermée dans un meuble, un placard ou posée par terre",
+          "Murs épais, dalle béton ou étage qui coupe le signal",
+          "Canal Wi-Fi saturé, surtout en immeuble ou en lotissement dense",
+          "Répéteur mal placé, qui répète un signal déjà faible",
+          "Box à redémarrer proprement, ou à remplacer chez l’opérateur",
+          "Trop d’appareils connectés en même temps le soir",
+        ],
+      },
+      {
+        title: "« Je n’ai plus internet du tout »",
+        paragraphs: [
+          "Quand plus rien ne fonctionne, le réflexe est d’appeler l’opérateur et de passer quarante minutes au téléphone. Souvent, la cause est visible en deux minutes chez vous : une prise débranchée pendant le ménage, un câble fibre plié, une multiprise éteinte, ou une panne réelle sur le secteur.",
+          "Loko fait le tour dans l’ordre, vous dit avec certitude si la panne est chez vous ou sur la ligne, et si c’est la ligne, vous saurez exactement quoi expliquer à l’opérateur — ce qui change tout dans la conversation.",
+        ],
+      },
+      {
+        title: "Nouvelle box, nouvel opérateur : tout est à refaire",
+        paragraphs: [
+          "Changer d’opérateur ou recevoir une nouvelle box, c’est repartir de zéro : nouveau nom de réseau, nouveau mot de passe, et donc tous les appareils de la maison à reconnecter un par un. Télévision, imprimante, téléphones, tablettes, enceinte, caméra, thermostat.",
+          "Loko s’occupe de l’ensemble en une intervention, remet la télévision et le décodeur en route, et peut redonner au réseau son ancien nom et son ancien mot de passe : tout se reconnecte alors tout seul, sans avoir à toucher à chaque appareil.",
+        ],
+      },
     ],
     relatedPages: [
       {
         href: "/depannage-informatique-les-sables-dolonne",
         title: "Dépannage informatique",
-        text: "Ordinateur, imprimante, TV : on remet tout en route à domicile.",
+        text: "Ordinateur, imprimante, mails : on remet tout en route à domicile.",
+      },
+      {
+        href: "/depannage-tv-box-les-sables-dolonne",
+        title: "Dépannage TV & box",
+        text: "Écran noir, chaînes disparues, streaming qui ne se lance plus.",
+      },
+      {
+        href: "/assistance-informatique-les-sables-dolonne",
+        title: "Assistance informatique",
+        text: "Un suivi régulier pour que l’installation reste stable dans le temps.",
       },
       {
         href: "/formation-informatique-seniors-les-sables-dolonne",
         title: "Formation & aide informatique",
         text: "Apprendre à utiliser ses appareils sereinement, à son rythme.",
       },
-      {
-        href: "/",
-        title: "Assistance numérique à domicile",
-        text: "Vue d’ensemble de l’accompagnement Loko aux Sables d’Olonne.",
-      },
     ],
     faq: [
+      {
+        q: "Mon wifi coupe tout le temps, faut-il changer de box ?",
+        a: "Pas forcément, et c’est rarement la première cause. Le plus souvent, la box est mal placée, le canal Wi-Fi est saturé ou le signal ne traverse pas un mur. On mesure la couverture chez vous avant de conseiller quoi que ce soit.",
+      },
+      {
+        q: "Le wifi ne passe pas à l’étage ou dans la chambre du fond, que faire ?",
+        a: "On teste pièce par pièce pour voir où le signal s’effondre vraiment, puis on choisit la solution adaptée : déplacer la box, ajouter un répéteur au bon endroit, passer par le réseau électrique en CPL, ou installer un réseau maillé si le logement est grand.",
+      },
+      {
+        q: "Comment savoir si le problème vient de chez moi ou de l’opérateur ?",
+        a: "C’est justement le premier point qu’on tranche sur place. Si la panne est sur la ligne, vous repartez avec les éléments précis à donner à l’opérateur ; si elle est dans le logement, on la règle directement.",
+      },
+      {
+        q: "J’ai perdu mon mot de passe wifi, pouvez-vous m’aider ?",
+        a: "Oui, on le récupère sur la box ou dans l’interface de l’opérateur. On peut aussi le remplacer par un mot de passe plus simple à retenir et le noter sur une fiche que vous gardez près de la box.",
+      },
       {
         q: "Loko remplace-t-il mon opérateur Internet ?",
         a: "Non, Loko n’est pas un opérateur. L’intervention sert à installer, comprendre, reconnecter ou améliorer votre installation à domicile.",
@@ -1683,26 +1965,78 @@ const SERVICE_PILLARS = {
     title: "Formation & aide informatique",
     art: "formation",
     seoTitle:
-      "Formation informatique et aide aux seniors aux Sables d’Olonne | Loko",
+      "Formation informatique seniors aux Sables d’Olonne | Cours à domicile — Loko",
     seoDescription:
-      "Loko vous apprend à utiliser ordinateur, smartphone, Internet et IA à domicile aux Sables d’Olonne, à votre rythme. Accompagnement patient et clair, idéal pour les seniors.",
+      "Formation informatique pour seniors à domicile aux Sables d’Olonne : ordinateur, smartphone, tablette, Internet, mails et démarches en ligne. Cours individuels, à votre rythme, crédit d’impôt 50 %.",
     hero:
       "Envie d’être plus à l’aise avec vos appareils aux Sables d’Olonne ? Loko vous accompagne à votre rythme, à domicile.",
     intro:
-      "Loko propose à domicile aux Sables d’Olonne un accompagnement et une formation au numérique adaptés à votre rythme : ordinateur, smartphone, tablette, Internet, mails ou intelligence artificielle. L’approche est patiente et claire — idéale pour les seniors qui veulent reprendre confiance avec leurs appareils.",
+      "Loko propose à domicile aux Sables d’Olonne une formation informatique pensée pour les seniors : ordinateur, smartphone, tablette, Internet, mails, photos ou démarches en ligne. Les cours sont individuels, chez vous, sur vos propres appareils, sans vocabulaire technique et sans jamais vous presser. Une séance dure environ une heure et demie, et vous repartez avec des repères écrits.",
     symptoms: [
       "Smartphone ou ordinateur intimidant ou difficile à utiliser",
-      "Peur de “mal faire” ou de tout dérégler",
-      "Mails, photos ou applications difficiles à gérer",
-      "Envie de comprendre Internet et l’IA simplement",
-      "Besoin d’avancer à son rythme, sans se sentir pressé",
+      "Peur de “mal faire”, de tout dérégler ou d’effacer quelque chose",
+      "Mails, photos, pièces jointes ou applications difficiles à gérer",
+      "Démarches en ligne obligatoires (impôts, Ameli, banque) qui bloquent",
+      "Difficulté à faire un appel vidéo avec les enfants ou petits-enfants",
+      "Crainte des arnaques par mail, SMS ou téléphone",
+      "Besoin d’avancer à son rythme, sans se sentir pressé ni jugé",
     ],
     help: [
-      "Accompagnement patient, vraiment à votre rythme",
-      "Apprentissage concret sur vos propres appareils",
-      "Explications claires et accessibles",
-      "Repères simples pour se souvenir des étapes",
-      "Gain d’autonomie et de confiance au quotidien",
+      "Cours individuels à domicile, un rythme choisi avec vous",
+      "Apprentissage concret sur vos propres appareils, pas sur du matériel d’école",
+      "Explications sans jargon, répétées autant de fois qu’il le faut",
+      "Fiche écrite avec les étapes, laissée à la fin de chaque séance",
+      "Réglages d’accessibilité : texte plus grand, sons, contraste",
+      "Repères simples pour reconnaître un mail ou un SMS frauduleux",
+      "Gain d’autonomie et de confiance, séance après séance",
+    ],
+    sections: [
+      {
+        title: "Une formation informatique pensée pour les seniors",
+        paragraphs: [
+          "Beaucoup de formations informatiques sont conçues pour des personnes déjà à l’aise. Ici, c’est l’inverse : on part de ce que vous savez faire, on avance pas à pas, et on revient autant de fois que nécessaire sur ce qui n’est pas clair. Il n’y a pas de groupe, pas de programme imposé, pas de rythme à tenir.",
+          "Les séances se déroulent chez vous, aux Sables d’Olonne et dans les communes voisines, sur votre ordinateur, votre tablette ou votre téléphone. C’est important : ce que vous apprenez fonctionne ensuite exactement pareil, au même endroit, avec les mêmes boutons.",
+        ],
+      },
+      {
+        title: "Ce que l’on apprend le plus souvent",
+        paragraphs: [
+          "Chaque accompagnement est différent, mais certaines demandes reviennent presque à chaque fois :",
+        ],
+        bullets: [
+          "Envoyer un mail, y joindre une photo, retrouver un message reçu",
+          "Prendre, ranger, envoyer et sauvegarder ses photos",
+          "Faire un appel vidéo avec la famille (WhatsApp, FaceTime, Messenger)",
+          "Utiliser un site administratif : impôts, Ameli, retraite, banque",
+          "Comprendre les mots de passe et les garder en sécurité",
+          "Repérer une arnaque avant de cliquer",
+          "Se servir d’Internet pour chercher une information fiable",
+          "Découvrir l’intelligence artificielle simplement, si le sujet vous intéresse",
+        ],
+      },
+      {
+        title: "Vous cherchez pour un parent ou un proche ?",
+        paragraphs: [
+          "Une grande partie des demandes vient des enfants ou des petits-enfants, souvent à distance, qui n’ont plus le temps ni la patience de tout réexpliquer au téléphone. C’est une démarche fréquente et parfaitement légitime.",
+          "Concrètement : vous prenez le rendez-vous, on convient ensemble de ce qui bloque, et l’intervention se fait au domicile de votre parent. Vous pouvez être présent la première fois si vous le souhaitez, ou être tenu au courant après la séance. L’objectif n’est jamais de faire à sa place, mais de lui rendre l’usage autonome — et de vous enlever, à vous, les appels de dépannage du dimanche soir.",
+        ],
+      },
+      {
+        title: "Comment se passe une séance",
+        bullets: [
+          "On échange quelques minutes au téléphone avant, pour cerner le besoin",
+          "Rendez-vous à domicile, à l’heure qui vous arrange",
+          "Environ 1 h 30 sur place, sur vos appareils, à votre rythme",
+          "On note ensemble les étapes sur une fiche papier que vous gardez",
+          "Vous décidez ensuite si vous souhaitez une autre séance, ou non",
+        ],
+      },
+      {
+        title: "Crédit d’impôt de 50 %",
+        paragraphs: [
+          "L’assistance et la formation informatique à domicile relèvent du service à la personne. Pour les prestations éligibles, la moitié de la somme vous est restituée sous forme de crédit d’impôt : une intervention à 79 € revient donc à 39,50 €. Aucune avance de dossier à monter de votre côté, l’attestation vous est fournie.",
+        ],
+      },
     ],
     relatedPages: [
       {
@@ -1716,27 +2050,43 @@ const SERVICE_PILLARS = {
         text: "Box, connexion, réseau faible : on remet l’accès en place.",
       },
       {
-        href: "/",
-        title: "Assistance numérique à domicile",
-        text: "Vue d’ensemble de l’accompagnement Loko aux Sables d’Olonne.",
+        href: "/assistance-informatique-les-sables-dolonne",
+        title: "Assistance informatique",
+        text: "Après la formation, un suivi régulier et quelqu’un à appeler en cas de doute.",
       },
     ],
     faq: [
       {
         q: "Faut-il déjà s’y connaître un minimum ?",
-        a: "Non, pas du tout. L’accompagnement part de là où vous en êtes, sans jugement.",
+        a: "Non, pas du tout. L’accompagnement part de là où vous en êtes, même si vous n’avez jamais allumé un ordinateur. Il n’y a aucun prérequis et aucun jugement.",
       },
       {
         q: "Apprend-on sur mes propres appareils ?",
-        a: "Oui, c’est l’idéal : on avance sur votre matériel, dans votre environnement, pour que ce soit utile au quotidien.",
+        a: "Oui, c’est l’idéal : on avance sur votre matériel, chez vous, pour que ce que vous apprenez soit directement réutilisable au quotidien.",
       },
       {
-        q: "C’est adapté aux personnes âgées ?",
-        a: "Oui. L’approche est pensée pour être rassurante, patiente et facile à suivre, en particulier pour les seniors.",
+        q: "Combien de temps dure une séance, et combien en faut-il ?",
+        a: "Une séance dure environ une heure et demie. Beaucoup de personnes n’en font qu’une ou deux, pour débloquer un usage précis. D’autres préfèrent un rendez-vous régulier, une fois par mois par exemple. Vous décidez à chaque fois, rien n’est engagé à l’avance.",
+      },
+      {
+        q: "Je cherche pour mon père ou ma mère, est-ce possible ?",
+        a: "Oui, c’est même très fréquent. Vous pouvez prendre le rendez-vous, expliquer ce qui bloque, et l’intervention se fait à son domicile. Vous pouvez être présent la première fois ou simplement être informé après la séance.",
+      },
+      {
+        q: "Est-ce que vous faites à ma place ou est-ce que vous m’apprenez ?",
+        a: "On vous apprend. Si une manipulation est urgente, on la règle d’abord, puis on reprend calmement pour que vous sachiez la refaire seul la prochaine fois.",
+      },
+      {
+        q: "Peut-on revoir plusieurs fois la même chose ?",
+        a: "Autant de fois que nécessaire. C’est normal d’oublier, surtout au début. Une fiche écrite avec les étapes vous est laissée à la fin de chaque séance pour vous y retrouver entre deux rendez-vous.",
       },
       {
         q: "La formation est-elle éligible au crédit d’impôt ?",
-        a: "Pour les prestations éligibles au service à la personne, vous pouvez bénéficier d’un crédit d’impôt de 50 %.",
+        a: "Oui, pour les prestations éligibles au service à la personne : 50 % de la somme vous est restituée en crédit d’impôt. Une intervention à 79 € revient donc à 39,50 €.",
+      },
+      {
+        q: "Intervenez-vous en dehors des Sables d’Olonne ?",
+        a: "Oui, dans toutes les communes voisines : Olonne-sur-Mer, Château-d’Olonne, L’Île-d’Olonne, Talmont-Saint-Hilaire, Sainte-Foy et alentours, sans supplément de déplacement.",
       },
     ],
   },
@@ -1778,9 +2128,9 @@ const SERVICE_PILLARS = {
         text: "Apprendre à utiliser ses appareils sereinement, à son rythme.",
       },
       {
-        href: "/",
-        title: "Assistance numérique à domicile",
-        text: "Vue d’ensemble de l’accompagnement Loko aux Sables d’Olonne.",
+        href: "/assistance-informatique-les-sables-dolonne",
+        title: "Assistance informatique",
+        text: "Un accompagnement dans la durée, pour ne plus rester bloqué seul.",
       },
     ],
     faq: [
@@ -1811,26 +2161,62 @@ const SERVICE_PILLARS = {
     title: "Dépannage TV & appareils connectés",
     art: "tv",
     seoTitle:
-      "Dépannage TV et box aux Sables d’Olonne | Télévision, streaming, objets connectés — Loko",
+      "Dépannage TV et box TV aux Sables d’Olonne | Écran noir, aucun signal — Loko",
     seoDescription:
-      "Loko remet votre TV en marche à domicile aux Sables d’Olonne : écran noir, plus de signal, box TV, Netflix ou applications qui ne fonctionnent plus, objets connectés à installer.",
+      "Ma TV ne s’allume plus, écran noir, « aucun signal », box TV bloquée, Netflix qui ne se lance plus : Loko intervient à domicile aux Sables d’Olonne, souvent le jour même. Crédit d’impôt 50 %.",
     hero:
       "Télévision, box ou appareil connecté qui ne répond plus aux Sables d’Olonne ? Loko remet tout en marche à domicile.",
     intro:
       "Loko intervient à domicile aux Sables d’Olonne pour votre télévision et vos appareils connectés : écran noir, plus aucun signal, mauvaise source, box TV, services de streaming comme Netflix qui ne se lancent plus, ou nouvel objet connecté à installer. L’objectif est de tout remettre en marche simplement et de vous montrer comment vous en servir.",
     symptoms: [
       "Télévision avec écran noir, « aucun signal » ou mauvaise source",
-      "Box TV qui ne s’allume plus ou ne répond plus",
-      "Netflix, Prime ou autre application qui ne se lance plus",
-      "Télécommande, son ou image mal réglés",
-      "Nouvel appareil connecté (TV, enceinte, caméra) à installer",
+      "Box TV (Orange, SFR, Bouygues, Free) qui ne s’allume plus ou reste bloquée",
+      "Chaînes disparues ou plus rangées dans le bon ordre après une mise à jour",
+      "Netflix, Prime, Disney+ ou le replay qui ne se lance plus",
+      "Deux ou trois télécommandes et on ne sait plus laquelle sert à quoi",
+      "Son absent, décalé, ou barre de son qui ne s’active plus",
+      "Nouvelle télévision à installer et à connecter au Wi-Fi",
+      "Nouvel appareil connecté (enceinte, caméra, décodeur) à mettre en service",
     ],
     help: [
+      "Diagnostic sur place : on trouve d’où vient réellement la panne",
       "Remise en route de la télévision et de la box TV",
-      "Reconfiguration des sources, du son et de l’image",
-      "Réinstallation de vos applications de streaming",
-      "Installation et mise en service d’appareils connectés",
-      "Explications simples pour tout reprendre en main",
+      "Reconfiguration des sources HDMI, du son et de l’image",
+      "Nouvelle recherche des chaînes et remise en ordre",
+      "Réinstallation et reconnexion de vos applications de streaming",
+      "Installation d’une TV neuve : branchements, Wi-Fi, comptes, réglages",
+      "Simplification des télécommandes quand c’est possible",
+      "Explications simples, notées, pour tout reprendre en main",
+    ],
+    sections: [
+      {
+        title: "« Ma télé ne marche plus » : les causes les plus fréquentes",
+        paragraphs: [
+          "Dans la grande majorité des cas, la télévision n’est pas en panne. Le problème vient de la chaîne d’appareils entre le mur et l’écran : la box Internet, le décodeur TV, un câble HDMI, ou simplement la mauvaise source sélectionnée sur le téléviseur.",
+          "C’est pour cela qu’un déplacement à domicile règle souvent la situation en une intervention : on teste chaque maillon dans l’ordre, au lieu de deviner au téléphone.",
+        ],
+        bullets: [
+          "Mauvaise source sélectionnée (HDMI 1 au lieu de HDMI 2, par exemple)",
+          "Câble HDMI débranché, abîmé, ou déplacé lors d’un ménage",
+          "Box TV qui a besoin d’être redémarrée dans le bon ordre",
+          "Mise à jour de l’opérateur qui a fait disparaître les chaînes",
+          "Wi-Fi trop faible dans le salon pour le streaming",
+          "Compte Netflix ou Prime déconnecté et mot de passe oublié",
+        ],
+      },
+      {
+        title: "Une TV neuve à installer ?",
+        paragraphs: [
+          "Livrer un téléviseur et le faire fonctionner sont deux choses différentes. Loko se déplace pour l’installation complète : branchements, connexion au Wi-Fi, recherche des chaînes, liaison avec la box TV et la barre de son, comptes de streaming, réglage de l’image et du son, et remise à plat des télécommandes.",
+          "Vous repartez avec une installation qui marche, et surtout que vous savez utiliser — pas avec un carton et un mode d’emploi.",
+        ],
+      },
+      {
+        title: "Ce que Loko ne fait pas",
+        paragraphs: [
+          "Loko n’est ni un opérateur, ni un réparateur d’écran. Si la dalle du téléviseur est cassée ou si la panne est purement matérielle, on vous le dit clairement sur place et on vous oriente vers la bonne solution, plutôt que de multiplier les interventions inutiles.",
+        ],
+      },
     ],
     relatedPages: [
       {
@@ -1848,6 +2234,11 @@ const SERVICE_PILLARS = {
         title: "Assistance numérique à domicile",
         text: "Vue d’ensemble de l’accompagnement Loko aux Sables d’Olonne.",
       },
+      {
+        href: "/formation-informatique-seniors-les-sables-dolonne",
+        title: "Formation informatique seniors",
+        text: "Reprendre la main sur la télécommande, la box et les applications, calmement.",
+      },
     ],
     faq: [
       {
@@ -1864,7 +2255,27 @@ const SERVICE_PILLARS = {
       },
       {
         q: "Est-ce éligible au crédit d’impôt de 50 % ?",
-        a: "Pour les prestations éligibles au service à la personne, vous pouvez bénéficier d’un crédit d’impôt de 50 %.",
+        a: "Oui, pour les prestations éligibles au service à la personne : une intervention à 79 € revient à 39,50 € après crédit d’impôt.",
+      },
+      {
+        q: "Mes chaînes ont disparu après une mise à jour, que faire ?",
+        a: "C’est un grand classique, surtout après une intervention de l’opérateur. Loko relance une recherche des chaînes, les remet dans le bon ordre et vérifie que les enregistrements et le replay fonctionnent toujours.",
+      },
+      {
+        q: "Intervenez-vous quel que soit l’opérateur ?",
+        a: "Oui : Orange, SFR, Bouygues, Free ou une TV connectée sans décodeur. Loko n’est pas un opérateur, mais intervient sur l’installation elle-même, à votre domicile.",
+      },
+      {
+        q: "Pouvez-vous installer une télévision neuve ?",
+        a: "Oui : branchements, connexion au Wi-Fi, recherche des chaînes, barre de son, comptes de streaming et réglages d’image. Et on vous montre comment vous en servir avant de partir.",
+      },
+      {
+        q: "Combien de temps dure l’intervention ?",
+        a: "Le plus souvent moins d’une heure et demie. Un diagnostic simple (source, câble, redémarrage) est réglé rapidement ; une installation complète prend un peu plus de temps.",
+      },
+      {
+        q: "J’ai trois télécommandes et je m’y perds, pouvez-vous simplifier ?",
+        a: "Oui. Quand le matériel le permet, on regroupe les fonctions sur une seule télécommande, et on note les deux ou trois gestes utiles sur une fiche que vous gardez.",
       },
     ],
   },
@@ -1873,26 +2284,53 @@ const SERVICE_PILLARS = {
     title: "Transfert de données & sauvegarde",
     art: "data",
     seoTitle:
-      "Transfert de données et sauvegarde aux Sables d’Olonne | Changement d’appareil — Loko",
+      "Récupérer ses photos et transférer ses données aux Sables d’Olonne — Loko",
     seoDescription:
-      "Loko sécurise et transfère vos données à domicile aux Sables d’Olonne : changement de téléphone ou d’ordinateur, sauvegarde de photos, contacts et fichiers. Rien de perdu.",
+      "Je veux récupérer mes photos, je change de téléphone, j’ai peur de tout perdre : Loko transfère et sauvegarde vos données à domicile aux Sables d’Olonne. Photos, contacts, messages et documents.",
     hero:
       "Changement de téléphone ou d’ordinateur aux Sables d’Olonne ? Loko transfère et sauvegarde vos données à domicile.",
     intro:
       "Loko intervient à domicile aux Sables d’Olonne lors d’un changement d’appareil ou pour mettre vos données à l’abri : transfert de photos, contacts, messages et fichiers d’un ancien téléphone ou ordinateur vers le nouveau, mise en place d’une sauvegarde fiable. L’objectif est simple : ne rien perdre et partir l’esprit tranquille.",
     symptoms: [
-      "Nouveau téléphone ou ordinateur à configurer",
-      "Peur de perdre ses photos, contacts ou documents",
-      "Ancien appareil à vider en toute sécurité",
-      "Aucune sauvegarde en place aujourd’hui",
-      "Données éparpillées entre plusieurs appareils",
+      "Je veux récupérer mes photos, je ne sais plus où elles sont",
+      "J’ai effacé quelque chose par erreur, peut-on le retrouver ?",
+      "Je change de téléphone et j’ai peur de tout perdre",
+      "Mon téléphone dit « stockage plein » et refuse de prendre des photos",
+      "Je n’ai jamais rien sauvegardé et ça m’inquiète",
+      "Mes photos sont éparpillées entre le téléphone, l’ordinateur et une clé USB",
+      "Je voudrais donner mon ancien appareil sans laisser mes données dessus",
+      "On me parle d’iCloud ou de Google Photos et je n’y comprends rien",
     ],
     help: [
-      "Transfert complet vers votre nouvel appareil",
-      "Récupération des photos, contacts, messages et fichiers",
-      "Mise en place d’une sauvegarde simple et fiable",
-      "Effacement sécurisé de l’ancien appareil si besoin",
-      "Explications claires pour garder vos données à l’abri",
+      "Recherche de vos photos là où elles sont réellement stockées",
+      "Récupération de fichiers effacés par erreur, quand c’est encore possible",
+      "Transfert complet vers votre nouvel appareil, vérifié devant vous",
+      "Photos, contacts, messages, mails et documents : rien n’est laissé de côté",
+      "Mise en place d’une sauvegarde simple qui tourne toute seule ensuite",
+      "Libération d’espace sans rien supprimer d’important",
+      "Effacement sécurisé de l’ancien appareil avant de le donner ou de le vendre",
+      "Explications claires pour savoir où sont vos données",
+    ],
+    sections: [
+      {
+        title: "« Je veux récupérer mes photos » : par où on commence",
+        paragraphs: [
+          "Dans la plupart des cas, les photos ne sont pas perdues, elles sont simplement quelque part où vous ne les cherchez pas : sur un compte iCloud ou Google auquel plus personne n’est connecté, dans une corbeille qui les garde encore trente jours, sur une carte mémoire, ou sur l’ancien téléphone rangé dans un tiroir.",
+          "On commence donc toujours par chercher avant de conclure. Et quand la perte est réelle — carte formatée, dossier supprimé, disque qui ne répond plus — on tente une récupération sur place, sans jamais promettre de résultat à l’avance.",
+        ],
+        bullets: [
+          "Un conseil essentiel : arrêtez d’utiliser l’appareil dès que vous constatez la perte",
+          "Ne réinstallez rien et ne « nettoyez » pas l’appareil avant de nous appeler",
+          "Plus on intervient tôt, plus les chances de tout retrouver sont élevées",
+        ],
+      },
+      {
+        title: "Une sauvegarde qui marche vraiment",
+        paragraphs: [
+          "Beaucoup de gens croient être sauvegardés parce qu’un message le leur a dit un jour. Une sauvegarde qui n’a pas tourné depuis deux ans, ou qu’on ne sait pas relire, ne protège de rien.",
+          "Loko met en place une sauvegarde simple, adaptée à ce que vous avez vraiment — pas une usine à gaz — puis fait l’essentiel : on restaure un fichier au hasard devant vous, pour vérifier que ça fonctionne. Vous saurez ensuite en une phrase où sont vos photos et comment les récupérer.",
+        ],
+      },
     ],
     relatedPages: [
       {
@@ -1910,11 +2348,24 @@ const SERVICE_PILLARS = {
         title: "Assistance numérique à domicile",
         text: "Vue d’ensemble de l’accompagnement Loko aux Sables d’Olonne.",
       },
+      {
+        href: "/formation-informatique-seniors-les-sables-dolonne",
+        title: "Formation informatique seniors",
+        text: "Apprendre à gérer et sauvegarder vos photos vous-même, sans crainte.",
+      },
     ],
     faq: [
       {
+        q: "J’ai effacé mes photos par erreur, peut-on les récupérer ?",
+        a: "Souvent oui, surtout si vous appelez rapidement. On regarde d’abord les corbeilles, les comptes iCloud ou Google et l’ancien appareil ; si la suppression est définitive, on tente une récupération sur place. Le plus important : cessez d’utiliser l’appareil en attendant.",
+      },
+      {
+        q: "Je ne retrouve plus mes photos sur mon téléphone, où sont-elles passées ?",
+        a: "Neuf fois sur dix, elles sont toujours là mais dans un compte auquel le téléphone n’est plus connecté, ou dans un album masqué. On les retrouve, on les remet à leur place et on vous montre où regarder à l’avenir.",
+      },
+      {
         q: "Je change de téléphone, vais-je perdre mes photos ?",
-        a: "Non : Loko transfère vos photos, contacts et messages vers le nouveau téléphone et vérifie que tout est bien là avant de finir.",
+        a: "Non : Loko transfère vos photos, contacts et messages vers le nouveau téléphone et vérifie devant vous que tout est bien là avant de finir. On ne vide l’ancien appareil qu’une fois cette vérification faite.",
       },
       {
         q: "Pouvez-vous transférer d’un ordinateur à un autre ?",
@@ -1967,6 +2418,14 @@ const NEARBY_CITIES = [
     neighbors: ["L’Île-d’Olonne", "Brem-sur-Mer"],
     local:
       "Petit village au nord-est, entre Olonne et Brem, Vairé garde un caractère rural et tranquille. Plutôt que de vous déplacer jusqu’aux Sables, vous profitez d’une assistance et d’un dépannage informatique directement à domicile, à votre rythme.",
+  },
+  {
+    slug: "grosbreuil",
+    name: "Grosbreuil",
+    timeMin: 15,
+    neighbors: ["Sainte-Foy", "Les Achards"],
+    local:
+      "Commune rurale de l’arrière-pays sablais, entre Sainte-Foy et Les Achards, Grosbreuil s’organise autour de son bourg, de son église et d’une série de hameaux dispersés le long des routes de campagne. Il n’y a aucun magasin d’informatique sur place : Loko vient donc directement à domicile, dans le bourg comme dans les hameaux, pour l’ordinateur, la box, le smartphone ou la télévision.",
   },
   {
     slug: "sainte-foy",
@@ -2024,6 +2483,30 @@ const NEARBY_CITIES = [
     local:
       "Station balnéaire prisée pour son port de plaisance, ses plages et sa forêt, Jard-sur-Mer compte beaucoup de résidences secondaires. Loko se déplace à domicile pour l’installation, le dépannage et la prise en main, résidents à l’année comme estivants.",
   },
+  {
+    slug: "longeville-sur-mer",
+    name: "Longeville-sur-Mer",
+    timeMin: 25,
+    neighbors: ["Jard-sur-Mer", "Talmont-Saint-Hilaire"],
+    local:
+      "Entre la forêt domaniale et les grandes plages du Rocher et des Conches, Longeville-sur-Mer étire son bourg, ses campings et ses lotissements sur plusieurs kilomètres jusqu’au Bouil. Les maisons y sont souvent basses, éloignées les unes des autres et entourées de pins — ce qui explique bien des soucis de couverture Wi-Fi. Loko se déplace à domicile sur toute la commune, du bourg au front de mer.",
+  },
+  {
+    slug: "saint-gilles-croix-de-vie",
+    name: "Saint-Gilles-Croix-de-Vie",
+    timeMin: 30,
+    neighbors: ["Saint-Hilaire-de-Riez", "Brem-sur-Mer"],
+    local:
+      "Port de pêche vivant à l’embouchure de la Vie, Saint-Gilles-Croix-de-Vie est constituée de deux rives réunies : Saint-Gilles côté port et criée, Croix-de-Vie côté Grande Plage et Boisvinet. Beaucoup d’appartements et de maisons de ville anciennes, des murs épais, des retraités installés à l’année. Loko intervient à domicile des deux côtés du pont pour Internet, l’ordinateur, la télévision et le smartphone.",
+  },
+  {
+    slug: "saint-hilaire-de-riez",
+    name: "Saint-Hilaire-de-Riez",
+    timeMin: 30,
+    neighbors: ["Saint-Gilles-Croix-de-Vie", "Brem-sur-Mer"],
+    local:
+      "Très étendue, Saint-Hilaire-de-Riez va du bourg intérieur au marais et aux Mattes, jusqu’à la corniche de Sion-sur-l’Océan et aux Demoiselles. C’est l’une des communes de Vendée qui compte le plus de résidences secondaires et de campings, avec des installations remises en service chaque printemps. Loko se déplace à domicile partout sur la commune, à l’année comme en saison.",
+  },
 ];
 
 const BUSINESS_AREAS = [
@@ -2079,6 +2562,11 @@ const problemCards = [
     href: "/depannage-informatique-les-sables-dolonne",
     label: "Ordinateur",
     desc: "Ordinateur lent, mails, fichiers ou imprimante : on simplifie votre usage au quotidien.",
+  },
+  {
+    href: "/assistance-informatique-les-sables-dolonne",
+    label: "Assistance informatique",
+    desc: "Un suivi régulier à domicile : mises à jour, sauvegardes et vos questions du quotidien.",
   },
   {
     href: "/depannage-tv-box-les-sables-dolonne",
@@ -2187,7 +2675,7 @@ function getGlobalBusinessSchema() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5",
-      reviewCount: "33",
+      reviewCount: "38",
       bestRating: "5",
       worstRating: "1",
     },
@@ -3204,6 +3692,14 @@ function TarifsPage() {
                 hoverStyle={styles.contactZoneLinkHover}
               >
                 Dépannage informatique
+              </HoverLink>
+              {" · "}
+              <HoverLink
+                href="/assistance-informatique-les-sables-dolonne"
+                baseStyle={styles.contactZoneLink}
+                hoverStyle={styles.contactZoneLinkHover}
+              >
+                Assistance informatique
               </HoverLink>
               {" · "}
               <HoverLink
@@ -4698,6 +5194,41 @@ function PlanDuSitePage() {
       href: "/depannage-informatique-les-sables-dolonne",
       title: "Ordinateur lent",
       text: "Aide à domicile si votre ordinateur devient trop lent, rame ou bloque au quotidien.",
+    },
+    {
+      href: "/depannage-informatique-les-sables-dolonne",
+      title: "Mon ordinateur ne s’allume plus",
+      text: "Aide à domicile si l’ordinateur ne démarre plus, reste sur écran noir ou s’éteint tout seul.",
+    },
+    {
+      href: "/depannage-informatique-les-sables-dolonne",
+      title: "Installer une imprimante",
+      text: "Aide à domicile pour installer une imprimante neuve et la connecter à tous vos appareils.",
+    },
+    {
+      href: "/depannage-informatique-les-sables-dolonne",
+      title: "Je n’arrive plus à ouvrir mes mails",
+      text: "Aide à domicile pour retrouver l’accès à votre messagerie et vos messages.",
+    },
+    {
+      href: "/assistance-informatique-les-sables-dolonne",
+      title: "Assistance informatique",
+      text: "Accompagnement à domicile dans la durée : mises à jour, sauvegardes et questions du quotidien.",
+    },
+    {
+      href: "/assistance-informatique-les-sables-dolonne",
+      title: "Maintenance informatique à domicile",
+      text: "Un passage régulier pour entretenir vos appareils et éviter les pannes.",
+    },
+    {
+      href: "/transfert-donnees-sauvegarde-les-sables-dolonne",
+      title: "Récupérer mes photos",
+      text: "Aide à domicile pour retrouver des photos disparues ou effacées par erreur.",
+    },
+    {
+      href: "/depannage-wifi-internet-les-sables-dolonne",
+      title: "Wifi qui coupe",
+      text: "Aide à domicile si le wifi coupe sans arrêt ou s’il faut relancer la box tous les jours.",
     },
     {
       href: "/depannage-informatique-les-sables-dolonne",
@@ -6507,12 +7038,20 @@ function SiteFooter() {
                   label: "Dépannage informatique",
                 },
                 {
+                  href: "/assistance-informatique-les-sables-dolonne",
+                  label: "Assistance informatique",
+                },
+                {
                   href: "/depannage-wifi-internet-les-sables-dolonne",
                   label: "Dépannage Wi-Fi & Internet",
                 },
                 {
                   href: "/formation-informatique-seniors-les-sables-dolonne",
-                  label: "Formation & aide",
+                  label: "Formation informatique seniors",
+                },
+                {
+                  href: "/depannage-tv-box-les-sables-dolonne",
+                  label: "Dépannage TV & box",
                 },
                 { href: "/credit-impot", label: "Crédit d’impôt 50 %" },
               ].map((s) => (
@@ -7051,6 +7590,26 @@ function HomePage({ city = null }) {
   const cityIn = `${cityPrep}${cityShortName}`;
   const services = [
     {
+      title: "Dépannage informatique",
+      text: "Ordinateur qui ne s’allume plus, ordinateur lent, imprimante ou mails inaccessibles : on se déplace et on répare.",
+      href: "/depannage-informatique-les-sables-dolonne",
+    },
+    {
+      title: "Formation informatique seniors",
+      text: "Ordinateur, smartphone, Internet, mails : des cours individuels à domicile, à votre rythme et sans jargon.",
+      href: "/formation-informatique-seniors-les-sables-dolonne",
+    },
+    {
+      title: "Dépannage TV & box",
+      text: "Écran noir, « aucun signal », box TV bloquée ou applications qui ne se lancent plus : on remet l’image en place.",
+      href: "/depannage-tv-box-les-sables-dolonne",
+    },
+    {
+      title: "Assistance informatique",
+      text: "Un accompagnement dans la durée pour vos appareils : réglages, mises à jour, sauvegardes et questions du quotidien.",
+      href: "/assistance-informatique-les-sables-dolonne",
+    },
+    {
       title: "Internet & Wi-Fi",
       text: "Connexion instable, Wi-Fi lent ou box à installer : on remet tout en place simplement à domicile.",
       href: "/depannage-wifi-internet-les-sables-dolonne",
@@ -7061,24 +7620,9 @@ function HomePage({ city = null }) {
       href: "/depannage-smartphone-les-sables-dolonne",
     },
     {
-      title: "Ordinateur",
-      text: "Ordinateur lent, mails, fichiers ou imprimante : on simplifie votre usage au quotidien.",
-      href: "/depannage-informatique-les-sables-dolonne",
-    },
-    {
-      title: "TV & appareils connectés",
-      text: "TV, box ou applications qui ne fonctionnent plus : on remet tout en marche sans prise de tête.",
-      href: "/depannage-tv-box-les-sables-dolonne",
-    },
-    {
       title: "Données & transferts",
       text: "Changement d’appareil ou peur de perdre vos données : on sécurise et transfère tout pour vous.",
       href: "/transfert-donnees-sauvegarde-les-sables-dolonne",
-    },
-    {
-      title: "Apprendre le numérique",
-      text: "Ordinateur, smartphone, Internet ou IA : apprenez simplement, à votre rythme, chez vous.",
-      href: "/formation-informatique-seniors-les-sables-dolonne",
     },
   ];
 
@@ -7099,7 +7643,7 @@ function HomePage({ city = null }) {
     "imprimante",
   ];
   const heroWordIndex = useRotatingWord(heroWords, 1900, animate);
-  const avisCount = useCountUp(33, 1100, animate);
+  const avisCount = useCountUp(38, 1100, animate);
   const fade = (delay) =>
     animate
       ? { animation: `lkFadeUp 0.6s cubic-bezier(0.2,0.7,0.2,1) both ${delay}s` }
@@ -7222,8 +7766,8 @@ function HomePage({ city = null }) {
                       marginTop: 16,
                     }}
                   >
-                    Assistance numérique & dépannage informatique à domicile{" "}
-                    {cityPrep}
+                    Dépannage informatique, assistance, formation seniors et
+                    TV&nbsp;/&nbsp;box à domicile {cityPrep}
                     <span
                       style={{
                         color: "#2563EB",
@@ -7245,7 +7789,7 @@ function HomePage({ city = null }) {
                   }}
                 >
                   {cityEnrichment?.heroIntro ||
-                    `Loko vous aide à domicile${isCity ? ` ${cityIn}` : ""} pour tout le numérique et le dépannage informatique : Internet, Wi-Fi, smartphone, ordinateur, télévision, sécurité et transfert de données. Pas besoin de boutique ni d’entreprise informatique — on vient chez vous, avec un crédit d’impôt de 50 %.`}
+                    `Loko intervient à domicile${isCity ? ` ${cityIn}` : ""} pour quatre choses : le dépannage informatique (ordinateur, imprimante, Internet), l’assistance informatique au quotidien, la formation informatique des seniors et le dépannage TV / box. Pas besoin de boutique ni d’entreprise informatique — on vient chez vous, avec un crédit d’impôt de 50 %.`}
                 </p>
 
                 <div
@@ -7306,7 +7850,7 @@ function HomePage({ city = null }) {
                 marginRight: "auto",
               }}
             >
-              Des solutions concrètes pour vos appareils du quotidien
+              Dépannage, assistance et formation informatique à domicile
             </h2>
             <p
               style={{
@@ -7731,7 +8275,7 @@ function ReviewsBanner() {
           <span style={styles.socialProofStars} aria-hidden="true">
             ★★★★★
           </span>
-          <span style={styles.socialProofText}>33 avis Google</span>
+          <span style={styles.socialProofText}>38 avis Google</span>
         </a>
       </div>
       <div
@@ -8029,6 +8573,7 @@ const CITY_LOC = {
   "chateau-d-olonne": ["au ", "Château-d’Olonne"],
   "l-ile-d-olonne": ["à ", "L’Île-d’Olonne"],
   vaire: ["à ", "Vairé"],
+  grosbreuil: ["à ", "Grosbreuil"],
   "sainte-foy": ["à ", "Sainte-Foy"],
   "brem-sur-mer": ["à ", "Brem-sur-Mer"],
   "saint-mathurin": ["à ", "Saint-Mathurin"],
@@ -8036,6 +8581,9 @@ const CITY_LOC = {
   "les-achards": ["aux ", "Achards"],
   "nieul-le-dolent": ["à ", "Nieul-le-Dolent"],
   "jard-sur-mer": ["à ", "Jard-sur-Mer"],
+  "longeville-sur-mer": ["à ", "Longeville-sur-Mer"],
+  "saint-gilles-croix-de-vie": ["à ", "Saint-Gilles-Croix-de-Vie"],
+  "saint-hilaire-de-riez": ["à ", "Saint-Hilaire-de-Riez"],
 };
 
 const HUB_LOC = "aux Sables d’Olonne";
@@ -8391,6 +8939,53 @@ function ProblemPage({ page, originCity = null }) {
             </div>
           </div>
         </section>
+
+        {/* CONTENU ÉDITORIAL (optionnel) — page.sections : [{ title, paragraphs, bullets }] */}
+        {page.sections?.length ? (
+          <section style={{ padding: isMobile ? "40px 0 4px" : "56px 0 4px" }}>
+            <div style={styles.containerNarrow}>
+              {page.sections.map((sec) => (
+                <div key={sec.title} style={{ marginBottom: isMobile ? 32 : 44 }}>
+                  <h2
+                    style={{
+                      ...styles.sectionTitle,
+                      fontSize: isMobile ? 23 : 30,
+                      marginTop: 0,
+                    }}
+                  >
+                    {sec.title}
+                  </h2>
+                  {(sec.paragraphs || []).map((p) => (
+                    <p
+                      key={p.slice(0, 40)}
+                      style={{
+                        ...styles.sectionText,
+                        fontSize: isMobile ? 15.5 : 16,
+                        lineHeight: 1.7,
+                        marginTop: 12,
+                      }}
+                    >
+                      {p}
+                    </p>
+                  ))}
+                  {sec.bullets?.length ? (
+                    <div style={{ ...t.rows, marginTop: 16 }}>
+                      {sec.bullets.map((item, i) => (
+                        <div
+                          key={item}
+                          style={{ ...t.row, ...(i > 0 ? t.rowDivider : {}) }}
+                        >
+                          <span style={t.iconWrap}>{check(BLUE, 16)}</span>
+                          <span style={t.rowText}>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {/* CTA BAR */}
         <section style={{ padding: isMobile ? "44px 0" : "60px 0" }}>

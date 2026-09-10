@@ -86,6 +86,90 @@ const CITY_ENRICHMENT = {
       },
     ],
   },
+  grosbreuil: {
+    seoDescription:
+      "Aide informatique à domicile à Grosbreuil : bourg et hameaux, ordinateur lent, Wi-Fi, imprimante et smartphone. Aucun magasin sur place, ~15 min des Sables.",
+    heroIntro:
+      "À Grosbreuil, il n’y a ni boutique informatique ni réparateur : Loko vient chez vous, dans le bourg comme dans les hameaux, pour l’ordinateur qui rame, le Wi-Fi qui coupe, l’imprimante ou le téléphone.",
+    highlights: [
+      "Aucun dépanneur sur la commune : c’est l’intervention qui se déplace",
+      "Hameaux éloignés du bourg où le débit reste modeste",
+      "Ordinateur familial ancien à nettoyer plutôt qu’à remplacer",
+    ],
+    faq: [
+      {
+        q: "Y a-t-il un réparateur informatique à Grosbreuil ?",
+        a: "Non, il n’y en a pas sur la commune. C’est justement pour cela que Loko se déplace à domicile : vous n’avez ni à charger votre ordinateur dans la voiture, ni à rouler jusqu’aux Sables ou aux Achards.",
+      },
+      {
+        q: "Intervenez-vous dans les hameaux autour du bourg ?",
+        a: "Oui, sur toute la commune : le bourg, les fermes et les hameaux dispersés. Le déplacement est compris, sans supplément par rapport aux Sables d’Olonne.",
+      },
+    ],
+  },
+  "longeville-sur-mer": {
+    seoDescription:
+      "Dépannage informatique à Longeville-sur-Mer : bourg, Le Bouil, plage du Rocher. Wi-Fi dans les maisons sous les pins, TV et smartphone à domicile. ~25 min des Sables.",
+    heroIntro:
+      "À Longeville-sur-Mer, du bourg au Bouil et jusqu’aux plages, Loko intervient à domicile : Wi-Fi qui ne passe pas d’un bout à l’autre de la maison, télévision, box et smartphone.",
+    highlights: [
+      "Maisons basses et étalées sous les pins : Wi-Fi qui ne couvre pas tout",
+      "Résidences et locations à remettre en service au printemps",
+      "TV et streaming remis en route pour les séjours en famille",
+    ],
+    faq: [
+      {
+        q: "Le Wi-Fi ne passe pas jusqu’au fond de la maison à Longeville, est-ce normal ?",
+        a: "C’est très fréquent ici : les maisons sont souvent de plain-pied et très étalées, parfois avec une extension ou une véranda. On mesure la couverture réelle chez vous et on ajoute un répéteur ou un réseau maillé là où c’est utile.",
+      },
+      {
+        q: "Pouvez-vous préparer une maison de location avant la saison ?",
+        a: "Oui : remise en route de la box, du Wi-Fi et de la télévision, vérification des applications de streaming et des codes, pour que tout fonctionne à l’arrivée des locataires.",
+      },
+    ],
+  },
+  "saint-gilles-croix-de-vie": {
+    seoDescription:
+      "Assistance informatique à Saint-Gilles-Croix-de-Vie : port, Grande Plage, Boisvinet. Wi-Fi en appartement, ordinateur, TV et smartphone à domicile. ~30 min des Sables.",
+    heroIntro:
+      "À Saint-Gilles-Croix-de-Vie, des quais du port à la Grande Plage, Loko se déplace à domicile pour l’ordinateur, la box, la télévision et le smartphone — appartements comme maisons de ville.",
+    highlights: [
+      "Appartements et maisons de ville anciennes : murs épais, Wi-Fi qui bloque",
+      "Accompagnement de retraités installés à l’année sur les deux rives",
+      "Passage à la fibre et changement d’opérateur à reconfigurer",
+    ],
+    faq: [
+      {
+        q: "Intervenez-vous des deux côtés du pont, à Saint-Gilles comme à Croix-de-Vie ?",
+        a: "Oui, sur l’ensemble de la commune : côté port et criée, côté Grande Plage, Boisvinet et les quartiers résidentiels en retrait.",
+      },
+      {
+        q: "Mon Wi-Fi passe mal dans un appartement ancien, que faire ?",
+        a: "Les murs épais et les cloisons d’origine coupent beaucoup le signal. On repositionne la box, on teste chaque pièce et on ajoute si besoin un répéteur ou un boîtier CPL adapté au logement.",
+      },
+    ],
+  },
+  "saint-hilaire-de-riez": {
+    seoDescription:
+      "Dépannage informatique à Saint-Hilaire-de-Riez : bourg, Sion-sur-l’Océan, Les Mattes. Wi-Fi, TV, box et smartphone à domicile. Résidences secondaires, ~30 min des Sables.",
+    heroIntro:
+      "À Saint-Hilaire-de-Riez, du bourg aux Mattes et jusqu’à Sion-sur-l’Océan, Loko vient à domicile remettre en route Internet, la télévision, l’ordinateur ou le téléphone — à l’année comme en saison.",
+    highlights: [
+      "Commune très étendue : une intervention à domicile évite tout déplacement",
+      "Résidences secondaires à réveiller chaque printemps (box, TV, comptes)",
+      "Réseau saturé en été quand toute la famille se connecte en même temps",
+    ],
+    faq: [
+      {
+        q: "Venez-vous à Sion-sur-l’Océan et dans le secteur des Mattes ?",
+        a: "Oui, Loko couvre toute la commune de Saint-Hilaire-de-Riez : le bourg, le marais et les Mattes, la corniche de Sion et les quartiers proches des plages.",
+      },
+      {
+        q: "Ma résidence secondaire est fermée depuis l’hiver, tout est à remettre en route.",
+        a: "C’est une demande classique ici. On rebranche et reconfigure la box, on relance la télévision et la recherche des chaînes, on reconnecte les comptes de streaming et on vérifie le Wi-Fi avant votre séjour.",
+      },
+    ],
+  },
   "sainte-foy": {
     seoDescription:
       "Assistance numérique à Sainte-Foy : dépannage Wi-Fi, ordinateur, TV et smartphone à domicile. Commune résidentielle, ~12 min des Sables.",

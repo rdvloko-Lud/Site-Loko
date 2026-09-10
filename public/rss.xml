@@ -6,7 +6,14 @@
     <atom:link href="https://www.lokofr.com/rss.xml" rel="self" type="application/rss+xml" />
     <description>Astuces et conseils simples pour mieux vivre avec vos appareils : Wi-Fi, ordinateur, smartphone, TV et sécurité. Le blog Loko, écrit à partir de cas réels aux Sables d’Olonne.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Wed, 01 Jul 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Votre PC rame ou tourne encore sous Windows 10 : faut-il le changer ?</title>
+      <link>https://www.lokofr.com/blog/pc-qui-rame-windows-10</link>
+      <guid isPermaLink="true">https://www.lokofr.com/blog/pc-qui-rame-windows-10</guid>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 GMT</pubDate>
+      <description>Windows 10 n'est plus mis à jour depuis octobre 2025 et votre ordinateur s'essouffle ? Avant d'en racheter un, voici ce qui se répare vraiment, et quand changer devient raisonnable.</description>
+    </item>
     <item>
       <title>Arnaques par mail et SMS : comment les reconnaître (et quoi faire)</title>
       <link>https://www.lokofr.com/blog/reconnaitre-arnaques-mail-sms</link>

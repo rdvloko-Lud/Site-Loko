@@ -28,6 +28,7 @@ const staticPagesSeo = {
 // Pages "piliers" (services forts) — voir SERVICE_PILLARS dans src/App.js
 const servicePillars = [
   "/depannage-informatique-les-sables-dolonne",
+  "/assistance-informatique-les-sables-dolonne",
   "/depannage-wifi-internet-les-sables-dolonne",
   "/depannage-smartphone-les-sables-dolonne",
   "/depannage-tv-box-les-sables-dolonne",
@@ -41,6 +42,7 @@ const cityPages = [
   "/aide-informatique-chateau-d-olonne",
   "/aide-informatique-l-ile-d-olonne",
   "/aide-informatique-vaire",
+  "/aide-informatique-grosbreuil",
   "/aide-informatique-sainte-foy",
   "/aide-informatique-brem-sur-mer",
   "/aide-informatique-saint-mathurin",
@@ -48,6 +50,9 @@ const cityPages = [
   "/aide-informatique-les-achards",
   "/aide-informatique-nieul-le-dolent",
   "/aide-informatique-jard-sur-mer",
+  "/aide-informatique-longeville-sur-mer",
+  "/aide-informatique-saint-gilles-croix-de-vie",
+  "/aide-informatique-saint-hilaire-de-riez",
 ];
 
 // Pages "blog" — générées depuis content/blog/*.md par generate-blog.js
