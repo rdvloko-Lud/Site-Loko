@@ -6487,7 +6487,7 @@ function LinkedInIcon() {
   );
 }
 
-// Icône de la marque Lockpit (lock-pit.com) — source : lockpit-site/assets/lockpit-app-icon.svg
+// Icône de la marque Lockpit (lockpit.fr) — source : lockpit-site/assets/lockpit-app-icon.svg
 function LockpitIcon({ size = 24 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
@@ -6575,7 +6575,7 @@ function ProBand() {
             </div>
           </div>
           <a
-            href="https://www.lock-pit.com"
+            href="https://lockpit.fr"
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={() => setHover(true)}
@@ -7163,7 +7163,7 @@ function SiteFooter() {
           >
             Fait par{" "}
             <a
-              href="https://www.lock-pit.com"
+              href="https://lockpit.fr"
               target="_blank"
               rel="noopener noreferrer"
               style={{
