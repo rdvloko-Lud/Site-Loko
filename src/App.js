@@ -6950,6 +6950,57 @@ function BlogPostPage({ post }) {
   );
 }
 
+const LOCKPIT_LOGO_PATH =
+  "M36 270h37v123h105v33H36z M248 347.5a91 86.5 0 1 0 182 0a91 86.5 0 1 0 -182 0z M283.5 347.5a55.5 52 0 1 1 111.0 0a55.5 52 0 1 1 -111.0 0z M666.0 295.8A91 86.5 0 1 0 666.8 398.2L639.6 375.8A55.5 52 0 1 1 638.7 318.0z M757 270h37v59l-37 30z M887.1 270h38.4L826 356Q800 380 772 426h-15v-48z M855.5 351.2L931.4 426h-48.7L830.5 374.5z M1012 270h109.5a51.5 51.5 0 0 1 0 103H1048.5v53H1012z M1048.5 300v43.5h67.7a21.75 21.75 0 0 0 0-43.5z M1250 270h36v156h-36z M1360 270h155v32h-57v124h-36V302h-62z M279 200.5L1260 36.4V199h-15V52.9L279 214.5z M288 486h14v139.7L1260 472.4v14L288 641.9z";
+
+// Crédit discret « Réalisé par » + logo Lockpit (mot), aligné à droite du footer.
+function FooterCredit({ isMobile }) {
+  const [active, setActive] = useState(false);
+  return (
+    <p
+      style={{
+        margin: "16px 0 0",
+        paddingTop: 14,
+        borderTop: "1px solid rgba(255,255,255,0.1)",
+        textAlign: isMobile ? "left" : "right",
+        fontSize: "0.72rem",
+        color: "rgba(255,255,255,0.46)",
+        opacity: 0.7,
+      }}
+    >
+      Réalisé par{" "}
+      <a
+        href="https://lockpit.fr/"
+        target="_blank"
+        rel="noopener"
+        aria-label="Lockpit"
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        onFocus={(e) => {
+          if (e.target.matches(":focus-visible")) setActive(true);
+        }}
+        onBlur={() => setActive(false)}
+        style={{
+          display: "inline-flex",
+          verticalAlign: "middle",
+          color: active ? "#F2A200" : "inherit",
+          opacity: active ? 1 : undefined,
+          transition: "color 0.3s",
+        }}
+      >
+        <svg
+          viewBox="36 36 1480 606"
+          role="img"
+          aria-hidden="true"
+          style={{ height: 30, width: "auto", display: "block" }}
+        >
+          <path fill="currentColor" fillRule="evenodd" d={LOCKPIT_LOGO_PATH} />
+        </svg>
+      </a>
+    </p>
+  );
+}
+
 function SiteFooter() {
   const isMobile = useIsMobile();
   // Sur mobile, on enlève les "boîtes" (bord + fond + padding) pour un footer
@@ -7154,29 +7205,8 @@ function SiteFooter() {
             <span style={styles.footerLegalDot}>•</span>
             <span>Service local d’assistance numérique à domicile</span>
           </div>
-          <span
-            style={{
-              fontSize: 12,
-              color: "rgba(255,255,255,0.4)",
-              marginTop: 2,
-            }}
-          >
-            Fait par{" "}
-            <a
-              href="https://lockpit.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontWeight: 700,
-                color: "rgba(255,255,255,0.7)",
-                textDecoration: "none",
-              }}
-            >
-              Lockpit
-            </a>{" "}
-            avec le ❤️
-          </span>
         </div>
+        <FooterCredit isMobile={isMobile} />
       </div>
       </footer>
     </>
