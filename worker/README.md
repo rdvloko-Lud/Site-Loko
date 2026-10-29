@@ -29,8 +29,18 @@ bascule été/hiver gérée). Tout se règle en haut du fichier.
 
 ## Anti-spam
 
-Honeypot (`website`), délai minimum côté site, **Turnstile vérifié côté serveur**
-et limitation par IP (5 messages/h, 2 réservations/h).
+Plusieurs couches, dans l'ordre (`src/services/security.js`) :
+
+1. **Origine** : un POST sans en-tête `Origin` lokofr.com (curl, script) → 403.
+2. **Honeypot** (`website`) et délai minimum côté site.
+3. **Turnstile vérifié côté serveur** — widget « Loko - formulaires publics »,
+   secret `TURNSTILE_SECRET` sur le Worker, clé de site
+   `REACT_APP_TURNSTILE_SITE_KEY` sur le projet Pages `site-loko`.
+4. **Limitation par IP** : 3 messages/h, 2 réservations/h.
+5. **Filtre de contenu** : lien dans le message / nom / ville, e-mail jetable
+   (`prodmail.online`, `yopmail.com`…) ou TLD douteux, nom sans lettre.
+   Le robot reçoit `{ ok: true }` mais rien n'est enregistré ni envoyé ;
+   le rejet est journalisé (`spam-rejete`) dans l'observabilité du Worker.
 
 ## Déploiement (à faire une fois)
 

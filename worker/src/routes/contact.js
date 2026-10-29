@@ -2,9 +2,11 @@ import { json, adminOk } from "../http.js";
 import { sendEmail } from "../services/email.js";
 import { contactAdminHtml, contactClientHtml } from "../services/emailTemplates.js";
 import { validateContact } from "../services/validate.js";
-import { verifyTurnstile, isRateLimited, clientIp } from "../services/security.js";
+import { verifyTurnstile, isRateLimited, clientIp, originOk, spamReason, logSpam } from "../services/security.js";
 
 export async function handlePostContact(request, env, ctx) {
+  if (!originOk(request)) return json(request, { error: "Origine non autorisée" }, 403);
+
   const body = await request.json().catch(() => null);
   if (body?.website) return json(request, { ok: true }); // honeypot : on fait semblant
 
@@ -15,11 +17,17 @@ export async function handlePostContact(request, env, ctx) {
   if (!(await verifyTurnstile(env, body?.turnstileToken, ip))) {
     return json(request, { error: "Vérification anti-robot échouée" }, 403);
   }
-  if (await isRateLimited(env, `contact:${ip}`, 5, 1)) {
+  if (await isRateLimited(env, `contact:${ip}`, 3, 1)) {
     return json(request, { error: "Trop de messages envoyés. Réessayez dans une heure." }, 429);
   }
 
   const data = check.data;
+  const reason = spamReason(data);
+  if (reason) {
+    // On fait semblant d'accepter : le robot ne sait pas qu'il est filtré.
+    logSpam("contact", reason, ip, data);
+    return json(request, { ok: true });
+  }
   const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   await env.RESA_KV.put(
     `contact:${id}`,

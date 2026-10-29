@@ -12,7 +12,7 @@ import { fetchBusyRanges, overlapsBusy, pushBooking } from "../services/os.js";
 import { validateBooking } from "../services/validate.js";
 import { sendEmail } from "../services/email.js";
 import { bookingAdminHtml, bookingClientHtml } from "../services/emailTemplates.js";
-import { verifyTurnstile, isRateLimited, clientIp } from "../services/security.js";
+import { verifyTurnstile, isRateLimited, clientIp, originOk, spamReason, logSpam } from "../services/security.js";
 
 /** GET /api/slots?from=YYYY-MM-DD&to=YYYY-MM-DD → { "2026-08-25": ["09:00", ...] } */
 export async function handleGetSlots(request, url, env) {
@@ -75,6 +75,8 @@ function isBusyInOs(busy, slot) {
 }
 
 export async function handlePostBook(request, env, ctx) {
+  if (!originOk(request)) return json(request, { error: "Origine non autorisée" }, 403);
+
   const body = await request.json().catch(() => null);
   if (body?.website) return json(request, { ok: true }); // honeypot
 
@@ -90,6 +92,11 @@ export async function handlePostBook(request, env, ctx) {
   }
 
   const data = check.data;
+  const reason = spamReason(data);
+  if (reason) {
+    logSpam("book", reason, ip, data);
+    return json(request, { ok: true });
+  }
   const { slot } = data;
   if (!isWorkDay(slot.slice(0, 10)) || !isBookable(slot)) {
     return json(request, { error: "Créneau indisponible" }, 400);
