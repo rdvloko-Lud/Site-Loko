@@ -15,6 +15,7 @@ de clé API).
 | `POST` | `/api/admin/login` | Vérifie le mot de passe admin |
 | `GET` | `/api/admin/bookings?from=&to=` | RDV + créneaux bloqués |
 | `POST` | `/api/admin/block` | `{ slot, action: "block" \| "unblock" }` |
+| `POST` | `/api/agents/block` | `{ action, ranges:[{start,end}], marginMinutes? }` — jeton `BLOCK_TOKEN` dédié (bloquer/débloquer uniquement), marge 1 h par défaut |
 | `POST` | `/api/admin/cancel` | `{ slot, notify }` — annule et prévient le client |
 | `GET` | `/api/admin/contacts` | Messages reçus |
 | `DELETE` | `/api/admin/contact` | `{ id }` |

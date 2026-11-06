@@ -36,5 +36,6 @@
   // Secrets (npx wrangler secret put <NOM>) :
   //   ADMIN_PASSWORD     — mot de passe de la page /admin-rdv.html
   //   TURNSTILE_SECRET   — clé secrète Turnstile (facultatif mais recommandé)
+  //   BLOCK_TOKEN        — jeton de la routine de planification : bloque / débloque des créneaux, rien d'autre
   //   SITE_SYNC_SECRET   — secret partagé avec OS-Loko (mêmes valeurs des deux côtés)
 }
