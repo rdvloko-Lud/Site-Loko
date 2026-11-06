@@ -1,3 +1,4 @@
+import { loadNexusRanges } from "./nexusBlocks.js";
 // Pont vers OS-Loko (application interne) : agenda des interventions.
 // Les routes /api/public/* de l'app sont protégées par le secret partagé
 // SITE_SYNC_SECRET. Toutes les fonctions échouent « en douceur » : si l'app est
@@ -31,7 +32,7 @@ function logError(action, error) {
  * Renvoie [] si la synchro n'est pas configurée ou si l'app est injoignable :
  * mieux vaut proposer un créneau de trop que casser la page de réservation.
  */
-export async function fetchBusyRanges(env, fromISO, toISO) {
+async function fetchOsRanges(env, fromISO, toISO) {
   if (!ready(env)) return [];
   try {
     // On élargit la fenêtre de la marge : une intervention juste avant ou juste après
@@ -61,6 +62,18 @@ export async function fetchBusyRanges(env, fromISO, toISO) {
     logError("lecture des disponibilités", err);
     return [];
   }
+}
+
+ /**
+ * Plages occupées = agenda d'OS-Loko + planning Nexus (RDV Lockpit et interventions),
+ * pour que tout ce qui bloque Luderic bloque aussi ce site.
+ */
+export async function fetchBusyRanges(env, fromISO, toISO) {
+  const [os, nexus] = await Promise.all([
+    fetchOsRanges(env, fromISO, toISO),
+    loadNexusRanges(env),
+  ]);
+  return [...os, ...nexus];
 }
 
 /**

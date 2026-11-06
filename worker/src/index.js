@@ -8,6 +8,7 @@ import {
   handlePostAdminLogin,
 } from "./routes/admin.js";
 import { handlePostAgentsBlock } from "./routes/agents.js";
+import { handlePostNexusBlocks } from "./routes/nexus.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -22,6 +23,7 @@ export default {
       if (path === "/api/slots" && method === "GET") return await handleGetSlots(request, url, env);
       if (path === "/api/book" && method === "POST") return await handlePostBook(request, env, ctx);
 
+      if (path === "/api/nexus/blocks" && method === "POST") return await handlePostNexusBlocks(request, env);
       if (path === "/api/agents/block" && method === "POST") return await handlePostAgentsBlock(request, env);
 
       if (path === "/api/admin/login" && method === "POST") return await handlePostAdminLogin(request, env);
