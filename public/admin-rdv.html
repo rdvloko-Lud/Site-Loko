@@ -74,6 +74,7 @@
     .slot.booked{background:rgba(37,99,235,.09);border-color:rgba(37,99,235,.35);color:#1D4ED8;cursor:default}
     .slot.blocked{background:rgba(28,36,51,.06);border-color:var(--line);color:var(--soft)}
     .slot.os{background:rgba(234,106,18,.09);border-color:rgba(234,106,18,.32);color:#B5530D;cursor:default}
+    .slot.marge{background:repeating-linear-gradient(-55deg,rgba(28,36,51,.10) 0 1.5px,transparent 1.5px 6px);border-color:var(--line);color:var(--soft);cursor:default}
     .slot.blocked:hover{border-color:var(--ink);color:var(--ink)}
     .slot.past{opacity:.4;cursor:default}
     .slot-name{display:block;width:100%;font:500 10.5px var(--font);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -308,6 +309,10 @@
           el.classList.add("booked");
           el.innerHTML = label + '<span class="slot-name">' + esc(booked[slot].nom) + "</span>";
           el.title = booked[slot].nom + " — " + booked[slot].telephone;
+        } else if (osBusy[slot] && osBusy[slot].margin){
+          el.classList.add("marge");
+          el.innerHTML = label + '<span class="slot-name">marge</span>';
+          el.title = "Marge d'1 h autour de : " + osBusy[slot].label;
         } else if (osBusy[slot]){
           el.classList.add("os");
           el.innerHTML = label + '<span class="slot-name">' + esc(osBusy[slot].label) + "</span>";

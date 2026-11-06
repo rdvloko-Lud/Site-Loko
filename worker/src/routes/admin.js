@@ -43,7 +43,7 @@ export async function handleGetAdminBookings(request, url, env) {
         }
         const { startMs, endMs } = slotBounds(slot);
         const os = findBusy(busy, startMs, endMs);
-        if (os) result.push({ slot, date: dateStr, time, type: "os", label: os.label, kind: os.kind });
+        if (os) result.push({ slot, date: dateStr, time, type: "os", label: os.label, kind: os.kind, margin: os.margin });
       }
     }
     cur.setUTCDate(cur.getUTCDate() + 1);

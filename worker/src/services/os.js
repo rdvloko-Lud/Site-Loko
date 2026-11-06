@@ -34,9 +34,13 @@ function logError(action, error) {
 export async function fetchBusyRanges(env, fromISO, toISO) {
   if (!ready(env)) return [];
   try {
+    // On élargit la fenêtre de la marge : une intervention juste avant ou juste après
+    // la période demandée doit quand même bloquer ses créneaux voisins.
+    const lo = new Date(Date.parse(fromISO) - BLOCK_MARGIN_MS).toISOString();
+    const hi = new Date(Date.parse(toISO) + BLOCK_MARGIN_MS).toISOString();
     const res = await osFetch(
       env,
-      `${osUrl(env, "/api/public/availability")}?from=${encodeURIComponent(fromISO)}&to=${encodeURIComponent(toISO)}`,
+      `${osUrl(env, "/api/public/availability")}?from=${encodeURIComponent(lo)}&to=${encodeURIComponent(hi)}`,
       { headers: { "x-site-secret": env.SITE_SYNC_SECRET } }
     );
     if (!res.ok) {
@@ -59,14 +63,26 @@ export async function fetchBusyRanges(env, fromISO, toISO) {
   }
 }
 
-/** Un créneau [start, end) chevauche-t-il une plage occupée ? */
+/**
+ * Marge de sécurité autour de chaque rendez-vous : une heure avant et une heure après
+ * (le temps d'arriver et de souffler), comme sur lockpit.fr.
+ */
+export const BLOCK_MARGIN_MS = 60 * 60 * 1000;
+
+/** Un créneau [start, end) chevauche-t-il une plage occupée, marge comprise ? */
 export function overlapsBusy(busy, startMs, endMs) {
-  return busy.some((r) => startMs < r.end && endMs > r.start);
+  return busy.some((r) => startMs < r.end + BLOCK_MARGIN_MS && endMs > r.start - BLOCK_MARGIN_MS);
 }
 
-/** La plage occupée qui chevauche ce créneau, s'il y en a une. */
+/**
+ * La plage occupée qui bloque ce créneau, s'il y en a une. `margin: true` quand le créneau
+ * n'est bloqué que par la marge (le rendez-vous lui-même tombe sur un autre créneau).
+ */
 export function findBusy(busy, startMs, endMs) {
-  return busy.find((r) => startMs < r.end && endMs > r.start) || null;
+  const direct = busy.find((r) => startMs < r.end && endMs > r.start);
+  if (direct) return { ...direct, margin: false };
+  const near = busy.find((r) => startMs < r.end + BLOCK_MARGIN_MS && endMs > r.start - BLOCK_MARGIN_MS);
+  return near ? { ...near, margin: true } : null;
 }
 
 /** Crée le client et l'intervention dans OS-Loko. Renvoie l'id ou null. */
