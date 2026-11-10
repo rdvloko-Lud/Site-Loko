@@ -3,6 +3,7 @@ import logoCreditImpot from "./Assets/logo-credit-impot.png";
 import { BLOG_POSTS } from "./blogData";
 import { getCityEnrichment } from "./cityEnrichment";
 import DemoVideoPage from "./demo-video/DemoVideoPage";
+import ChristmasTheme, { NoelBand, SantaHat, useNoel } from "./ChristmasTheme";
 const SITE_URL = "https://www.lokofr.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-loko.jpg`;
 const DEFAULT_SITE_NAME = "Loko";
@@ -39,8 +40,23 @@ const UI_FONT =
 const GOOGLE_REVIEWS_URL =
   "https://www.google.com/search?q=Loko+Les+Sables+d%27Olonne&hl=fr";
 
-// Vrais avis de la page Google de Loko (note 5/5, 38 avis).
+// Vrais avis de la page Google de Loko (note 5/5, 41 avis).
 const GOOGLE_REVIEWS = [
+  {
+    author: "G-Assist",
+    rating: 5,
+    text: "Merci beaucoup à Ludéric pour sa réactivité et son professionnalisme ! Je vous recommanderais avec plaisir :)",
+  },
+  {
+    author: "Elle Jj",
+    rating: 5,
+    text: "Parfait, efficacité et rapidité, je recommande 👌",
+  },
+  {
+    author: "Linda Stedjee",
+    rating: 5,
+    text: "Very knowledgeable computer and phone expert. Arrived right on time and got the work done very quickly. Highly recommended",
+  },
   {
     author: "Sybille Sauvez",
     rating: 5,
@@ -2675,7 +2691,7 @@ function getGlobalBusinessSchema() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5",
-      reviewCount: "38",
+      reviewCount: "41",
       bestRating: "5",
       worstRating: "1",
     },
@@ -3357,9 +3373,11 @@ export default function LokoSite() {
   return (
     <>
       <SiteBackground />
+      <NoelBand />
       {page}
       <ContactModal />
       <CreditModal />
+      <ChristmasTheme />
     </>
   );
 }
@@ -6384,7 +6402,10 @@ function SiteLogo() {
       aria-label="Retour à l’accueil Loko"
     >
       <div style={styles.logoWrap}>
-        <img src="/logo-loko.webp" alt="Logo Loko" style={styles.logoImage} />
+        <span style={{ position: "relative", display: "inline-block" }}>
+          <img src="/logo-loko.webp" alt="Logo Loko" style={styles.logoImage} />
+          <SantaHat size={52} />
+        </span>
         <div style={styles.logoTextBlock}>
           <div style={styles.sublogo}>Assistance numérique à domicile</div>
         </div>
@@ -7308,6 +7329,21 @@ function SiteBackground() {
     { name: "laptop", left: "48%", top: "84%", size: 34, dur: 6.9, delay: 1.1 },
     { name: "tv", left: "30%", top: "70%", size: 30, dur: 8.2, delay: 0.5 },
   ];
+  const noel = useNoel();
+  const noelEmojis = [
+    { e: "🎄", left: "3%", top: "24%", size: 44, dur: 7 },
+    { e: "🎁", left: "30%", top: "20%", size: 36, dur: 6.2 },
+    { e: "⛄", left: "78%", top: "34%", size: 42, dur: 7.6 },
+    { e: "⭐", left: "52%", top: "14%", size: 30, dur: 5.6 },
+    { e: "🔔", left: "94%", top: "58%", size: 32, dur: 6.8 },
+    { e: "🍬", left: "18%", top: "62%", size: 32, dur: 7.2 },
+    { e: "🎅", left: "66%", top: "78%", size: 40, dur: 8 },
+    { e: "❄️", left: "42%", top: "40%", size: 30, dur: 6 },
+    { e: "🎁", left: "92%", top: "88%", size: 34, dur: 6.6 },
+    { e: "🎄", left: "4%", top: "90%", size: 38, dur: 7.4 },
+    { e: "⭐", left: "56%", top: "68%", size: 26, dur: 5.8 },
+    { e: "🦌", left: "34%", top: "90%", size: 36, dur: 7.8 },
+  ];
   return (
     <div
       aria-hidden="true"
@@ -7317,7 +7353,9 @@ function SiteBackground() {
         zIndex: -1,
         overflow: "hidden",
         pointerEvents: "none",
-        background: "#FBF8F3",
+        background: noel
+          ? "linear-gradient(180deg, #f7f0ea 0%, #FBF8F3 45%, #eef5f1 100%)"
+          : "#FBF8F3",
       }}
     >
       {icons.map((ic, i) => (
@@ -7327,14 +7365,30 @@ function SiteBackground() {
             position: "absolute",
             left: ic.left,
             top: ic.top,
-            color: "#2563EB",
-            opacity: 0.12,
+            color: noel ? (i % 2 ? "#1f7a4d" : "#c62d3b") : "#2563EB",
+            opacity: noel ? 0.16 : 0.12,
             animation: `lkFloat ${ic.dur}s ease-in-out infinite ${ic.delay}s`,
           }}
         >
           <FloatIcon name={ic.name} size={ic.size} />
         </span>
       ))}
+      {noel &&
+        noelEmojis.map((o, i) => (
+          <span
+            key={`n${i}`}
+            style={{
+              position: "absolute",
+              left: o.left,
+              top: o.top,
+              fontSize: o.size,
+              opacity: 0.32,
+              animation: `lkFloat ${o.dur}s ease-in-out infinite ${i * 0.35}s`,
+            }}
+          >
+            {o.e}
+          </span>
+        ))}
     </div>
   );
 }
@@ -7673,7 +7727,7 @@ function HomePage({ city = null }) {
     "imprimante",
   ];
   const heroWordIndex = useRotatingWord(heroWords, 1900, animate);
-  const avisCount = useCountUp(38, 1100, animate);
+  const avisCount = useCountUp(41, 1100, animate);
   const fade = (delay) =>
     animate
       ? { animation: `lkFadeUp 0.6s cubic-bezier(0.2,0.7,0.2,1) both ${delay}s` }
@@ -8305,7 +8359,7 @@ function ReviewsBanner() {
           <span style={styles.socialProofStars} aria-hidden="true">
             ★★★★★
           </span>
-          <span style={styles.socialProofText}>38 avis Google</span>
+          <span style={styles.socialProofText}>41 avis Google</span>
         </a>
       </div>
       <div
