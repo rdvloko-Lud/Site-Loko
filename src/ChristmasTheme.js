@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState, useSyncExternalStore } from "react"
 // Pour le retirer : supprimer <ChristmasTheme />, <NoelBand /> et <SantaHat />
 // (+ le bloc « noel » de SiteBackground) dans App.js.
 //
-// Activation : automatique du 25 novembre au 6 janvier. Le visiteur peut le
+// Activation : automatique du 1er novembre au 6 janvier. Le visiteur peut le
 // couper (double-clic sur le sapin) : choix mémorisé. Forcer : ?noel=1 / ?noel=0.
 
 const STORAGE_KEY = "loko-noel";
@@ -19,7 +19,7 @@ const ORNAMENTS = ["🎄", "⭐", "🎁", "🔔", "❄️", "🍬"];
 function isSeason(now = new Date()) {
   const m = now.getMonth();
   const d = now.getDate();
-  return (m === 10 && d >= 25) || m === 11 || (m === 0 && d <= 6);
+  return m === 10 || m === 11 || (m === 0 && d <= 6);
 }
 
 function readInitialState() {
